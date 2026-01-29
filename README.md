@@ -1,11 +1,11 @@
-# [Nazwa Projektu]
+# AlgoVisus
 
 [![KN Algo](https://img.shields.io/badge/Made%20by-KN%20Algo-000424?style=flat-square&logo=cplusplus)](https://algo.pwr.edu.pl/)
 [![PWr](https://img.shields.io/badge/Affiliation-PWr-red?style=flat-square)](https://pwr.edu.pl/)
 [![License](https://img.shields.io/badge/License-GPLv3-purple?style=flat-square)](./LICENSE)
 [![Status](https://img.shields.io/badge/Status-Development-orange?style=flat-square)]()
 
-> Krótkie, jednozdaniowe podsumowanie tego, co robi ten projekt (np. "Implementacja algorytmu mrówkowego do problemu komiwojażera").
+> Aplikacja do dbania o Twój wzrok stworzona we współpracy z KN Visus! 
 
 ## 📋 O projekcie
 

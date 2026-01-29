@@ -2,6 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import appLogo from '/favicon.svg'
 import PWABadge from './PWABadge.tsx'
+import { Button } from './components/ui/button.tsx'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -34,12 +35,15 @@ function App() {
       </div>
       <h1 className="text-5xl leading-tight">AlgoVisus</h1>
       <div className="p-8">
-        <button 
-          onClick={() => setCount((count) => count + 1)}
-          className="rounded-lg border border-transparent px-5 py-2.5 text-base font-medium cursor-pointer bg-gray-800 text-amber-50 transition-colors duration-250 hover:border-[#646cff] focus:outline-4 focus:outline-[#646cff] light:bg-[#f9f9f9]"
-        >
-          count is {count}
-        </button>
+        <Button variant="outline" onClick={() => setCount((count) => count + 1)}>
+          Increase
+        </Button>
+        <span className="m-6 text-2xl">{count}</span>
+        <Button variant="outline" onClick={() => setCount((count) => count - 1)}>
+          Decrease
+        </Button>
+      </div>
+      <div className="text-lg">
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>

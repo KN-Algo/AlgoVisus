@@ -39,7 +39,7 @@ function App() {
           Increase
         </Button>
         <span className="m-6 text-2xl">{count}</span>
-        <Button variant="outline" onClick={() => setCount((count) => count - 1)}>
+        <Button onClick={() => setCount((count) => count - 1)}>
           Decrease
         </Button>
       </div>

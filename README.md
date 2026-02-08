@@ -60,6 +60,10 @@ npm run dev
 - [PWA](https://vite-pwa-org.netlify.app/guide/)
 - [React Router](https://reactrouter.com/start/modes#framework)
 
+### Konwencje nazewnicze
+- [branchy](https://conventional-branch.github.io/pl/)
+- [commitów](https://www.conventionalcommits.org/pl/v1.0.0/)
+
 ## 🤝 Twórcy
 
 Projekt realizowany przez członków **KN Algo** przy Politechnice Wrocławskiej:

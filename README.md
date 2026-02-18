@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/License-GPLv3-purple?style=flat-square)](./LICENSE)
 [![Status](https://img.shields.io/badge/Status-Development-orange?style=flat-square)]()
 
-> Aplikacja do dbania o Twój wzrok stworzona we współpracy z KN Visus! 
+> Aplikacja do dbania o Twój wzrok stworzona we współpracy z KN Visus!
 
 ## 📋 O projekcie
 
@@ -70,7 +70,7 @@ Projekt realizowany przez członków **KN Algo** przy Politechnice Wrocławskiej
 
   * **[Adrian Goral](https://github.com/xEdziu)**
   * **[Imię Nazwisko](https://github.com/)**
-  
+
 Ze wsparciem merytorycznym członków **KN Visus** przy Politechnice Wrocławskiej:
   * **[Imię Nazwisko](https://github.com/)**
 

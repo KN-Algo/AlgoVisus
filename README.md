@@ -27,6 +27,7 @@ Instrukcja krok po kroku, jak uruchomić projekt lokalnie.
 ### Wymagania wstępne
 * `git`
 * `node >= v24.5.0`
+* `python` (tylko do instalacji `pre-commit`)
 
 ### Instalacja
 
@@ -35,9 +36,19 @@ Instrukcja krok po kroku, jak uruchomić projekt lokalnie.
    git clone https://github.com/KN-Algo/AlgoVisus.git
    ```
 
-2.  Zainstaluj zależności:
+2.  Zainstaluj zależności frontendowe:
     ```bash
     npm install
+    ```
+
+3. Zainstaluj zależności wymagane do funkcjonowania pre-commit:
+    ```bash
+    pip install pre-commit
+    ```
+
+4. Zainstaluj pre-commit w repozytorium:
+    ```bash
+    pre-commit install
     ```
 
 ### Uruchomienie

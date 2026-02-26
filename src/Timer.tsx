@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 const SEC_IN_MSEC = 1000;
-const INTERVAL_IN_MSEC = 1000;
+const INTERVAL_IN_MSEC = 100;
 
 type Time = {
     hour : number,
@@ -18,6 +18,7 @@ function TimeToMilSec({ hour, minut, second }: Time): number {
 
 export function Timer({ hour, minut, second }: Time) {
     const count_time : number = TimeToMilSec({ hour, minut, second })
+
     const [time, setTime] = useState<number>(count_time);
     const [referenceTime, setReferenceTime] = useState<number>(Date.now());
     
@@ -29,7 +30,7 @@ export function Timer({ hour, minut, second }: Time) {
 
         setTime(prev => {
             if (prev <= 0) return 0;
-            return prev - interval;
+            return Math.max(prev - interval, 0);
         });
     };
 
@@ -38,7 +39,7 @@ export function Timer({ hour, minut, second }: Time) {
     },[time])
 
     return <>
-        {(time / SEC_IN_MSEC).toFixed(1)}
+        {(time / SEC_IN_MSEC).toFixed(0)}
     </>;
 
 };

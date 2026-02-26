@@ -36,7 +36,7 @@ function App() {
       </div>
       <h1 className="text-5xl leading-tight">AlgoVisus</h1>
       <div className="text-lg">
-        <Timer hour={0} minut={1} second={3}/>
+        <Timer hour={0} minut={1} second={4}/>
       </div>
       <div className="p-8">
         <Button

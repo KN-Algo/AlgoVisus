@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
+
 const SEC_IN_MSEC = 1000;
-
-
+const INTERVAL_IN_MSEC = 1000;
 
 type Time = {
     hour : number,
@@ -16,30 +16,30 @@ function TimeToMilSec({ hour, minut, second }: Time): number {
     return m_second;
 };
 
-function Timer({ hour, minut, second }: Time) {
+export function Timer({ hour, minut, second }: Time) {
     const count_time : number = TimeToMilSec({ hour, minut, second })
-    
-    
     const [time, setTime] = useState<number>(count_time);
-    const [alarm, setAlarm] = useState<boolean>(false);
+    const [referenceTime, setReferenceTime] = useState<number>(Date.now());
     
-    const getTime = () => {
-        setTime(prev => prev - SEC_IN_MSEC)
+    function countDownUntilZero(): void {
+        const now = Date.now();
+        const interval = now - referenceTime;
 
-        if (time <= 0) {
-            setAlarm(true);
-        }
-    }
+        setReferenceTime(now);
+
+        setTime(prev => {
+            if (prev <= 0) return 0;
+            return prev - interval;
+        });
+    };
 
     useEffect(() => {
-        const interval = setInterval(() => getTime(), SEC_IN_MSEC);
+        setTimeout(countDownUntilZero, INTERVAL_IN_MSEC);
+    },[time])
 
-        return () => clearInterval(interval);
-    }, []);
-
-    return (
-        <div className="timer">
-        </div>
-    );
+    return <>
+        {(time / SEC_IN_MSEC).toFixed(1)}
+    </>;
 
 };
+

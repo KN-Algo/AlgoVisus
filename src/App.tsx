@@ -3,7 +3,7 @@ import reactLogo from "./assets/react.svg";
 import appLogo from "/favicon.svg";
 import PWABadge from "./PWABadge.tsx";
 import { Button } from "./components/ui/button.tsx";
-import { Timer } from "./Timer";
+import { ExampleTimerComponent } from "./components/exampleTimer.tsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -36,7 +36,7 @@ function App() {
       </div>
       <h1 className="text-5xl leading-tight">AlgoVisus</h1>
       <div className="text-lg">
-        <Timer hour={0} minut={1} second={4} />
+        <ExampleTimerComponent />
       </div>
       <div className="p-8">
         <Button

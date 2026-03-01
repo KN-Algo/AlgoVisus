@@ -16,25 +16,41 @@ function TimeToMilSec({ hour, minut, second }: Time): number {
   return m_second;
 }
 
-export function Timer({ hour, minut, second }: Time) {
+export function useTimer({ hour, minut, second }: Time) {
   const count_time: number = TimeToMilSec({ hour, minut, second });
 
   const [time, setTime] = useState<number>(count_time);
+  const [isRunning, setIsRunning] = useState<boolean>(false);
   const referenceTime = useRef<number>(Date.now());
 
-  useEffect(() => {
-    const savedTime = localStorage.getItem("lastTime");
-    if (savedTime) setTime(Number(savedTime));
-  }, []);
+  function start() {
+    referenceTime.current = Date.now();
+    setIsRunning(true);
+  }
+
+  function stop() {
+    setIsRunning(false);
+  }
+
+  function reset() {
+    referenceTime.current = Date.now();
+    setTime(count_time);
+    setIsRunning(false);
+  }
 
   function countDownUntilZero(): void {
+    if (!isRunning) return;
+
     const now: number = Date.now();
     const interval: number = now - referenceTime.current;
 
     referenceTime.current = now;
 
     setTime((prev) => {
-      if (prev <= 0) return 0;
+      if (prev <= 0) {
+        localStorage.removeItem("lastTime");
+        return 0;
+      }
       const newTime: number = Math.max(prev - interval, 0);
       localStorage.setItem("lastTime", newTime.toString());
       return newTime;
@@ -42,8 +58,17 @@ export function Timer({ hour, minut, second }: Time) {
   }
 
   useEffect(() => {
+    const savedTime = localStorage.getItem("lastTime");
+    if (savedTime) setTime(Number(savedTime));
+  }, []);
+
+  useEffect(() => {
     setTimeout(countDownUntilZero, INTERVAL_IN_MSEC);
   }, [time]);
 
-  return time;
+  useEffect(() => {
+    setTimeout(countDownUntilZero, INTERVAL_IN_MSEC);
+  }, [isRunning]);
+
+  return { time, start, stop, reset };
 }

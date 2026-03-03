@@ -10,7 +10,7 @@ export function ExampleTimerComponent() {
 
   useEffect(() => {
     start();
-  }, [start]);
+  }, []);
 
   useEffect(() => {
     if (time == 0) {

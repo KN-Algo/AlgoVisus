@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
+import { subscribe } from "./globalClock";
 
 const SEC_IN_MSEC = 1000;
-const INTERVAL_IN_MSEC = 100;
 
 type Time = {
   hour: number;
@@ -16,12 +16,13 @@ function TimeToMilSec({ hour, minut, second }: Time): number {
   return m_second;
 }
 
-export function useTimer({ hour, minut, second }: Time) {
-  const count_time: number = TimeToMilSec({ hour, minut, second });
+export function useTimer({ hour, minut, second }: Time, storageKey: string) {
+  const countTime = TimeToMilSec({ hour, minut, second });
 
-  const [time, setTime] = useState<number>(count_time);
-  const [isRunning, setIsRunning] = useState<boolean>(false);
-  const referenceTime = useRef<number>(Date.now());
+  const [time, setTime] = useState(countTime);
+  const [isRunning, setIsRunning] = useState(false);
+
+  const referenceTime = useRef<number>(0);
 
   function start() {
     referenceTime.current = Date.now();
@@ -33,42 +34,36 @@ export function useTimer({ hour, minut, second }: Time) {
   }
 
   function reset() {
-    referenceTime.current = Date.now();
-    setTime(count_time);
+    setTime(countTime);
     setIsRunning(false);
   }
 
-  function countDownUntilZero(): void {
-    if (!isRunning) return;
+  useEffect(() => {
+    return subscribe((now) => {
+      if (!isRunning) return;
 
-    const now: number = Date.now();
-    const interval: number = now - referenceTime.current;
+      const delta = now - referenceTime.current;
+      referenceTime.current = now;
 
-    referenceTime.current = now;
-
-    setTime((prev) => {
-      if (prev <= 0) {
-        localStorage.removeItem("lastTime");
-        return 0;
-      }
-      const newTime: number = Math.max(prev - interval, 0);
-      localStorage.setItem("lastTime", newTime.toString());
-      return newTime;
+      setTime((prev) => Math.max(prev - delta, 0));
     });
-  }
+  }, [isRunning]);
 
   useEffect(() => {
-    const savedTime = localStorage.getItem("lastTime");
-    if (savedTime) setTime(Number(savedTime));
-  }, []);
+    if (time <= 0) {
+      localStorage.removeItem(storageKey);
+      return;
+    }
 
-  useEffect(() => {
-    setTimeout(countDownUntilZero, INTERVAL_IN_MSEC);
+    if (time !== countTime) localStorage.setItem(storageKey, time.toString());
   }, [time]);
 
   useEffect(() => {
-    setTimeout(countDownUntilZero, INTERVAL_IN_MSEC);
-  }, [isRunning]);
+    const savedTime = localStorage.getItem(storageKey);
+    if (savedTime) {
+      setTime(Number(savedTime));
+    }
+  }, []);
 
   return { time, start, stop, reset };
 }

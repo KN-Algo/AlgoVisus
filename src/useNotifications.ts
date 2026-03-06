@@ -1,5 +1,11 @@
 import { useState } from "react";
 
+// Interfejs dla powiadomienia, który zawiera tytuł i opcje
+export interface AppNotification {
+  title: string;
+  options?: NotificationOptions;
+}
+
 export const useNotifications = () => {
   // Pamięc stanu dla statusu zgody
   const [permission, setPermission] =
@@ -11,11 +17,21 @@ export const useNotifications = () => {
     setPermission(status);
   };
   // Funkcja wysylania powiadomienia
-  const sendNotification = () => {
+  const sendNotification = async (notifications: AppNotification) => {
     if (Notification.permission === "granted") {
-      new Notification("Sukces!", {
-        body: "Wyslano powiadomienie.",
-      });
+      if ("serviceWorker" in navigator) {
+        try {
+          const registration = await navigator.serviceWorker.ready;
+          await registration.showNotification(
+            notifications.title,
+            notifications.options,
+          );
+        } catch (error) {
+          console.error("Bład podczas wyświetlania powiadomienia:", error);
+        }
+      } else {
+        new Notification(notifications.title, notifications.options);
+      }
     } else {
       alert("Brak zgody na powiadomienia!");
     }

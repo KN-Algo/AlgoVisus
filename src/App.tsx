@@ -4,6 +4,7 @@ import appLogo from "/favicon.svg";
 import PWABadge from "./PWABadge.tsx";
 import { Button } from "./components/ui/button.tsx";
 import EyeExercise from "./components/ui/eye-exercise.tsx";
+import { ExampleTimerComponent } from "./components/exampleTimer.tsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -35,6 +36,9 @@ function App() {
         </a>
       </div>
       <h1 className="text-5xl leading-tight">AlgoVisus</h1>
+      <div className="text-lg">
+        <ExampleTimerComponent />
+      </div>
       <div className="p-8">
         <Button
           variant="outline"

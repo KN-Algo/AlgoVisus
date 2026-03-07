@@ -7,110 +7,87 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar"
+import { routes } from "@/lib/routes-config";
 import {SeparatorVertical, Settings } from "lucide-react"
+import { Link } from "react-router-dom";
 
-const projects = [
-
-      {
-    name: "Trening Akomodacji",
-    url: "/trening-akomodacji",
-    icon: "-",
-  },
-
-      {
-    name: "Ósemka",
-    url: "/osemka",
-    icon: "-",
-  },
-
-        {
-    name: "Śledzenie kropki",
-    url: "/sledzenie-kropki",
-    icon: "-",
-  },
-
-      {
-    name: "Ruchy oczy do dali",
-    url: "/dal",
-    icon: "-",
-  },
-]
-
-const other = [
-        {
-    name: "Autorzy",
-    url: "/autorzy",
-    icon: "-",
-  },
-]
+const exercises= routes.filter(r => r.prefix === 'exercises');
+const other= routes.filter(r => r.prefix === 'other');
+const footer= routes.filter(r => r.prefix === 'footer');
 
 export function AppSidebar() {
+  const { setOpen, setOpenMobile } = useSidebar()
+
+  const handleMenuItemClick = () => {
+    setOpen(false)
+    setOpenMobile(false)
+  }
+
   return (
-    <Sidebar variant="floating" collapsible="offcanvas" className="z-50">
+    <Sidebar  collapsible="offcanvas" variant="floating" className="z-50">
 
       {/* Nagłówek bocznego panelu*/ }
       <SidebarHeader className="py-6 flex items-center justify-center">
-        <h1 className="text-2xl font-bold ">Logo</h1>
+        <Link to={"/"} onClick={handleMenuItemClick} className="flex w-2/4 justify-center">
+          <span className="text-2xl font-bold tracking-tight">{"Logo"}</span>
+        </Link>
       </SidebarHeader>
 
         {/* Główna zawartość bocznego panelu  */}
         <SidebarContent>
+          {/* Grupa menu z ćwiczeniami */ }
           <SidebarGroup>
-            <text className="text-sm font-semibold text-slate-500 tracking-wide">Ćwiczenia</text>
+            <span className="text-sm font-semibold text-slate-500 tracking-wide">Ćwiczenia</span>
             <SidebarMenu>
-          <div className="text-sm font-semibold text-slate-500 tracking-wide">
-            {projects.map((project) => (
-              <SidebarMenuItem key={project.name}>
-            <SidebarMenuButton asChild className="group transition-all duration-200 hover:text-blue-600">
-              <a 
-                href={project.url} 
-                className="flex items-center gap-2 px-4 py-2 text-slate-700 hover:text-black rounded-md transition-colors duration-200 font-medium"
-              >
-                <SeparatorVertical className="w-6 h-6 -ml-2 -mr-2 shrink-0" />
-                <text className="text-sm font-medium">{"  "}</text>
-                <span>{project.name}</span>
-              </a>
-            </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
-          </div>
+              {exercises.map((route) => (
+                <SidebarMenuItem key={route.path}>
+                  <SidebarMenuButton asChild className="group transition-all duration-200 hover:text-blue-600">
+                    <Link to={route.path} onClick={handleMenuItemClick} className="flex items-center gap-2 px-4 py-2 text-slate-700 hover:text-black rounded-md transition-colors duration-200 font-medium">
+                      <SeparatorVertical className="w-6 h-6 -ml-2 shrink-0" />
+                      <span className="text-sm font-medium">{route.name}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
             </SidebarMenu>
-        </SidebarGroup> 
+          </SidebarGroup> 
 
-        <SidebarGroup>
-          <text className="text-sm font-semibold text-slate-500 tracking-wide">Inne</text>
+          <SidebarGroup>
+            {/* Grupa menu z innymi stronami */ }
+            <span className="text-sm font-semibold text-slate-500 tracking-wide">Inne</span>
             <SidebarMenu>
-          <div className="text-sm font-semibold text-slate-500 tracking-wide">
-            {other.map((project) => (
-              <SidebarMenuItem key={project.name}>
-            <SidebarMenuButton asChild className="group transition-all duration-200 hover:text-blue-600">
-              <a 
-                href={project.url} 
-                className="flex items-center gap-2 px-4 py-2 text-slate-700 hover:text-black rounded-md transition-colors duration-200 font-medium"
-              >
-                <SeparatorVertical className="w-6 h-6 -ml-2 -mr-2 shrink-0" />
-                <text className="text-sm font-medium">{"  "}</text>
-                <span>{project.name}</span>
-              </a>
-            </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
-          </div>
+              {other.map((route) => (
+                <SidebarMenuItem key={route.path}>
+                  <SidebarMenuButton asChild className="group transition-all duration-200 hover:text-blue-600">
+                    <Link to={route.path} onClick={handleMenuItemClick}  className="flex items-center gap-2 px-4 py-2 text-slate-700 hover:text-black rounded-md transition-colors duration-200 font-medium">
+                      <SeparatorVertical className="w-6 h-6 -ml-2 shrink-0" />
+                      <span className="text-sm font-medium">{route.name}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
             </SidebarMenu>
-        </SidebarGroup> 
+          </SidebarGroup> 
+        </SidebarContent>
 
-        
-      </SidebarContent>
+        {/* Stopka bocznego panelu */ }
+        <SidebarFooter>
+              <SidebarMenu>
+                {footer.map((route) => (
+                  <SidebarMenuItem key={route.path}>
+                    <SidebarMenuButton asChild className="group transition-all duration-200 hover:text-blue-600">
+                      <Link to={route.path} onClick={handleMenuItemClick} className="flex items-center gap-2 px-4 py-2 text-slate-700 hover:text-red-600 rounded-md transition-colors duration-200 font-medium">
+                        <Settings className="w-6 h-6 -ml-2 shrink-0" />
+                        <span className="text-sm font-medium">{route.name}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+        </SidebarFooter>
 
-      {/* Stopka bocznego panelu */ }
-      <SidebarFooter>
-<a href="/ustawienia" className="flex items-center gap-2 px-4 py-2 text-slate-700 hover:text-red-600 rounded-md transition-colors duration-200 font-medium">
-  <Settings className="w-5 h-5" />
-  <span>Ustawienia</span>
-</a>
-      </SidebarFooter>
-
-    </Sidebar>
+      </Sidebar>
   )
 }

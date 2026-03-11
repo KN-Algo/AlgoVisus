@@ -1,6 +1,6 @@
-import { useNotifications } from "./useNotifications";
-import { useScheduler } from "./useScheduler";
-import { type AppNotification } from "./useNotifications";
+import { useNotifications } from "./hooks/useNotifications";
+import { useScheduler } from "./hooks/useScheduler";
+import { type AppNotification } from "./hooks/useNotifications";
 
 export default function TestApp() {
   // 1. Pobieramy narzędzia do powiadomień
@@ -40,10 +40,10 @@ export default function TestApp() {
 
           {/* Uruchomienie cyklu - np. co 20 minut */}
           <button
-            onClick={() => startSchedule(testNotification, 20)}
+            onClick={() => startSchedule(testNotification, 0.1)}
             className="bg-purple-500 text-white px-6 py-2 rounded"
           >
-            Uruchom (Co 20 min)
+            Uruchom (Co 0.1 min)
           </button>
 
           {/* Zatrzymanie cyklu */}

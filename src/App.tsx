@@ -3,6 +3,7 @@ import reactLogo from "./assets/react.svg";
 import appLogo from "/favicon.svg";
 import PWABadge from "./PWABadge.tsx";
 import { Button } from "./components/ui/button.tsx";
+import EyeExercise from "./components/ui/eye-exercise.tsx";
 import { ExampleTimerComponent } from "./components/exampleTimer.tsx";
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
         </p>
       </div>
       <p>Click on the Vite and React logos to learn more</p>
+      <div> <EyeExercise /> </div>
       <PWABadge />
     </div>
   );

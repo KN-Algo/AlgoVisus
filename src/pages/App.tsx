@@ -1,10 +1,10 @@
 import { useState } from "react";
 import reactLogo from "../assets/react.svg";
 import appLogo from "/favicon.svg";
-import PWABadge from "./PWABadge.tsx";
-import { Button } from "./components/ui/button.tsx";
-import { ExampleTimerComponent } from "./components/exampleTimer.tsx";
-import { TwentyMinutesRule } from "./components/twentyMinutesRule.tsx";
+import PWABadge from "../PWABadge.tsx";
+import { Button } from "../components/ui/button.tsx";
+import { ExampleTimerComponent } from "../components/exampleTimer.tsx";
+import { TwentyMinutesRule } from "../components/twentyMinutesRule.tsx";
 
 function App() {
   const [count, setCount] = useState(0);

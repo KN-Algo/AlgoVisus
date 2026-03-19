@@ -1,11 +1,13 @@
 import { HeroSection } from "./_components/HeroSection.tsx";
 import { ExercisesSection } from "./_components/ExercisesSection.tsx";
+import { FooterSection } from "./_components/FooterSection.tsx";
 
 function App() {
   return (
     <div className="w-full">
       <HeroSection />
       <ExercisesSection />
+      <FooterSection />
       {/* Stara zawartość - na razie zakomentowana */}
       {/* <div className="min-h-screen w-full px-8 text-center bg-gray-400 flex flex-col justify-center">
         <div className="flex justify-center items-center mb-4">

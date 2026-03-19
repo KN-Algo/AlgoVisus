@@ -1,9 +1,9 @@
-function Ustawienia() {
+function Ósemka() {
   return (
     <div className="min-h-screen w-full px-8 text-center bg-gray-400 flex flex-col justify-center">
-      <h1 className="text-5xl font-bold">Ustawienia</h1>
+      <h1 className="text-5xl font-bold">Ósemka</h1>
     </div>
   );
 }
 
-export default Ustawienia;
+export default Ósemka;

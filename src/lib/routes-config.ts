@@ -8,37 +8,24 @@ export interface RouteConfig {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const pages = import.meta.glob("../pages/**/App.tsx") as Record<string, any>;
+const pages = import.meta.glob("../pages/*.tsx") as Record<string, any>;
 
-export const routes = Object.keys(pages).map((path) => {
-  // Extract folder name from path (e.g., '../pages/home/App.tsx' -> 'home')
-  const folderName = path.split("/")[3];
+export const routes = Object.keys(pages)
+  .filter((path) => !path.includes("_components"))
+  .map((path) => {
+    const fullFileName = path.split("/").pop()?.replace(".tsx", "") || "";
+    const hasPrefix = fullFileName.includes("_");
+    const prefix = hasPrefix ? fullFileName.split("_")[0] : null;
+    const cleanName = hasPrefix ? fullFileName.split("_")[1] : fullFileName;
 
-  // Map folder names to route names and paths
-  const folderToRoute: {
-    [key: string]: { name: string; path: string; prefix: string | null };
-  } = {
-    home: { name: "App", path: "/", prefix: null },
-    exercises: {
-      name: "Ósemka",
-      path: "/exercises/ósemka",
-      prefix: "exercises",
-    },
-    settings: { name: "Ustawienia", path: "/settings", prefix: null },
-    authors: { name: "Autorzy", path: "/authors", prefix: null },
-  };
+    const routePath =
+      cleanName.toLowerCase() === "app" ? "/" : `/${cleanName.toLowerCase()}`;
 
-  const route = folderToRoute[folderName] || {
-    name: folderName,
-    path: `/${folderName}`,
-    prefix: null,
-  };
-
-  return {
-    path: route.path,
-    name: route.name,
-    prefix: route.prefix,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    component: React.lazy(pages[path] as any),
-  };
-});
+    return {
+      path: routePath,
+      name: cleanName,
+      prefix: prefix,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      component: React.lazy(pages[path] as any),
+    };
+  });

@@ -1,5 +1,5 @@
-import { HeroSection } from "./HeroSection.tsx";
-import { ExercisesSection } from "./ExercisesSection.tsx";
+import { HeroSection } from "./_components/HeroSection.tsx";
+import { ExercisesSection } from "./_components/ExercisesSection.tsx";
 
 function App() {
   return (

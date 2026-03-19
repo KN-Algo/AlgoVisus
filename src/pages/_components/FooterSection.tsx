@@ -5,12 +5,45 @@ export function FooterSection() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-100">
+    <footer className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-100 animate-fade-in">
+      <style>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-fade-in {
+          animation: fadeIn 600ms ease-out;
+        }
+
+        .animate-fade-in-up {
+          animation: fadeInUp 600ms ease-out;
+        }
+      `}</style>
+
       <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 py-12 md:py-16">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mb-12">
           {/* About Section */}
-          <div className="flex flex-col">
+          <div
+            className="flex flex-col animate-fade-in-up"
+            style={{ animationDelay: "100ms", animationFillMode: "backwards" }}
+          >
             <h3 className="text-lg md:text-xl font-bold mb-4 text-white">
               AlgoVisus
             </h3>
@@ -21,7 +54,10 @@ export function FooterSection() {
           </div>
 
           {/* Quick Links */}
-          <div className="flex flex-col">
+          <div
+            className="flex flex-col animate-fade-in-up"
+            style={{ animationDelay: "150ms", animationFillMode: "backwards" }}
+          >
             <h3 className="text-lg md:text-xl font-bold mb-4 text-white">
               Menu
             </h3>
@@ -48,7 +84,10 @@ export function FooterSection() {
           </div>
 
           {/* Contact & Social */}
-          <div className="flex flex-col">
+          <div
+            className="flex flex-col animate-fade-in-up"
+            style={{ animationDelay: "200ms", animationFillMode: "backwards" }}
+          >
             <h3 className="text-lg md:text-xl font-bold mb-4 text-white">
               Kontakt
             </h3>
@@ -77,7 +116,10 @@ export function FooterSection() {
         <div className="border-t border-gray-700 pt-8 md:pt-12" />
 
         {/* Bottom Section */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+        <div
+          className="flex flex-col md:flex-row justify-between items-center gap-4 animate-fade-in-up"
+          style={{ animationDelay: "250ms", animationFillMode: "backwards" }}
+        >
           <p className="text-xs md:text-sm text-gray-500 text-center md:text-left">
             © {currentYear} AlgoVisus. Wszystkie prawa zastrzeżone.
           </p>

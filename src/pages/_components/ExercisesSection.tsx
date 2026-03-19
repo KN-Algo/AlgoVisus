@@ -14,10 +14,43 @@ export function ExercisesSection() {
   const exercises = routes.filter((r) => r.prefix === "exercises");
 
   return (
-    <section className="w-full bg-gradient-to-b from-white to-blue-50 py-20 px-4">
+    <section className="w-full bg-gradient-to-b from-white to-blue-50 py-20 px-4 animate-fade-in">
+      <style>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-fade-in {
+          animation: fadeIn 600ms ease-out;
+        }
+
+        .animate-fade-in-up {
+          animation: fadeInUp 600ms ease-out;
+        }
+      `}</style>
+
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
-        <div className="mb-16 text-center">
+        <div
+          className="mb-16 text-center animate-fade-in-up"
+          style={{ animationDelay: "100ms", animationFillMode: "backwards" }}
+        >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-4">
             Odkryj ćwiczenia dla zdrowszych oczu
           </h2>
@@ -29,8 +62,16 @@ export function ExercisesSection() {
 
         {/* Exercises Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {exercises.map((exercise) => (
-            <Link key={exercise.path} to={exercise.path} className="group">
+          {exercises.map((exercise, index) => (
+            <Link
+              key={exercise.path}
+              to={exercise.path}
+              className="group animate-fade-in-up"
+              style={{
+                animationDelay: `${200 + index * 100}ms`,
+                animationFillMode: "backwards",
+              }}
+            >
               <div className="h-full bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden border border-slate-100 hover:border-teal-300">
                 {/* Card Content */}
                 <div className="p-8 flex flex-col items-center text-center h-full">

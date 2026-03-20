@@ -13,7 +13,10 @@ export function ScrollProgressBar() {
       setScrollProgress(scrolled);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    // Call immediately to set correct initial width
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 

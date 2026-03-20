@@ -7,8 +7,9 @@ export interface RouteConfig {
   component: React.LazyExoticComponent<React.ComponentType>;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const pages = import.meta.glob("../pages/*.tsx") as Record<string, any>;
+const pages = import.meta.glob<{ default: React.ComponentType }>(
+  "../pages/*.tsx",
+);
 
 export const routes = Object.keys(pages)
   .filter((path) => !path.includes("_components"))
@@ -25,7 +26,6 @@ export const routes = Object.keys(pages)
       path: routePath,
       name: cleanName,
       prefix: prefix,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      component: React.lazy(pages[path] as any),
+      component: React.lazy(() => pages[path]()),
     };
   });

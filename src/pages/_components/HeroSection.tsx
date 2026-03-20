@@ -59,50 +59,6 @@ export function HeroSection() {
           </div>
         </div>
       </div>
-
-      {/* CSS Animations */}
-      <style>{`
-        @keyframes shimmer {
-          0% {
-            transform: translateX(-100%);
-          }
-          100% {
-            transform: translateX(100%);
-          }
-        }
-
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .animate-shimmer {
-          animation: shimmer 4s infinite;
-        }
-
-        .animate-fade-in {
-          animation: fadeIn 600ms ease-out;
-        }
-
-        .animate-fade-in-up {
-          animation: fadeInUp 600ms ease-out;
-        }
-      `}</style>
     </section>
   );
 }

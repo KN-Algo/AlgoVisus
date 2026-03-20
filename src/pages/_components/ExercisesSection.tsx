@@ -89,7 +89,7 @@ export function ExercisesSection() {
 
                   {/* Description */}
                   <p className="text-slate-600 text-sm md:text-base mb-6 flex-grow">
-                    Odkryj tego ćwiczenia i udoskonalaj swoją technę
+                    Odkryj tego ćwiczenia i udoskonalaj swoją technikę
                   </p>
 
                   {/* CTA Button */}

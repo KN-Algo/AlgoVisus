@@ -47,7 +47,7 @@ export function HeroSection() {
             AlgoVisus to aplikacja stworzona specjalnie dla programistów i
             pracowników biurowych, którzy dbają o zdrowie swoich oczu.
             Regularnie przypominamy o przerwach i dostarczamy cennych informacji
-            o higienie wzroku, bazując na wiedży optometrycznej.
+            o higienie wzroku, bazując na wiedzy optometrycznej.
           </p>
 
           {/* CTA Button */}

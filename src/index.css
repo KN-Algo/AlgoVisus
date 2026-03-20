@@ -113,11 +113,49 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+@keyframes gradient-flow {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .gradient-flow-layer {
+    @apply overflow-hidden opacity-0 transition-opacity duration-[260ms] ease-out;
+  }
+
+  .gradient-flow-track {
+    @apply h-full w-[200%] flex will-change-transform;
+  }
+
+  .gradient-flow-segment {
+    @apply h-full w-1/2;
+    background: linear-gradient(
+      90deg,
+      rgba(37, 99, 235, 0.78) 0%,
+      rgba(14, 116, 144, 0.76) 20%,
+      rgba(13, 148, 136, 0.74) 40%,
+      rgba(45, 212, 191, 0.72) 60%,
+      rgba(56, 189, 248, 0.74) 80%,
+      rgba(37, 99, 235, 0.78) 100%
+    );
+  }
+}
+
+@layer utilities {
+  .animate-gradient-flow {
+    animation: gradient-flow 3s linear infinite;
   }
 }

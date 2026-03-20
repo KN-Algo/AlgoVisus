@@ -33,8 +33,8 @@ export function GradientButton({
         <div className="absolute inset-0 bg-gradient-to-r from-teal-600 to-blue-600 z-0" />
 
         {/* Animated overlay gradient on hover */}
-        <div className="gradient-flow-layer absolute inset-0 z-0">
-          <div className="gradient-flow-track">
+        <div className="gradient-flow-layer group-hover:opacity-[0.72] absolute inset-0 z-0">
+          <div className="gradient-flow-track animate-gradient-flow">
             <div className="gradient-flow-segment" />
             <div className="gradient-flow-segment" />
           </div>

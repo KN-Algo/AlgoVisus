@@ -4,7 +4,7 @@ export function HeroSection() {
   return (
     <section className="relative w-full min-h-screen overflow-hidden animate-fade-in">
       {/* Base Background - More Color Saturation, Less White */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-150 via-cyan-100 to-teal-150" />
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-100 via-cyan-100 to-teal-200" />
 
       {/* Animated Shimmer/Shine Effect */}
       <div className="absolute inset-0 overflow-hidden">

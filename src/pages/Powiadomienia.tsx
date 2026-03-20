@@ -1,8 +1,72 @@
+import { Bell } from "lucide-react";
+import { useState } from "react";
+//  SquareArrowLeft --> zaimportowac wyzej 
 
-function Notifications() {
-    return (
-        <div>Notifications</div>
-    )
+interface UstawieniaPowiadomien {
+    id: string;
+    title: string;
+    active: boolean;
+    icon: React.ReactNode;
 }
 
-export default Notifications
+function Powiadomienia() {
+
+    // Stan przechowujący wybory użytkownika
+    const [settings, setSettings] = useState<UstawieniaPowiadomien[]>([
+        { id: "1", title: "POWIADOMIENIE1", active: true, icon: <Bell size={17} /> },
+        { id: "2", title: "POWIADOMIENIE2", active: true, icon: <Bell size={17} /> },
+        { id: "3", title: "POWIADOMIENIE3", active: true, icon: <Bell size={17} /> },
+        { id: "4", title: "POWIADOMIENIE4", active: true, icon: <Bell size={17} /> },
+    ]);
+
+    // Funkcja przełączająca stan konkretnego powiadomienia
+    const toggle = (id: string) => {
+        setSettings(prev =>
+            prev.map(item =>
+                item.id === id ? { ...item, active: !item.active } : item
+            )
+        );
+    };
+
+    return (
+        <div className="min-h-screen w-full bg-gray-100 flex flex-col items-center p-10">
+
+            {/* Nagłówek z przyciskiem powrotu -- dodac przycisk -> nie działa */}
+            <div className="w-full max-w-md flex items-center mb-8">
+                <h1 className="text-4xl font-bold text-gray-800">Powiadomienia</h1>
+            </div>
+
+            {/* Lista opcji do wyboru */}
+            <div className="w-full max-w-md space-y-3">
+                {settings.map((item) => (
+                    <div
+                        key={item.id}
+                        onClick={() => toggle(item.id)}
+                        className="flex items-center justify-between p-4 bg-white rounded-2xl shadow-sm cursor-pointer active:bg-gray-50 transition-colors"
+                    >
+                        {/* Ikonka i naglowek powiadomienia */}
+                        <div className="flex items-center gap-4">
+                            <div className="p-2 bg-blue-50 text-blue-600 rounded-lg">
+                                {item.icon}
+                            </div>
+
+                            <span className="font-medium text-gray-600">
+                                {item.title}</span>
+                        </div>
+
+                        {/* Toggle - przycisk switch */}
+                        <div className={`w-12 h-6 rounded-full transition-colors relative ${item.active ? 'bg-green-500' : 'bg-gray-300'}`}>
+                            <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all ${item.active ? 'left-7' : 'left-1'}`} />
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            <div className="mt-auto mb-6 text-gray-400 text-sm text-center px-4">
+                Powiadomienia zostały włączone
+            </div>
+        </div>
+    );
+}
+
+export default Powiadomienia

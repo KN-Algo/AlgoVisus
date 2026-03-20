@@ -13,7 +13,10 @@ export function ExercisesSection() {
   const exercises = routes.filter((r) => r.prefix === "exercises");
 
   return (
-    <section className="w-full bg-gradient-to-b from-white to-blue-50 py-20 px-4 animate-fade-in">
+    <section
+      id="exercises"
+      className="w-full bg-gradient-to-b from-white to-blue-50 py-20 px-4 animate-fade-in"
+    >
       <style>{`
         @keyframes fadeIn {
           from {

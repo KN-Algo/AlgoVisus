@@ -128,12 +128,9 @@ export function FooterSection() {
             <Heart className="w-4 h-4 text-red-500 fill-red-500" />
             <span>przez KN-Algo</span>
           </div>
-          <a
-            href="/polityka-prywatnosci"
-            className="text-xs md:text-sm text-gray-500 hover:text-gray-300 transition-colors duration-200"
-          >
+          <span className="text-xs md:text-sm text-gray-500">
             Polityka prywatności
-          </a>
+          </span>
         </div>
       </div>
     </footer>

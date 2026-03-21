@@ -1,14 +1,11 @@
+import { useEffect, useState } from "react";
 import { useNotifications } from "../hooks/useNotifications";
-import { useScheduler } from "../hooks/useScheduler";
+import { useTimeNotification } from "../hooks/useTimeNotification";
 import { type AppNotification } from "../hooks/useNotifications";
 
 export default function TestApp() {
-  // 1. Pobieramy narzędzia do powiadomień
   const { permission, requestPermission, sendNotification } =
     useNotifications();
-
-  // 2. Pobieramy narzędzia do harmonogramu i przekazujemy mu funkcję wysyłającą!
-  const { startSchedule, stopSchedule } = useScheduler(sendNotification);
 
   const testNotification: AppNotification = {
     title: "Czas na przerwę! ☕",
@@ -17,9 +14,31 @@ export default function TestApp() {
     },
   };
 
+  // 🔔 Jednorazowy timer (10 sekund)
+  const timer = useTimeNotification(sendNotification, testNotification, {
+    hour: 0,
+    minut: 0,
+    second: 10,
+  });
+
+  // 🔄 stan cyklu
+  const [isCycle, setIsCycle] = useState(false);
+
+  // 🔔 efekt cykliczny
+  useEffect(() => {
+    if (timer.time === 0) {
+      sendNotification(testNotification);
+
+      if (isCycle) {
+        timer.reset();
+        timer.start();
+      }
+    }
+  }, [timer.time, isCycle]);
+
   return (
     <div className="min-h-screen bg-gray-50 p-10 flex flex-col items-center gap-4">
-      <h1 className="text-3xl font-bold">Tester Cykliczny ⏳</h1>
+      <h1 className="text-3xl font-bold">Tester Powiadomień ⏳</h1>
 
       {permission !== "granted" ? (
         <button
@@ -29,8 +48,8 @@ export default function TestApp() {
           Zezwól na powiadomienia
         </button>
       ) : (
-        <div className="flex gap-4">
-          {/* Zwykłe kliknięcie */}
+        <div className="flex flex-col gap-4">
+          {/* 🔔 natychmiast */}
           <button
             onClick={() => sendNotification(testNotification)}
             className="bg-green-500 text-white px-6 py-2 rounded"
@@ -38,21 +57,39 @@ export default function TestApp() {
             Wyślij raz (Teraz)
           </button>
 
-          {/* Uruchomienie cyklu - np. co 20 minut */}
+          {/* 🔔 timer */}
           <button
-            onClick={() => startSchedule(testNotification, 0.1)}
-            className="bg-purple-500 text-white px-6 py-2 rounded"
+            onClick={timer.start}
+            className="bg-yellow-500 text-white px-6 py-2 rounded"
           >
-            Uruchom (Co 0.1 min)
+            Uruchom timer (10s)
           </button>
 
-          {/* Zatrzymanie cyklu */}
           <button
-            onClick={stopSchedule}
+            onClick={timer.stop}
             className="bg-red-500 text-white px-6 py-2 rounded"
           >
-            Zatrzymaj cykl
+            Zatrzymaj timer
           </button>
+
+          <button
+            onClick={timer.reset}
+            className="bg-gray-500 text-white px-6 py-2 rounded"
+          >
+            Reset timer
+          </button>
+
+          {/* 🔄 cykliczny */}
+          <button
+            onClick={() => setIsCycle((prev) => !prev)}
+            className={`px-6 py-2 rounded ${
+              isCycle ? "bg-purple-500 text-white" : "bg-purple-200 text-black"
+            }`}
+          >
+            {isCycle ? "Cykl ON" : "Cykl OFF"}
+          </button>
+
+          <p>Pozostało: {Math.ceil(timer.time / 1000)}s</p>
         </div>
       )}
     </div>

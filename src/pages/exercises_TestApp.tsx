@@ -1,6 +1,6 @@
-import { useNotifications } from "./hooks/useNotifications";
-import { useScheduler } from "./hooks/useScheduler";
-import { type AppNotification } from "./hooks/useNotifications";
+import { useNotifications } from "../hooks/useNotifications";
+import { useScheduler } from "../hooks/useScheduler";
+import { type AppNotification } from "../hooks/useNotifications";
 
 export default function TestApp() {
   // 1. Pobieramy narzędzia do powiadomień

@@ -10,8 +10,9 @@ import {
 } from "@/components/ui/sidebar";
 import { useSidebar } from "@/components/ui/sidebar.utils";
 import { routes } from "@/lib/routes-config";
-import { SeparatorVertical, Settings } from "lucide-react";
+import { SeparatorVertical, Settings, X } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const exercises = routes.filter((r) => r.prefix === "exercises");
 const other = routes.filter((r) => r.prefix === "other");
@@ -28,14 +29,24 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="offcanvas" variant="floating" className="z-50">
       {/* Nagłówek bocznego panelu*/}
-      <SidebarHeader className="py-6 flex items-center justify-center">
+      <SidebarHeader className="py-6 flex items-center justify-center relative">
         <Link
           to={"/"}
           onClick={handleMenuItemClick}
-          className="flex w-2/4 justify-center"
+          className="flex justify-center"
         >
           <span className="text-2xl font-bold tracking-tight">{"Logo"}</span>
         </Link>
+        {/* Close button w rogu */}
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={handleMenuItemClick}
+          className="absolute top-1 right-4 h-8 w-8"
+        >
+          <X className="h-5 w-5" />
+          <span className="sr-only">Close menu</span>
+        </Button>
       </SidebarHeader>
 
       {/* Główna zawartość bocznego panelu  */}

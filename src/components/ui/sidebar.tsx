@@ -218,14 +218,14 @@ function Sidebar({
         <button
           type="button"
           aria-label="Close Sidebar"
-          className="fixed inset-0 z-40 bg-black/20"
+          className="fixed inset-0 z-[60] bg-transparent"
           onClick={() => setOpen(false)}
         />
       )}
       <div
         data-slot="sidebar-container"
         className={cn(
-          "fixed inset-y-0 z-50 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex",
+          "fixed inset-y-0 z-[70] hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex",
           side === "left"
             ? "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]"
             : "right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]",

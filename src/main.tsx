@@ -7,7 +7,6 @@ import { AppSidebar } from "./components/app-sidebar.tsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Suspense } from "react";
 import { routes } from "./lib/routes-config";
-import { ExampleNotification } from "./components/exampleNotification"; // <--- import naszego komponentu
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -18,9 +17,6 @@ createRoot(document.getElementById("root")!).render(
           <AppSidebar />
 
           <main className="p-0">
-            {/*Komponent powiadomień działa w całej apce */}
-            <ExampleNotification />
-
             <Suspense
               fallback={
                 <div className="flex items-center justify-center p-10">

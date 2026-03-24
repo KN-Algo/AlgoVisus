@@ -1,10 +1,9 @@
 import { useState } from "react";
 import reactLogo from "../assets/react.svg";
 import appLogo from "/favicon.svg";
-import EyeExercise from "../components/ui/eye-exercise.tsx";
-import { ExampleTimerComponent } from "../components/exampleTimer.tsx";
-import PWABadge from "../PWABadge.tsx";
-import { Button } from "../components/ui/button.tsx";
+import PWABadge from "@/PWABadge.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import { ExampleTimerComponent } from "@/components/exampleTimer.tsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -57,7 +56,6 @@ function App() {
         </p>
       </div>
       <p>Click on the Vite and React logos to learn more</p>
-      <div> <EyeExercise /> </div>
       <PWABadge />
     </div>
   );

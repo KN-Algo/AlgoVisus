@@ -1,10 +1,10 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
+import reactLogo from "../assets/react.svg";
 import appLogo from "/favicon.svg";
-import PWABadge from "./PWABadge.tsx";
-import { Button } from "./components/ui/button.tsx";
-import EyeExercise from "./components/ui/eye-exercise.tsx";
-import { ExampleTimerComponent } from "./components/exampleTimer.tsx";
+import EyeExercise from "../components/ui/eye-exercise.tsx";
+import { ExampleTimerComponent } from "../components/exampleTimer.tsx";
+import PWABadge from "../PWABadge.tsx";
+import { Button } from "../components/ui/button.tsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -15,6 +15,7 @@ function App() {
         <a
           href="https://vite.dev"
           target="_blank"
+          rel="noopener noreferrer"
           className="font-medium text-[#646cff] no-underline hover:text-[#535bf2] light:hover:text-[#747bff]"
         >
           <img
@@ -26,6 +27,7 @@ function App() {
         <a
           href="https://react.dev"
           target="_blank"
+          rel="noopener noreferrer"
           className="font-medium text-[#646cff] no-underline hover:text-[#535bf2] light:hover:text-[#747bff]"
         >
           <img

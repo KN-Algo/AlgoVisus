@@ -9,7 +9,7 @@ export type Time = {
   second: number;
 };
 
-function TimeToMilSec({ hour, minut, second }: Time): number {
+export function TimeToMilSec({ hour, minut, second }: Time): number {
   minut += hour * 60;
   second += minut * 60;
   const m_second: number = second * SEC_IN_MSEC;

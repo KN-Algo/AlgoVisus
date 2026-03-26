@@ -152,12 +152,12 @@ export function AppSidebar() {
                           `group/item flex h-full w-full items-center gap-3 rounded-xl px-3.5 text-sm transition-all duration-200 ${
                             isActive
                               ? "bg-gradient-to-r from-cyan-100 to-blue-100 text-cyan-900 shadow-sm"
-                              : "text-slate-700 hover:bg-slate-100/90 hover:text-slate-900"
+                              : "text-black hover:bg-slate-100/90 hover:text-black"
                           }`
                         }
                       >
-                        <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-white/80 ring-1 ring-slate-200/70">
-                          <Icon className="h-4.5 w-4.5" />
+                        <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-slate-200/70 border border-slate-400">
+                          <Icon className="h-4.5 w-4.5 text-black" />
                         </span>
                         <span className="truncate font-medium">
                           {route.name}
@@ -192,12 +192,12 @@ export function AppSidebar() {
                           `group/item flex h-full w-full items-center gap-3 rounded-xl px-3.5 text-sm transition-all duration-200 ${
                             isActive
                               ? "bg-gradient-to-r from-cyan-100 to-blue-100 text-cyan-900 shadow-sm"
-                              : "text-slate-700 hover:bg-slate-100/90 hover:text-slate-900"
+                              : "text-black hover:bg-slate-100/90 hover:text-black"
                           }`
                         }
                       >
-                        <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-white/80 ring-1 ring-slate-200/70">
-                          <Icon className="h-4.5 w-4.5" />
+                        <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-slate-200/70 border border-slate-400">
+                          <Icon className="h-4.5 w-4.5 text-black" />
                         </span>
                         <span className="truncate font-medium">
                           {route.name}
@@ -231,12 +231,12 @@ export function AppSidebar() {
                         `flex h-full w-full items-center gap-3 rounded-xl px-3.5 text-sm transition-all duration-200 ${
                           isActive
                             ? "bg-gradient-to-r from-cyan-100 to-blue-100 text-cyan-900 shadow-sm"
-                            : "text-slate-700 hover:bg-slate-100/90 hover:text-slate-900"
+                            : "text-black hover:bg-slate-100/90 hover:text-black"
                         }`
                       }
                     >
-                      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-white/80 ring-1 ring-slate-200/70">
-                        <Icon className="h-4.5 w-4.5" />
+                      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-slate-200/70 border border-slate-400">
+                        <Icon className="h-4.5 w-4.5 text-black" />
                       </span>
                       <span className="truncate font-medium">{route.name}</span>
                     </NavLink>

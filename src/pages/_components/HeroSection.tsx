@@ -1,6 +1,10 @@
 import { GradientButton } from "@/components/ui/gradient-button";
+import { useSidebar } from "@/components/ui/sidebar.utils";
 
 export function HeroSection() {
+  const { open, openMobile } = useSidebar();
+  const isSidebarOpen = open || openMobile;
+
   return (
     <section className="relative w-full min-h-screen overflow-hidden animate-fade-in">
       {/* Base Background - More Color Saturation, Less White */}
@@ -19,11 +23,21 @@ export function HeroSection() {
             className="flex justify-center mb-12 animate-fade-in-up"
             style={{ animationDelay: "100ms", animationFillMode: "backwards" }}
           >
-            <div className="w-24 h-24 md:w-32 md:h-32 rounded-full shadow-2xl overflow-hidden border-4 border-white/50 backdrop-blur-sm hover:scale-110 transition-transform duration-300">
+            <div
+              className={`w-24 h-24 md:w-32 md:h-32 rounded-full shadow-2xl overflow-hidden border-4 backdrop-blur-sm hover:scale-110 transition-all duration-300 ${
+                isSidebarOpen
+                  ? "border-white/85 shadow-[0_0_0_6px_rgba(255,255,255,0.22),0_0_28px_rgba(125,211,252,0.35)]"
+                  : "border-white/50"
+              }`}
+            >
               <img
                 src="/src/assets/images/AlgoVisus_logo.png"
                 alt="AlgoVisus Logo"
-                className="w-full h-full object-cover"
+                className={`w-full h-full object-cover transition-all duration-300 ${
+                  isSidebarOpen
+                    ? "brightness-110 contrast-105 saturate-110"
+                    : "brightness-100"
+                }`}
               />
             </div>
           </div>

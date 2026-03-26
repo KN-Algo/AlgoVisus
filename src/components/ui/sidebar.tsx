@@ -218,7 +218,12 @@ function Sidebar({
         <button
           type="button"
           aria-label="Close Sidebar"
-          className="fixed inset-0 z-[60] bg-transparent"
+          className={cn(
+            "fixed inset-y-0 z-[60] bg-slate-950/35 transition-colors duration-300",
+            side === "left"
+              ? "left-[var(--sidebar-width)] right-0"
+              : "left-0 right-[var(--sidebar-width)]",
+          )}
           onClick={() => setOpen(false)}
         />
       )}

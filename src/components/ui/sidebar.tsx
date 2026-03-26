@@ -175,6 +175,7 @@ function Sidebar({
           showCloseButton={false}
           className={cn(
             "bg-sidebar text-sidebar-foreground w-(--sidebar-width) p-0",
+            className,
           )}
           style={
             {
@@ -218,7 +219,9 @@ function Sidebar({
         <button
           type="button"
           aria-label="Close Sidebar"
-          className="fixed inset-0 z-[60] bg-transparent"
+          className={cn(
+            "fixed inset-0 z-[60] bg-slate-950/35 animate-in fade-in-0 duration-200",
+          )}
           onClick={() => setOpen(false)}
         />
       )}

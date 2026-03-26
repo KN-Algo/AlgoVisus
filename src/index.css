@@ -122,6 +122,15 @@
   }
 }
 
+@keyframes hero-shimmer {
+  0% {
+    transform: translateX(-110%);
+  }
+  100% {
+    transform: translateX(110%);
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -157,5 +166,9 @@
 @layer utilities {
   .animate-gradient-flow {
     animation: gradient-flow 3s linear infinite;
+  }
+
+  .animate-shimmer {
+    animation: hero-shimmer 4.8s ease-in-out infinite;
   }
 }

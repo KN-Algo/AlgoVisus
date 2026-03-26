@@ -12,8 +12,8 @@ import { useSidebar } from "@/components/ui/sidebar.utils";
 import { routes } from "@/lib/routes-config";
 import {
   Eye,
+  Infinity as InfinityIcon,
   Info,
-  Orbit,
   Settings2,
   Sparkles,
   TimerReset,
@@ -33,7 +33,7 @@ const getRouteIcon = (name: string, prefix: string | null) => {
 
   if (prefix === "exercises") {
     if (normalized.includes("osem") || normalized.includes("ósem")) {
-      return Orbit;
+      return InfinityIcon;
     }
     if (normalized.includes("far") || normalized.includes("gaze")) {
       return Eye;
@@ -79,12 +79,21 @@ export function AppSidebar() {
         .app-sidebar-shell {
           background: rgba(255, 255, 255, 0.88);
           backdrop-filter: blur(10px);
+          outline: none !important;
+          border: none !important;
+        }
+        .app-sidebar-shell * {
+          outline: none;
+        }
+        .app-sidebar-shell > div[data-sidebar="sidebar"] {
+          border: none !important;
+          box-shadow: none !important;
         }
       `}</style>
       <Sidebar
         collapsible="offcanvas"
         variant="floating"
-        className="z-50 app-sidebar-shell"
+        className="z-[70] app-sidebar-shell border-none"
       >
         {/* Nagłówek bocznego panelu */}
         <SidebarHeader className="relative overflow-hidden p-4 border-b border-slate-200/80 bg-gradient-to-br from-cyan-100/70 via-sky-50/90 to-teal-100/60">

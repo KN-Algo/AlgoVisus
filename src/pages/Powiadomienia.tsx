@@ -1,6 +1,7 @@
-import { Bell } from "lucide-react";
+import { Bell, SquareArrowLeft } from "lucide-react";
 import { useState } from "react";
-//  SquareArrowLeft --> zaimportowac wyzej 
+import { Link } from "react-router-dom";
+
 
 interface UstawieniaPowiadomien {
     id: string;
@@ -29,9 +30,17 @@ function Powiadomienia() {
     };
 
     return (
-        <div className="min-h-screen w-full bg-gray-100 flex flex-col items-center p-10">
+        <div className="min-h-screen w-full bg-gray-100 flex flex-col items-center p-10 relative">
 
-            {/* Nagłówek z przyciskiem powrotu -- dodac przycisk -> nie działa */}
+            {/* Przycisk powrotu */}
+            <Link
+                    to="/Ustawienia"
+                    className="absolute left-6 top-10 p-3 bg-white text-black rounded-full shadow-lg active:scale-95 transition-all hover:bg-gray-50"
+                    >
+                    <SquareArrowLeft size={20} />
+            </Link>
+
+            {/* Nagłówek strony */}
             <div className="w-full max-w-md flex items-center mb-8">
                 <h1 className="text-4xl font-bold text-gray-800">Powiadomienia</h1>
             </div>

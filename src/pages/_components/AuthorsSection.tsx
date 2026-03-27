@@ -51,20 +51,30 @@ export function AuthorsSection() {
                 animationFillMode: "backwards",
               }}
             >
-              <div className="w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-lg overflow-hidden shadow-lg hover:scale-110 transition-transform duration-300 flex items-center justify-center bg-white/10">
+              <a
+                href="https://www.algo.pwr.edu.pl"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-lg overflow-hidden shadow-lg hover:scale-110 transition-transform duration-300 flex items-center justify-center bg-white/10"
+              >
                 <img
                   src={KnAlgoLogo}
                   alt="KN Algo Logo"
                   className="w-full h-full object-contain p-2"
                 />
-              </div>
-              <div className="w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-lg overflow-hidden shadow-lg hover:scale-110 transition-transform duration-300 flex items-center justify-center bg-white/10">
+              </a>
+              <a
+                href="http://visus.pwr.wroc.pl"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-lg overflow-hidden shadow-lg hover:scale-110 transition-transform duration-300 flex items-center justify-center bg-white/10"
+              >
                 <img
                   src={KnVisusLogo}
                   alt="KN Visus Logo"
                   className="w-full h-full object-contain p-2"
                 />
-              </div>
+              </a>
             </div>
           </div>
 

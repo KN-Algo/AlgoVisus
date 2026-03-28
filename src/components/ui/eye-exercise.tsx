@@ -14,6 +14,7 @@ export default function EyeExercise({ forceExercise }: { forceExercise?: Exercis
   const [exerciseTime, setExerciseTime] = useState({ hour: 0, minut: 0, second: 20 });
   const { time, start, reset, stop } = useTimer(exerciseTime, 'eye_exercise_timer');
   const [restartCount, setRestartCount] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (forceExercise) {
@@ -58,21 +59,19 @@ export default function EyeExercise({ forceExercise }: { forceExercise?: Exercis
   useEffect(() => {
     if (currentView === 'exercise' && selectedExercise === 'osemka' && isPaused === false) {
       const animateBall = () => {
-        tRef.current += 0.01;
-
-        const A = 1050; 
-        const B = 850; 
-
-        const x = A * Math.sin(tRef.current);
-        const y = B * Math.sin(tRef.current) * Math.cos(tRef.current);
-
-        if (ballRef.current) {
-          ballRef.current.style.transform = `translate(${x}px, ${y}px)`;
-        }
-
-        requestRef.current = requestAnimationFrame(animateBall);
+        tRef.current += 0.0125;
+        if (containerRef.current && ballRef.current) {
+          const cWidth = containerRef.current.clientWidth;
+          const cHeight = containerRef.current.clientHeight;
+          const ballSize = ballRef.current.offsetWidth;
+          const A = (cWidth / 2) - (ballSize / 2) - 10; 
+          const B = cHeight - ballSize - 10; 
+          const x = A * Math.sin(tRef.current);
+          const y = B * Math.sin(tRef.current) * Math.cos(tRef.current);
+          ballRef.current.style.transform = `translate(${x}px, ${y}px)`;}
+        
+          requestRef.current = requestAnimationFrame(animateBall);
       };
-
       requestRef.current = requestAnimationFrame(animateBall);
     }
     else if (selectedExercise === 'oddech' && isPaused === false && currentView === 'exercise') {
@@ -82,21 +81,29 @@ export default function EyeExercise({ forceExercise }: { forceExercise?: Exercis
           const cycleTime = elapsed % 16000;
           let currentPhase = 0;
           let scale = 1;
+          let maxScale = 2;
           let text = "";
+          if (containerRef.current && breathBallRef.current) {
+          const cHeight = containerRef.current.clientHeight;
+          const cWidth = containerRef.current.clientWidth;
+          const minDimension = Math.min(cHeight, cWidth);
+          const baseSize = breathBallRef.current.offsetWidth; 
+          maxScale = (minDimension - 20) / baseSize;
+          maxScale = Math.max(1.1, Math.min(maxScale, 2.5));}
           if (cycleTime < 4000) {
             currentPhase = 0;
             text = "WDECH...";
-            scale = 1 + (cycleTime / 4000);
+            scale = 1 + (cycleTime / 4000) * (maxScale - 1);
           } 
           else if (cycleTime < 8000) {
             currentPhase = 1;
             text = "ZATRZYMAJ...";
-            scale = 2; 
+            scale = maxScale; 
           } 
           else if (cycleTime < 12000) {
             currentPhase = 2;
             text = "WYDECH...";
-            scale = 2 - ((cycleTime - 8000) / 4000);
+            scale = maxScale - ((cycleTime - 8000) / 4000) * (maxScale - 1);
           } 
           else {
             currentPhase = 3;
@@ -181,7 +188,7 @@ export default function EyeExercise({ forceExercise }: { forceExercise?: Exercis
           <h2 className="text-3xl font-bold mb-1">
             Trwa ćwiczenie: {selectedExercise === 'osemka' ? 'Ósemka' : 'Oddech'}
           </h2>
-          <div className="w-full h-9/10 border-2 border-dashed border-gray-500 m-3 flex justify-center items-center">
+          <div ref={containerRef} className="w-full h-9/10 border-2 border-dashed border-gray-500 m-3 flex justify-center items-center">
             
             {selectedExercise === 'osemka' && (
               time === 0 ? (
@@ -197,7 +204,8 @@ export default function EyeExercise({ forceExercise }: { forceExercise?: Exercis
                 <div
                   key="ball"
                   ref={ballRef}
-                  className="w-16 h-16 bg-teal-400 rounded-full shadow-[0_0_15px_rgba(45,212,191,0.6)]"
+                  className="bg-teal-400 rounded-full shadow-[0_0_15px_rgba(45,212,191,0.6)]"
+                  style={{width: 'clamp(8px, 5vw, 64px)', height: 'clamp(8px, 5vw, 64px)'}}
                 ></div>
               )
             )}
@@ -220,8 +228,8 @@ export default function EyeExercise({ forceExercise }: { forceExercise?: Exercis
                     </h3>
                     <div
                       ref={breathBallRef}
-                      className="w-40 h-40 rounded-full bg-blue-500/70 shadow-[0_0_50px_rgba(59,130,246,0.6)]"
-                      style={{ willChange: 'transform' }}
+                      className="rounded-full bg-blue-500/70 shadow-[0_0_50px_rgba(59,130,246,0.6)]"
+                      style={{willChange: 'transform', width: 'clamp(30px, 20vmin, 160px)', height: 'clamp(30px, 20vmin, 160px)'}}
                     ></div>
                  </div>
                )

@@ -95,19 +95,7 @@ function Drzewko() {
   return (
     <div className="min-h-screen w-full px-8 text-center bg-white flex flex-col items-center pt-6">
 
-      {permission !== "granted" ? (
-        <div className="text-center">
-          <p className="text-lg">
-            Aby otrzymywać powiadomienia, proszę zezwolić na powiadomienia.
-          </p>
-          <button
-            onClick={requestPermission}
-            className="bg-blue-500 text-white px-6 py-2 rounded-md mt-4"
-          >
-            Zezwól na powiadomienia
-          </button>
-        </div>
-      ) : !exerciseMenu ? (
+      {!exerciseMenu ? (
         /* --- WIDOK 1: INSTRUKCJA --- */
         <>
           <h1 className="text-5xl font-bold mb-16">Drzewko</h1>
@@ -122,12 +110,24 @@ function Drzewko() {
           </div>
 
           <button
-            onClick={() => setExerciseMenu(true)}
+            onClick={() => {setExerciseMenu(true); timer.reset(); setExerciseStarted(false); setExercisePaused(false); requestPermission();}}
             className="bg-blue-500 text-white px-6 py-2 rounded-md mt-12"
           >
             Przejdź do ćwiczenia
           </button>
         </>
+      ) : permission != "granted" ? (
+        <div className="text-center">
+          <p className="text-lg">
+            Aby otrzymywać powiadomienia, proszę zezwolić na powiadomienia.
+          </p>
+          <button
+            onClick={requestPermission}
+            className="bg-blue-500 text-white px-6 py-2 rounded-md mt-4"
+          >
+            Zezwól na powiadomienia
+          </button>
+        </div>
       ) : (
         /* --- WIDOK 2: ĆWICZENIE --- */
         <div className="w-full h-full">

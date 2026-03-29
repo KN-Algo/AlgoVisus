@@ -20,10 +20,10 @@ function Powiadomienia() {
         const savedCookies = Cookies.get(COOKIE_KEY);
 
         const defaultSettings = [
-            { id: "1", title: "POWIADOMIENIE1", active: true, icon: <Bell size={17} /> },
-            { id: "2", title: "POWIADOMIENIE2", active: true, icon: <Bell size={17} /> },
-            { id: "3", title: "POWIADOMIENIE3", active: true, icon: <Bell size={17} /> },
-            { id: "4", title: "POWIADOMIENIE4", active: true, icon: <Bell size={17} /> },
+            { id: "1", title: "Cykliczne powiadomienie ⏰", active: true, icon: <Bell size={17} /> }, // powiadomienie 20-20-20 i inne cwiczenia
+            { id: "2", title: "Czas na przerwę! ☕", active: true, icon: <Bell size={17} /> }, // obecnie testPushAPI
+            { id: "3", title: "Czas na ćwiczenie! 🔵", active: true, icon: <Bell size={17} /> },
+            { id: "4", title: "Zadbaj o nawodnienie! 💧", active: true, icon: <Bell size={17} /> },
         ];
 
 
@@ -50,7 +50,7 @@ function Powiadomienia() {
             item.id === id ? { ...item, active: !item.active } : item
         );
 
-         setSettings(newSettings);
+        setSettings(newSettings);
 
 
         // Zapisywanie uproszczonego obiektu do COOKIES {id, active}

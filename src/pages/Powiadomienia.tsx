@@ -1,6 +1,7 @@
 import { Bell, SquareArrowLeft } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
 
 
 interface UstawieniaPowiadomien {
@@ -10,23 +11,55 @@ interface UstawieniaPowiadomien {
     icon: React.ReactNode;
 }
 
+const COOKIE_KEY = "user_notifications_preferences";
+
 function Powiadomienia() {
 
     // Stan przechowujący wybory użytkownika
-    const [settings, setSettings] = useState<UstawieniaPowiadomien[]>([
-        { id: "1", title: "POWIADOMIENIE1", active: true, icon: <Bell size={17} /> },
-        { id: "2", title: "POWIADOMIENIE2", active: true, icon: <Bell size={17} /> },
-        { id: "3", title: "POWIADOMIENIE3", active: true, icon: <Bell size={17} /> },
-        { id: "4", title: "POWIADOMIENIE4", active: true, icon: <Bell size={17} /> },
-    ]);
+    const [settings, setSettings] = useState<UstawieniaPowiadomien[]>(() => {
+        const savedCookies = Cookies.get(COOKIE_KEY);
 
-    // Funkcja przełączająca stan konkretnego powiadomienia
+        const defaultSettings = [
+            { id: "1", title: "POWIADOMIENIE1", active: true, icon: <Bell size={17} /> },
+            { id: "2", title: "POWIADOMIENIE2", active: true, icon: <Bell size={17} /> },
+            { id: "3", title: "POWIADOMIENIE3", active: true, icon: <Bell size={17} /> },
+            { id: "4", title: "POWIADOMIENIE4", active: true, icon: <Bell size={17} /> },
+        ];
+
+
+        if (savedCookies) {
+            try {
+                const parsed = JSON.parse(savedCookies);
+                // Łączymy ikony z zapisanymi stanami powiadomien
+                return defaultSettings.map(ds => ({
+                    ...ds,
+                    active: parsed[ds.id] ?? ds.active
+                }));
+            } catch (error) {
+                // W przypadku wystąpienia błędu przy cookies, ustawiamy domyśne ustawienia
+                console.error("Błąd podczas odczytywania cookies:", error); // wyswietlenie bledu
+                return defaultSettings;
+            }
+        }
+        return defaultSettings;
+    });
+
+    // Funkcja przełączająca stan konkretnego powiadomienia i zapisująca nowy stan do COOKIES   
     const toggle = (id: string) => {
-        setSettings(prev =>
-            prev.map(item =>
-                item.id === id ? { ...item, active: !item.active } : item
-            )
+        const newSettings = settings.map(item =>
+            item.id === id ? { ...item, active: !item.active } : item
         );
+
+         setSettings(newSettings);
+
+
+        // Zapisywanie uproszczonego obiektu do COOKIES {id, active}
+        const configToSave = newSettings.reduce((acc, curr) => ({
+            ...acc, [curr.id]: curr.active
+        }), {});
+
+        // Po 365 dniach COOKIES zostaje usuniete
+        Cookies.set(COOKIE_KEY, JSON.stringify(configToSave), { expires: 365 });
     };
 
     return (
@@ -34,10 +67,10 @@ function Powiadomienia() {
 
             {/* Przycisk powrotu */}
             <Link
-                    to="/Ustawienia"
-                    className="absolute left-6 top-10 p-3 bg-white text-black rounded-full shadow-lg active:scale-95 transition-all hover:bg-gray-50"
-                    >
-                    <SquareArrowLeft size={20} />
+                to="/Ustawienia"
+                className="absolute left-6 top-10 p-3 bg-white text-black rounded-full shadow-lg active:scale-95 transition-all hover:bg-gray-50"
+            >
+                <SquareArrowLeft size={20} />
             </Link>
 
             {/* Nagłówek strony */}

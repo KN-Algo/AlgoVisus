@@ -4,6 +4,10 @@ import { useTimeNotification } from "../hooks/useTimeNotification";
 import { type AppNotification } from "../hooks/useNotifications";
 
 export default function TestPushApi() {
+  const [isBlocked] = useState<boolean>(() => {
+    const saved = localStorage.getItem("testPushApiBlock");
+    return saved !== null ? JSON.parse(saved) : false;
+  });
   const { permission, requestPermission, sendNotification } =
     useNotifications();
 
@@ -24,6 +28,7 @@ export default function TestPushApi() {
 
   useEffect(() => {
     if (timer.time === 0) {
+      if (isBlocked) return;
       sendNotification(testNotification);
 
       if (isCycle) {
@@ -31,7 +36,17 @@ export default function TestPushApi() {
         timer.start();
       }
     }
-  }, [timer.time, isCycle]);
+  }, [timer.time, isCycle, isBlocked]);
+
+  if (isBlocked) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-xl text-red-500 font-semibold">
+          Ten moduł jest zablokowany w ustawieniach
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 p-10 flex flex-col items-center gap-4">

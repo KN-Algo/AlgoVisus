@@ -3,19 +3,21 @@ import { useNotifications } from "../hooks/useNotifications";
 import { useTimeNotification } from "../hooks/useTimeNotification";
 import { type AppNotification } from "../hooks/useNotifications";
 import drzewoVideo from "../assets/videos/Drzewo.mp4";
+import notifySound from "../assets/sounds/notify.mp3";
 
 function Drzewko() {
     const [exerciseMenu, setExerciseMenu] = useState(false);
     const [exerciseStarted, setExerciseStarted] = useState(false);
     const [exercisePaused, setExercisePaused] = useState(false);
     const videoRef = useRef<HTMLVideoElement | null>(null);
+    const audioRef = useRef<HTMLAudioElement | null>(null);
 
     const { sendNotification } =
         useNotifications();
 
 
     const testNotification: AppNotification = {
-      title: "Czas na przerwę! ☕",
+      title: "Ćwiczenie Drzewko zakończone! 🌳",
       options: {
         body: "To powiadomienie wysyła się z ćwizczenia Drzewko, które właśnie wykonujesz.",
       },
@@ -24,8 +26,8 @@ function Drzewko() {
 
     const timer = useTimeNotification(sendNotification, testNotification, {
       hour: 0,
-      minut: 0,
-      second: 5,
+      minut: 2,
+      second: 0,
     });
     const isTimerFinished = timer.time <= 0;
 
@@ -50,6 +52,17 @@ function Drzewko() {
         video.currentTime = 0;
       }
     }, [exerciseMenu, exerciseStarted, exercisePaused, timer.time]);
+
+    useEffect(() => {
+      if (exerciseStarted && isTimerFinished) {
+        const audio = audioRef.current;
+        if (audio) {
+          audio.currentTime = 0;
+          audio.play().catch(() => {
+          });
+        }
+      }
+    }, [exerciseStarted, isTimerFinished]);
     
 
   return (
@@ -95,6 +108,8 @@ function Drzewko() {
                     Twoja przeglądarka nie wspiera wideo.
                 </video>
             </div>
+
+            <audio ref={audioRef} src={notifySound} />
 
             {!exerciseStarted ? (
 

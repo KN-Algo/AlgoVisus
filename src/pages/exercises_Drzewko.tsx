@@ -1,12 +1,14 @@
-import {  useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNotifications } from "../hooks/useNotifications";
 import { useTimeNotification } from "../hooks/useTimeNotification";
 import { type AppNotification } from "../hooks/useNotifications";
+import drzewoVideo from "../assets/videos/Drzewo.mp4";
 
 function Drzewko() {
     const [exerciseMenu, setExerciseMenu] = useState(false);
     const [exerciseStarted, setExerciseStarted] = useState(false);
     const [exercisePaused, setExercisePaused] = useState(false);
+    const videoRef = useRef<HTMLVideoElement | null>(null);
 
     const { sendNotification } =
         useNotifications();
@@ -23,12 +25,35 @@ function Drzewko() {
     const timer = useTimeNotification(sendNotification, testNotification, {
       hour: 0,
       minut: 0,
-      second: 10,
+      second: 5,
     });
+    const isTimerFinished = timer.time <= 0;
+
+    useEffect(() => {
+      const video = videoRef.current;
+      if (!video) {
+        return;
+      }
+
+      if (exerciseMenu && exerciseStarted && !exercisePaused && !isTimerFinished) {
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+          });
+        }
+        return;
+      }
+
+      video.pause();
+
+      if (!exerciseStarted) {
+        video.currentTime = 0;
+      }
+    }, [exerciseMenu, exerciseStarted, exercisePaused, timer.time]);
     
 
   return (
-    <div className="min-h-screen w-full px-8 text-center bg-white flex flex-col items-center pt-32">
+    <div className="min-h-screen w-full px-8 text-center bg-white flex flex-col items-center pt-6">
       
       {!exerciseMenu ? (
         /* --- WIDOK 1: INSTRUKCJA --- */
@@ -48,18 +73,27 @@ function Drzewko() {
             onClick={() => setExerciseMenu(true)}
             className="bg-blue-500 text-white px-6 py-2 rounded-md mt-12"
           >
-            Rozpocznij ćwiczenie
+            Przejdź do ćwiczenia
           </button>
         </>
       ) : (
         /* --- WIDOK 2: ĆWICZENIE --- */
         <div className="w-full h-full">
           
-            <h2 className="text-3xl font-bold mb-3">Ćwiczenie</h2>
-            <p className=" mb-10">Pozostało: {Math.ceil(timer.time / 1000)}s</p>
+            <p className=" mb-5 text-lg font-semibold">Pozostało: {Math.ceil(timer.time / 1000)}s</p>
             
-            <div className="p-10 border-2 border-dashed border-gray-200 rounded-xl mb-10">
-                Miejsce na Twoją implementację ćwiczenia...
+            <div className="mb-15 relative mx-auto w-full aspect-square max-w-md bg-black rounded-2xl shadow-2xl overflow-hidden border-4 border-white">
+                <video 
+                    ref={videoRef}
+                className="w-full h-full object-contain"
+                    loop         
+                    muted        
+                    playsInline  
+                  preload="metadata"
+                  src={drzewoVideo}
+                >
+                    Twoja przeglądarka nie wspiera wideo.
+                </video>
             </div>
 
             {!exerciseStarted ? (
@@ -68,27 +102,27 @@ function Drzewko() {
                 onClick={() => { timer.start(); setExerciseStarted(true); }}
                 className="bg-blue-500 text-white px-6 py-2 rounded"
                 >
-                Uruchom timer (10s)
+                Rozpocznij
             </button>
             ) : (
 
             <>
 
-                {!exercisePaused ? (
-                    <button
-                        onClick={() => { timer.stop(); setExercisePaused(true); }}
-                        className="bg-blue-500 text-white px-6 py-2 rounded mr-4"
-                        >
-                        Zatrzymaj timer
-                    </button>
-                ) : (
+              {!exercisePaused && !isTimerFinished ? (
+                <button
+                  onClick={() => { timer.stop(); setExercisePaused(true); }}
+                  className="bg-blue-500 text-white px-6 py-2 rounded mr-4"
+                  >
+                  Pauza
+                </button>
+              ) : !isTimerFinished ? (
                     <button
                         onClick={() => { timer.start(); setExercisePaused(false); }}
                         className="bg-blue-500 text-white px-6 py-2 rounded mr-4"
                         >
-                        Wznów timer
+                        Wznów
                     </button>
-                )}
+              ) : null}
 
                     <button
                         onClick={() => { timer.reset(); setExerciseStarted(false); }}
@@ -100,7 +134,7 @@ function Drzewko() {
 
             )}
 
-            <div className="flex flex-col gap-4 items-center mb-10 mt-6">
+            <div className="flex flex-col gap-2 items-center mb-5 mt-3">
                 <button 
                 onClick={() => {
                     setExerciseMenu(false);

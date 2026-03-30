@@ -17,7 +17,13 @@ createRoot(document.getElementById("root")!).render(
           <AppSidebar />
 
           <main className="p-0">
-            <Suspense fallback={null}>
+            <Suspense
+              fallback={
+                <div className="flex items-center justify-center p-10">
+                  Ładowanie...
+                </div>
+              }
+            >
               <Routes>
                 {routes.map(({ path, component: Element }) => (
                   <Route key={path} path={path} element={<Element />} />

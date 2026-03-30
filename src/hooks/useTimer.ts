@@ -3,7 +3,7 @@ import { subscribe } from "./globalClock";
 
 const SEC_IN_MSEC = 1000;
 
-type Time = {
+export type Time = {
   hour: number;
   minut: number;
   second: number;

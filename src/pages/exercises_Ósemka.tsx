@@ -1,9 +1,6 @@
-function Ósemka() {
-  return (
-    <div className="min-h-screen w-full px-8 text-center bg-gray-400 flex flex-col justify-center">
-      <h1 className="text-5xl font-bold">Ósemka</h1>
-    </div>
-  );
+import EyeExercise from "../components/ui/eye-exercise.tsx";
+export default function OsemkaPage() {
+  return <EyeExercise forceExercise="osemka" />;
 }
 
 export default Ósemka;

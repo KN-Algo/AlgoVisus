@@ -86,7 +86,7 @@ export function AuthorsSection() {
             {authors.map((author, index) => (
               <div
                 key={author.id}
-                className="animate-fade-in-up"
+                className="h-full animate-fade-in-up"
                 style={{
                   animationDelay: `${400 + index * 80}ms`,
                   animationFillMode: "backwards",

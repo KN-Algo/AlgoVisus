@@ -13,14 +13,14 @@ export function ExampleTimerComponent() {
 
   useEffect(() => {
     start();
-  }, []);
+  }, [start]);
 
   useEffect(() => {
     if (time == 0) {
       reset();
       start();
     }
-  }, [time]);
+  }, [time, reset, start]);
 
   return (
     <div>

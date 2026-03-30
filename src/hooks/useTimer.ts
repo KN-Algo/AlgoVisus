@@ -56,14 +56,14 @@ export function useTimer({ hour, minut, second }: Time, storageKey: string) {
     }
 
     if (time !== countTime) localStorage.setItem(storageKey, time.toString());
-  }, [time]);
+  }, [time, countTime, storageKey]);
 
   useEffect(() => {
     const savedTime = localStorage.getItem(storageKey);
     if (savedTime) {
       setTime(Number(savedTime));
     }
-  }, []);
+  }, [storageKey]);
 
   return { time, start, stop, reset };
 }

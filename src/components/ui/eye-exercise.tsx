@@ -318,10 +318,10 @@ export default function EyeExercise({
                   </Button>
                 </div>
               ) : (
-                <div className="relative flex h-full w-full flex-col items-center justify-center">
+                <>
                   <h3
                     ref={breathTextRef}
-                    className="pointer-events-none absolute inset-x-0 top-4 z-10 px-4 text-center text-3xl font-black text-blue-200 md:top-6 md:text-4xl"
+                    className="pointer-events-none absolute inset-x-0 top-5 z-10 px-4 text-center text-3xl font-black text-blue-200 md:top-6 md:text-4xl"
                   >
                     WDECH
                   </h3>
@@ -345,7 +345,7 @@ export default function EyeExercise({
                       ></div>
                     </div>
                   </div>
-                </div>
+                </>
               ))}
           </div>
 

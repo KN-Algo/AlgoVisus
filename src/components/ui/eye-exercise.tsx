@@ -53,6 +53,7 @@ export default function EyeExercise({
     setIsPaused(false);
     startTimeRef.current = null;
     lastPhaseRef.current = -1;
+    breathElapsedRef.current = 0;
     if (exerciseName === "osemka") {
       setExerciseTime({ hour: 0, minut: 0, second: 20 });
     } else if (exerciseName === "oddech") {
@@ -76,6 +77,7 @@ export default function EyeExercise({
   const breathTextRef = useRef<HTMLHeadingElement>(null);
   const startTimeRef = useRef<number | null>(null);
   const lastPhaseRef = useRef<number>(-1);
+  const breathElapsedRef = useRef<number>(0);
   const isEmbedded = mode === "embedded";
   useEffect(() => {
     if (
@@ -105,8 +107,11 @@ export default function EyeExercise({
       currentView === "exercise"
     ) {
       const animateBreath = (timestamp: number) => {
-        if (!startTimeRef.current) startTimeRef.current = timestamp;
+        if (startTimeRef.current === null) {
+          startTimeRef.current = timestamp - breathElapsedRef.current;
+        }
         const elapsed = timestamp - startTimeRef.current;
+        breathElapsedRef.current = elapsed;
         const cycleTime = elapsed % 16000;
         let currentPhase = 0;
         let scale = 1;
@@ -358,6 +363,14 @@ export default function EyeExercise({
                   setIsPaused(false);
                   start();
                 } else {
+                  if (
+                    selectedExercise === "oddech" &&
+                    startTimeRef.current !== null
+                  ) {
+                    breathElapsedRef.current =
+                      performance.now() - startTimeRef.current;
+                    startTimeRef.current = null;
+                  }
                   stop();
                   setIsPaused(true);
                 }

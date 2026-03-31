@@ -56,6 +56,10 @@ export default function EyeAccommodation() {
     };
 
 
+    // PROGRES 
+    const progress = ((10 - timeLeft) / 10) * 100; // progres w procentach
+    const totalPhases = maxCycles * 2; // liczba wszystkich faz
+    const currentPhase = (cycle - 1) * 2 + (status === "near" ? 1 : 2); // numer aktualnej fazy
 
     return (
 
@@ -101,6 +105,32 @@ export default function EyeAccommodation() {
                             </div>
                         </div>
                     </div>
+
+
+                        {/* PRZEBIEG TRENINGU */}
+                        <h2 className="text-gray-900 font-bold mb-4">
+                            Przebieg treningu
+                        </h2>
+                        <div className="space-y-4 text-sm text-gray-700">
+                            {/* PUNKT 1*/}
+                            <div className="flex gap-3">
+                                <div className="w-3 h-3 mt-1 rounded-full bg-blue-400 shrink-0" />
+                                <p>Dźwięk A (Blisko): Skup wzrok na punkcie na ekranie. Poczekaj aż obraz będzie idealnie ostry.</p>
+                            </div>
+                            
+                            {/* PUNKT 2*/}
+                            <div className="flex gap-3">
+                                <div className="w-3 h-3 mt-1 rounded-full bg-emerald-500 shrink-0" />
+                                <p>Dźwięk B (Daleko): Przenieś wzrok na obiekt za oknem. Poczekaj aż obraz „skoczy" i stanie się wyraźny.</p>
+                            </div>
+
+                            {/* PUNKT 3*/}
+                            <div className="flex gap-3">
+                                <span>🔁</span>
+                                <p>Zmiana następuje co 10 sekund. Wykonasz 6 powtórzeń (łącznie 2 minuty).</p>
+                            </div>
+                        </div>
+                    
 
                     {/* PRZYCISCKI ROZPOCZYNIAJĄCY I KOŃCZĄCY TRENING */}
                     <div className="flex gap-4">

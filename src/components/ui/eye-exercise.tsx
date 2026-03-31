@@ -1,44 +1,60 @@
-import { useState, useEffect, useRef } from 'react';
-import { useTimer } from '../../hooks/useTimer';
+import { useState, useEffect, useRef } from "react";
+import { useTimer } from "../../hooks/useTimer";
 import { Button } from "./button";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
-type ExerciseType = 'osemka' | 'oddech';
-type ViewState = 'start' | 'selection' | 'exercise';
+type ExerciseType = "osemka" | "oddech";
+type ViewState = "start" | "selection" | "exercise";
+type ExerciseMode = "overlay" | "embedded";
 
-export default function EyeExercise({ forceExercise }: { forceExercise?: ExerciseType }) {
+interface EyeExerciseProps {
+  forceExercise?: ExerciseType;
+  onExit?: () => void;
+  mode?: ExerciseMode;
+}
+
+export default function EyeExercise({
+  forceExercise,
+  onExit,
+  mode = "overlay",
+}: EyeExerciseProps) {
   const navigate = useNavigate();
-  const [currentView, setCurrentView] = useState<ViewState>('start');
-  const [selectedExercise, setSelectedExercise] = useState<ExerciseType | ''>('');
+  const [currentView, setCurrentView] = useState<ViewState>("start");
+  const [selectedExercise, setSelectedExercise] = useState<ExerciseType | "">(
+    "",
+  );
   const [isPaused, setIsPaused] = useState(false);
-  const [exerciseTime, setExerciseTime] = useState({ hour: 0, minut: 0, second: 20 });
-  const { time, start, reset, stop } = useTimer(exerciseTime, 'eye_exercise_timer');
+  const [exerciseTime, setExerciseTime] = useState({
+    hour: 0,
+    minut: 0,
+    second: 20,
+  });
+  const { time, start, reset, stop } = useTimer(
+    exerciseTime,
+    "eye_exercise_timer",
+  );
   const [restartCount, setRestartCount] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (forceExercise) {
       handleStartExercise(forceExercise);
-      reset();
-      setTimeout(() => {
-        start();
-      }, 50);
     }
   }, [forceExercise]);
 
   const handleStartExercise = (exerciseName: ExerciseType) => {
     setSelectedExercise(exerciseName);
-    setCurrentView('exercise');
+    setCurrentView("exercise");
     tRef.current = 0;
     setIsPaused(false);
     startTimeRef.current = null;
     lastPhaseRef.current = -1;
-    if (exerciseName === 'osemka') {
+    if (exerciseName === "osemka") {
       setExerciseTime({ hour: 0, minut: 0, second: 20 });
-    } else if (exerciseName === 'oddech') {
+    } else if (exerciseName === "oddech") {
       setExerciseTime({ hour: 0, minut: 1, second: 4 });
     }
-    setRestartCount(prev => prev + 1);
+    setRestartCount((prev) => prev + 1);
   };
   useEffect(() => {
     if (restartCount > 0) {
@@ -51,86 +67,93 @@ export default function EyeExercise({ forceExercise }: { forceExercise?: Exercis
 
   const ballRef = useRef<HTMLDivElement>(null);
   const requestRef = useRef<number>(0);
-  const tRef = useRef<number>(0); 
+  const tRef = useRef<number>(0);
   const breathBallRef = useRef<HTMLDivElement>(null);
   const breathTextRef = useRef<HTMLHeadingElement>(null);
   const startTimeRef = useRef<number | null>(null);
   const lastPhaseRef = useRef<number>(-1);
+  const isEmbedded = mode === "embedded";
   useEffect(() => {
-    if (currentView === 'exercise' && selectedExercise === 'osemka' && isPaused === false) {
+    if (
+      currentView === "exercise" &&
+      selectedExercise === "osemka" &&
+      isPaused === false
+    ) {
       const animateBall = () => {
         tRef.current += 0.0125;
         if (containerRef.current && ballRef.current) {
           const cWidth = containerRef.current.clientWidth;
           const cHeight = containerRef.current.clientHeight;
           const ballSize = ballRef.current.offsetWidth;
-          const A = (cWidth / 2) - (ballSize / 2) - 10; 
-          const B = cHeight - ballSize - 10; 
+          const A = cWidth / 2 - ballSize / 2 - 10;
+          const B = cHeight - ballSize - 10;
           const x = A * Math.sin(tRef.current);
           const y = B * Math.sin(tRef.current) * Math.cos(tRef.current);
-          ballRef.current.style.transform = `translate(${x}px, ${y}px)`;}
-        
-          requestRef.current = requestAnimationFrame(animateBall);
+          ballRef.current.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        requestRef.current = requestAnimationFrame(animateBall);
       };
       requestRef.current = requestAnimationFrame(animateBall);
-    }
-    else if (selectedExercise === 'oddech' && isPaused === false && currentView === 'exercise') {
-        const animateBreath = (timestamp: number) => {
-          if (!startTimeRef.current) startTimeRef.current = timestamp;
-          const elapsed = timestamp - startTimeRef.current;
-          const cycleTime = elapsed % 16000;
-          let currentPhase = 0;
-          let scale = 1;
-          let maxScale = 2;
-          let text = "";
-          if (containerRef.current && breathBallRef.current) {
+    } else if (
+      selectedExercise === "oddech" &&
+      isPaused === false &&
+      currentView === "exercise"
+    ) {
+      const animateBreath = (timestamp: number) => {
+        if (!startTimeRef.current) startTimeRef.current = timestamp;
+        const elapsed = timestamp - startTimeRef.current;
+        const cycleTime = elapsed % 16000;
+        let currentPhase = 0;
+        let scale = 1;
+        let maxScale = 2;
+        let text = "";
+        if (containerRef.current && breathBallRef.current) {
           const cHeight = containerRef.current.clientHeight;
           const cWidth = containerRef.current.clientWidth;
           const minDimension = Math.min(cHeight, cWidth);
-          const baseSize = breathBallRef.current.offsetWidth; 
+          const baseSize = breathBallRef.current.offsetWidth;
           maxScale = (minDimension - 20) / baseSize;
-          maxScale = Math.max(1.1, Math.min(maxScale, 2.5));}
-          if (cycleTime < 4000) {
-            currentPhase = 0;
-            text = "WDECH...";
-            scale = 1 + (cycleTime / 4000) * (maxScale - 1);
-          } 
-          else if (cycleTime < 8000) {
-            currentPhase = 1;
-            text = "ZATRZYMAJ...";
-            scale = maxScale; 
-          } 
-          else if (cycleTime < 12000) {
-            currentPhase = 2;
-            text = "WYDECH...";
-            scale = maxScale - ((cycleTime - 8000) / 4000) * (maxScale - 1);
-          } 
-          else {
-            currentPhase = 3;
-            text = "ZATRZYMAJ...";
-            scale = 1; 
+          maxScale = Math.max(1.1, Math.min(maxScale, 2.5));
+        }
+        if (cycleTime < 4000) {
+          currentPhase = 0;
+          text = "WDECH...";
+          scale = 1 + (cycleTime / 4000) * (maxScale - 1);
+        } else if (cycleTime < 8000) {
+          currentPhase = 1;
+          text = "ZATRZYMAJ...";
+          scale = maxScale;
+        } else if (cycleTime < 12000) {
+          currentPhase = 2;
+          text = "WYDECH...";
+          scale = maxScale - ((cycleTime - 8000) / 4000) * (maxScale - 1);
+        } else {
+          currentPhase = 3;
+          text = "ZATRZYMAJ...";
+          scale = 1;
+        }
+        if (currentPhase !== lastPhaseRef.current) {
+          if (lastPhaseRef.current !== -1 && "vibrate" in navigator) {
+            navigator.vibrate(200);
           }
-          if (currentPhase !== lastPhaseRef.current) {
-            if (lastPhaseRef.current !== -1 && "vibrate" in navigator) {
-              navigator.vibrate(200);
-            }
-            lastPhaseRef.current = currentPhase;
-            if (breathTextRef.current) breathTextRef.current.innerText = text;
-          }
+          lastPhaseRef.current = currentPhase;
+          if (breathTextRef.current) breathTextRef.current.innerText = text;
+        }
 
-          if (breathBallRef.current) {
-            breathBallRef.current.style.transform = `scale(${scale})`;
-          }
+        if (breathBallRef.current) {
+          breathBallRef.current.style.transform = `scale(${scale})`;
+        }
 
-          requestRef.current = requestAnimationFrame(animateBreath);
-        };
-        
-        startTimeRef.current = null;
-        lastPhaseRef.current = -1;
         requestRef.current = requestAnimationFrame(animateBreath);
-      }
-      return () => cancelAnimationFrame(requestRef.current!);
-    }, [currentView, selectedExercise, isPaused,]);
+      };
+
+      startTimeRef.current = null;
+      lastPhaseRef.current = -1;
+      requestRef.current = requestAnimationFrame(animateBreath);
+    }
+    return () => cancelAnimationFrame(requestRef.current!);
+  }, [currentView, selectedExercise, isPaused]);
 
   useEffect(() => {
     return () => {
@@ -140,63 +163,101 @@ export default function EyeExercise({ forceExercise }: { forceExercise?: Exercis
 
   return (
     <div className="p-5 text-center">
-      
       {/* WIDOK 1: Przycisk startowy */}
-      {currentView === 'start' && (
+      {currentView === "start" && (
         <div>
-          <Button onClick={() => setCurrentView('selection')}>
+          <Button onClick={() => setCurrentView("selection")}>
             Zrób ćwiczenie!
           </Button>
         </div>
       )}
 
       {/* WIDOK 2: Wybór ćwiczenia z instrukcjami  */}
-      {currentView === 'selection' && (
+      {currentView === "selection" && (
         <div>
           <h2 className="text-2xl font-bold mb-4">Wybierz ćwiczenie:</h2>
           <div className="flex justify-center gap-4">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="w-72"
               title="Śledź wzrokiem animowaną kuleczkę, która robi ósemki na ekranie."
-              onClick={() => { handleStartExercise('osemka'); start();  navigate('/ósemka'); }}>
+              onClick={() => navigate("/ósemka")}
+            >
               Klasyczna Ósemka
             </Button>
 
             <Button
-              variant="outline" 
-              className="w-72" 
+              variant="outline"
+              className="w-72"
               title="Skup się na oddychaniu: wdech, zatrzymanie, wydech, zatrzymanie. Powtarzaj cykl przez minutę."
-              onClick={() => { handleStartExercise('oddech'); start(); navigate('/oddech'); }}
+              onClick={() => navigate("/oddech")}
             >
               Oddech
             </Button>
           </div>
           <br />
-          <Button variant="link" className="text-gray-500" onClick={() => setCurrentView('start')}>
-              Wróć
+          <Button
+            variant="link"
+            className="text-gray-500"
+            onClick={() => setCurrentView("start")}
+          >
+            Wróć
           </Button>
         </div>
       )}
 
       {/* WIDOK 3: Trwające ćwiczenie z opcją pauzy i zakończenia */}
-      {currentView === 'exercise' && (
-        <div className="fixed inset-0 bg-[#1e2024] text-white z-[9999] flex flex-col justify-center items-center">
-          <div className="absolute top-2 right-12 text-4xl font-mono font-bold tracking-widest text-gray-300">
+      {currentView === "exercise" && (
+        <div
+          className={
+            isEmbedded
+              ? "relative flex min-h-[560px] flex-col overflow-hidden rounded-[2rem] border border-white/70 bg-[#1e2024] text-white shadow-[0_24px_60px_rgba(15,23,42,0.18)] md:min-h-[680px]"
+              : "fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#1e2024] text-white"
+          }
+        >
+          <div
+            className={
+              isEmbedded
+                ? "absolute right-5 top-5 z-10 text-2xl font-mono font-bold tracking-[0.2em] text-gray-300 md:text-3xl"
+                : "absolute top-2 right-12 text-4xl font-mono font-bold tracking-widest text-gray-300"
+            }
+          >
             {Math.floor(time / 1000)}s
           </div>
-          <h2 className="text-3xl font-bold mb-1">
-            Trwa ćwiczenie: {selectedExercise === 'osemka' ? 'Ósemka' : 'Oddech'}
-          </h2>
-          <div ref={containerRef} className="w-full h-9/10 border-2 border-dashed border-gray-500 m-3 flex justify-center items-center">
-            
-            {selectedExercise === 'osemka' && (
-              time === 0 ? (
-                <div key="end-screen" className="flex flex-col items-center gap-5"> 
+          <div
+            className={
+              isEmbedded ? "px-4 pt-8 text-center md:px-6 md:pt-10" : ""
+            }
+          >
+            <h2 className="mb-1 text-3xl font-bold">
+              Trwa ćwiczenie:{" "}
+              {selectedExercise === "osemka" ? "Ósemka" : "Oddech"}
+            </h2>
+            {isEmbedded && (
+              <p className="mx-auto max-w-2xl text-sm text-slate-300 md:text-base">
+                Skup wzrok na punkcie i podążaj za nim płynnie, bez poruszania
+                głową.
+              </p>
+            )}
+          </div>
+          <div
+            ref={containerRef}
+            className={
+              isEmbedded
+                ? "mx-4 my-4 flex min-h-[420px] flex-1 items-center justify-center overflow-hidden rounded-[1.5rem] border border-white/12 bg-white/[0.03] md:mx-6"
+                : "m-3 flex h-9/10 w-full items-center justify-center border-2 border-dashed border-gray-500"
+            }
+          >
+            {selectedExercise === "osemka" &&
+              (time === 0 ? (
+                <div
+                  key="end-screen"
+                  className="flex flex-col items-center gap-5"
+                >
                   <h2 className="text-4xl font-bold text-green-500 animate-pulse">
                     Koniec ćwiczenia!
                   </h2>
-                  <Button onClick={() => { handleStartExercise('osemka'); reset(); setTimeout(() => start(), 50); }}>
+                  <Button onClick={() => handleStartExercise("osemka")}>
                     Powtórz ćwiczenie
                   </Button>
                 </div>
@@ -205,58 +266,77 @@ export default function EyeExercise({ forceExercise }: { forceExercise?: Exercis
                   key="ball"
                   ref={ballRef}
                   className="bg-teal-400 rounded-full shadow-[0_0_15px_rgba(45,212,191,0.6)]"
-                  style={{width: 'clamp(8px, 5vw, 64px)', height: 'clamp(8px, 5vw, 64px)'}}
+                  style={{
+                    width: "clamp(8px, 5vw, 64px)",
+                    height: "clamp(8px, 5vw, 64px)",
+                  }}
                 ></div>
-              )
-            )}
+              ))}
 
-            {selectedExercise === 'oddech' && (
-               time === 0 ? (
-                <div className="flex flex-col items-center gap-5"> 
-                  <h2 className="text-4xl font-bold text-green-500 animate-pulse">Oddychanie</h2>
-                  <Button onClick={() => { handleStartExercise('oddech'); reset(); setTimeout(() => start(), 50); }}>
+            {selectedExercise === "oddech" &&
+              (time === 0 ? (
+                <div className="flex flex-col items-center gap-5">
+                  <h2 className="text-4xl font-bold text-green-500 animate-pulse">
+                    Oddychanie
+                  </h2>
+                  <Button onClick={() => handleStartExercise("oddech")}>
                     Powtórz oddychanie
                   </Button>
                 </div>
-               ) : (
-                 <div className="flex flex-col items-center justify-center relative w-full h-full">
-                    <h3 
-                      ref={breathTextRef} 
-                      className="text-4xl font-black tracking-[0.2em] text-blue-200 absolute top-[15%] z-10"
-                    >
-                       WDECH...
-                    </h3>
-                    <div
-                      ref={breathBallRef}
-                      className="rounded-full bg-blue-500/70 shadow-[0_0_50px_rgba(59,130,246,0.6)]"
-                      style={{willChange: 'transform', width: 'clamp(30px, 20vmin, 160px)', height: 'clamp(30px, 20vmin, 160px)'}}
-                    ></div>
-                 </div>
-               )
-            )}
-
+              ) : (
+                <div className="flex flex-col items-center justify-center relative w-full h-full">
+                  <h3
+                    ref={breathTextRef}
+                    className="text-4xl font-black tracking-[0.2em] text-blue-200 absolute top-[15%] z-10"
+                  >
+                    WDECH...
+                  </h3>
+                  <div
+                    ref={breathBallRef}
+                    className="rounded-full bg-blue-500/70 shadow-[0_0_50px_rgba(59,130,246,0.6)]"
+                    style={{
+                      willChange: "transform",
+                      width: "clamp(30px, 20vmin, 160px)",
+                      height: "clamp(30px, 20vmin, 160px)",
+                    }}
+                  ></div>
+                </div>
+              ))}
           </div>
-          <div className="flex gap-5">
-            <Button 
+          <div
+            className={
+              isEmbedded
+                ? "flex flex-wrap justify-center gap-4 px-4 pb-6 md:px-6 md:pb-8"
+                : "flex gap-5"
+            }
+          >
+            <Button
               variant={isPaused ? "default" : "secondary"}
               onClick={() => {
                 if (isPaused) {
                   setIsPaused(false);
                   start();
                 } else {
-                  stop();  
+                  stop();
                   setIsPaused(true);
-                }}}>
-                {isPaused ? 'Wznów' : 'Pauza'}
+                }
+              }}
+            >
+              {isPaused ? "Wznów" : "Pauza"}
             </Button>
 
-            <Button 
+            <Button
               variant="destructive"
-              onClick={() => { 
-                stop(); 
-                navigate('/');
-              }}>
-              Zakończ i wyjdź
+              onClick={() => {
+                stop();
+                if (onExit) {
+                  onExit();
+                  return;
+                }
+                navigate("/");
+              }}
+            >
+              {isEmbedded ? "Zakończ ćwiczenie" : "Zakończ i wyjdź"}
             </Button>
           </div>
         </div>

@@ -13,6 +13,13 @@ export default function OsemkaPage() {
   const closeTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "auto",
+    });
+  }, []);
+
+  useEffect(() => {
     if (!shouldRenderExercise) {
       return;
     }
@@ -33,8 +40,8 @@ export default function OsemkaPage() {
         return;
       }
 
-      const navbarOffset = 88;
-      const extraGap = 12;
+      const navbarOffset = 50;
+      const extraGap = 17;
       const rect = element.getBoundingClientRect();
       const absoluteTop = rect.top + window.scrollY;
 
@@ -63,6 +70,10 @@ export default function OsemkaPage() {
 
   const handleCloseExercise = () => {
     setIsExerciseVisible(false);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
 
     closeTimeoutRef.current = window.setTimeout(() => {
       setShouldRenderExercise(false);

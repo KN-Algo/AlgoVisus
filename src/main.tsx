@@ -8,10 +8,16 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Suspense } from "react";
 import { routes } from "./lib/routes-config";
 
+// import Twojego komponentu 20-20-20
+import { TwentyMinutesRule } from "./components/twentyMinutesRule.tsx";
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <SidebarProvider defaultOpen={false}>
+        {/* Komponent globalny - reguła 20-20-20 */}
+        <TwentyMinutesRule />
+
         <div className="w-full">
           <AppNavigationMenu />
           <AppSidebar />

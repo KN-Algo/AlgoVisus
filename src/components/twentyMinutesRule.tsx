@@ -23,12 +23,12 @@ export function TwentyMinutesRule() {
 
   const workTimer = useTimeNotification(
     sendNotification,
-    NOTIFICATION_WORK,
+    NOTIFICATION_BREAK,
     DEFAULT_TIME,
   );
   const breakTimer = useTimeNotification(
     sendNotification,
-    NOTIFICATION_BREAK,
+    NOTIFICATION_WORK,
     DEFAULT_TIME,
   );
 
@@ -38,21 +38,22 @@ export function TwentyMinutesRule() {
   useEffect(() => {
     const saved = localStorage.getItem(TWEN_MIN_ENABLE);
     setEnabled(saved !== null ? JSON.parse(saved) : true);
-    if (!enabled) {
-      workTimer.reset();
-      breakTimer.reset();
-    }
   }, []);
 
+  useEffect(() => {
+    if (!enabled) {
+      workTimer.stop();
+      breakTimer.stop();
+    }
+  }, [enabled]);
+
   const startCounting = () => {
-    if (workTimer.time > 0) {
-      breakTimer.reset();
-      workTimer.start();
-      setMode("work");
-    } else {
+    if (mode === "work") {
       workTimer.reset();
+      workTimer.start();
+    } else {
+      breakTimer.reset();
       breakTimer.start();
-      setMode("break");
     }
   };
 
@@ -69,19 +70,19 @@ export function TwentyMinutesRule() {
     if (workTimer.time === 0) {
       workTimer.reset();
       breakTimer.start();
-      setMode("work");
+      setMode("break");
     }
     console.log("work timer", workTimer.time);
-  }, [workTimer.time, enabled]);
+  }, [workTimer.time]);
 
   useEffect(() => {
     if (breakTimer.time === 0) {
       breakTimer.reset();
       workTimer.start();
-      setMode("break");
+      setMode("work");
     }
     console.log("break timer", breakTimer.time);
-  }, [breakTimer.time, enabled]);
+  }, [breakTimer.time]);
 
   return (
     <>

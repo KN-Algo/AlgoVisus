@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTimer } from "../../hooks/useTimer";
 import { Button } from "./button";
-import { useNavigate } from "react-router-dom";
 
 type ExerciseType = "osemka" | "oddech";
 type ViewState = "start" | "selection" | "exercise";
@@ -35,14 +35,19 @@ export default function EyeExercise({
   );
   const [restartCount, setRestartCount] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const ballRef = useRef<HTMLDivElement>(null);
+  const requestRef = useRef<number>(0);
+  const tRef = useRef<number>(0);
+  const breathBallRef = useRef<HTMLDivElement>(null);
+  const breathTextRef = useRef<HTMLHeadingElement>(null);
+  const startTimeRef = useRef<number | null>(null);
+  const lastPhaseRef = useRef<number>(-1);
+  const breathElapsedRef = useRef<number>(0);
+  const isEmbedded = mode === "embedded";
 
   useEffect(() => {
     if (forceExercise) {
       handleStartExercise(forceExercise);
-      reset();
-      setTimeout(() => {
-        start();
-      }, 50);
     }
   }, [forceExercise]);
 
@@ -54,13 +59,16 @@ export default function EyeExercise({
     startTimeRef.current = null;
     lastPhaseRef.current = -1;
     breathElapsedRef.current = 0;
+
     if (exerciseName === "osemka") {
       setExerciseTime({ hour: 0, minut: 0, second: 20 });
-    } else if (exerciseName === "oddech") {
+    } else {
       setExerciseTime({ hour: 0, minut: 1, second: 4 });
     }
+
     setRestartCount((prev) => prev + 1);
   };
+
   useEffect(() => {
     if (restartCount > 0) {
       reset();
@@ -70,15 +78,6 @@ export default function EyeExercise({
     }
   }, [restartCount]);
 
-  const ballRef = useRef<HTMLDivElement>(null);
-  const requestRef = useRef<number>(0);
-  const tRef = useRef<number>(0);
-  const breathBallRef = useRef<HTMLDivElement>(null);
-  const breathTextRef = useRef<HTMLHeadingElement>(null);
-  const startTimeRef = useRef<number | null>(null);
-  const lastPhaseRef = useRef<number>(-1);
-  const breathElapsedRef = useRef<number>(0);
-  const isEmbedded = mode === "embedded";
   useEffect(() => {
     if (
       currentView === "exercise" &&
@@ -87,6 +86,7 @@ export default function EyeExercise({
     ) {
       const animateBall = () => {
         tRef.current += 0.0125;
+
         if (containerRef.current && ballRef.current) {
           const cWidth = containerRef.current.clientWidth;
           const cHeight = containerRef.current.clientHeight;
@@ -100,6 +100,7 @@ export default function EyeExercise({
 
         requestRef.current = requestAnimationFrame(animateBall);
       };
+
       requestRef.current = requestAnimationFrame(animateBall);
     } else if (
       selectedExercise === "oddech" &&
@@ -110,6 +111,7 @@ export default function EyeExercise({
         if (startTimeRef.current === null) {
           startTimeRef.current = timestamp - breathElapsedRef.current;
         }
+
         const elapsed = timestamp - startTimeRef.current;
         breathElapsedRef.current = elapsed;
         const cycleTime = elapsed % 16000;
@@ -117,14 +119,17 @@ export default function EyeExercise({
         let scale = 1;
         let maxScale = 1.7;
         let text = "";
+
         if (containerRef.current && breathBallRef.current) {
           const cHeight = containerRef.current.clientHeight;
           const cWidth = containerRef.current.clientWidth;
           const minDimension = Math.min(cHeight, cWidth);
           const baseSize = breathBallRef.current.offsetWidth;
+
           maxScale = (minDimension - 112) / baseSize;
           maxScale = Math.max(1.05, Math.min(maxScale, 1.75));
         }
+
         if (cycleTime < 4000) {
           currentPhase = 0;
           text = "WDECH";
@@ -142,12 +147,17 @@ export default function EyeExercise({
           text = "ZATRZYMAJ";
           scale = 1;
         }
+
         if (currentPhase !== lastPhaseRef.current) {
           if (lastPhaseRef.current !== -1 && "vibrate" in navigator) {
             navigator.vibrate(200);
           }
+
           lastPhaseRef.current = currentPhase;
-          if (breathTextRef.current) breathTextRef.current.innerText = text;
+
+          if (breathTextRef.current) {
+            breathTextRef.current.innerText = text;
+          }
         }
 
         if (breathBallRef.current) {
@@ -161,7 +171,8 @@ export default function EyeExercise({
       lastPhaseRef.current = -1;
       requestRef.current = requestAnimationFrame(animateBreath);
     }
-    return () => cancelAnimationFrame(requestRef.current!);
+
+    return () => cancelAnimationFrame(requestRef.current);
   }, [currentView, selectedExercise, isPaused]);
 
   useEffect(() => {
@@ -172,7 +183,6 @@ export default function EyeExercise({
 
   return (
     <div className="p-5 text-center">
-      {/* WIDOK 1: Przycisk startowy */}
       {currentView === "start" && (
         <div>
           <Button onClick={() => setCurrentView("selection")}>
@@ -181,20 +191,15 @@ export default function EyeExercise({
         </div>
       )}
 
-      {/* WIDOK 2: Wybór ćwiczenia z instrukcjami  */}
       {currentView === "selection" && (
         <div>
-          <h2 className="text-2xl font-bold mb-4">Wybierz ćwiczenie:</h2>
+          <h2 className="mb-4 text-2xl font-bold">Wybierz ćwiczenie:</h2>
           <div className="flex justify-center gap-4">
             <Button
               variant="outline"
               className="w-72"
               title="Śledź wzrokiem animowaną kuleczkę, która robi ósemki na ekranie."
-              onClick={() => {
-                handleStartExercise("osemka");
-                start();
-                navigate("/ósemka");
-              }}
+              onClick={() => navigate("/ósemka")}
             >
               Klasyczna Ósemka
             </Button>
@@ -203,11 +208,7 @@ export default function EyeExercise({
               variant="outline"
               className="w-72"
               title="Skup się na oddychaniu: wdech, zatrzymanie, wydech, zatrzymanie. Powtarzaj cykl przez minutę."
-              onClick={() => {
-                handleStartExercise("oddech");
-                start();
-                navigate("/oddech");
-              }}
+              onClick={() => navigate("/oddech")}
             >
               Oddech
             </Button>
@@ -223,38 +224,47 @@ export default function EyeExercise({
         </div>
       )}
 
-      {/* WIDOK 3: Trwające ćwiczenie z opcją pauzy i zakończenia */}
       {currentView === "exercise" && (
         <div
           className={
             isEmbedded
               ? "relative flex min-h-[560px] flex-col overflow-hidden rounded-[2rem] border border-white/70 bg-[#1e2024] text-white shadow-[0_24px_60px_rgba(15,23,42,0.18)] md:min-h-[680px]"
-              : "fixed inset-0 bg-[#1e2024] text-white z-[9999] flex flex-col justify-center items-center"
+              : "fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#1e2024] text-white"
           }
         >
           <div
             className={
               isEmbedded
                 ? "absolute right-5 top-5 z-10 hidden text-3xl font-mono font-bold tracking-[0.2em] text-gray-300 md:block"
-                : "absolute top-2 right-12 text-4xl font-mono font-bold tracking-widest text-gray-300"
+                : "absolute right-12 top-2 text-4xl font-mono font-bold tracking-widest text-gray-300"
             }
           >
             {Math.floor(time / 1000)}s
           </div>
+
           <div
             className={
               isEmbedded ? "px-4 pt-8 text-center md:px-6 md:pt-10" : ""
             }
           >
-            <h2 className="text-3xl font-bold mb-1">
+            <h2 className="mb-1 text-3xl font-bold">
               Trwa ćwiczenie:{" "}
               {selectedExercise === "osemka" ? "Ósemka" : "Oddech"}
             </h2>
+
+            {isEmbedded && selectedExercise === "osemka" && (
+              <p className="mx-auto max-w-2xl text-sm text-slate-300 md:text-base">
+                Skup wzrok na punkcie i podążaj za nim płynnie, bez poruszania
+                głową.
+              </p>
+            )}
+
             {isEmbedded && selectedExercise === "oddech" && (
               <p className="mx-auto max-w-2xl text-sm text-slate-300 md:text-base">
                 Podążaj za rytmem: wdech, zatrzymanie, wydech, zatrzymanie.
               </p>
             )}
+
             {isEmbedded && (
               <div className="mt-4 flex justify-center md:hidden">
                 <div className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-sm font-mono font-bold tracking-[0.18em] text-gray-300">
@@ -263,12 +273,13 @@ export default function EyeExercise({
               </div>
             )}
           </div>
+
           <div
             ref={containerRef}
             className={
               isEmbedded
                 ? "relative mx-4 my-4 flex min-h-[420px] flex-1 items-center justify-center overflow-hidden rounded-[1.5rem] border border-white/12 bg-white/[0.03] md:mx-6"
-                : "relative w-full h-9/10 border-2 border-dashed border-gray-500 m-3 flex justify-center items-center"
+                : "relative m-3 flex h-9/10 w-full items-center justify-center border-2 border-dashed border-gray-500"
             }
           >
             {selectedExercise === "osemka" &&
@@ -277,16 +288,10 @@ export default function EyeExercise({
                   key="end-screen"
                   className="flex flex-col items-center gap-5"
                 >
-                  <h2 className="text-4xl font-bold text-green-500 animate-pulse">
+                  <h2 className="animate-pulse text-4xl font-bold text-green-500">
                     Koniec ćwiczenia!
                   </h2>
-                  <Button
-                    onClick={() => {
-                      handleStartExercise("osemka");
-                      reset();
-                      setTimeout(() => start(), 50);
-                    }}
-                  >
+                  <Button onClick={() => handleStartExercise("osemka")}>
                     Powtórz ćwiczenie
                   </Button>
                 </div>
@@ -294,7 +299,7 @@ export default function EyeExercise({
                 <div
                   key="ball"
                   ref={ballRef}
-                  className="bg-teal-400 rounded-full shadow-[0_0_15px_rgba(45,212,191,0.6)]"
+                  className="rounded-full bg-teal-400 shadow-[0_0_15px_rgba(45,212,191,0.6)]"
                   style={{
                     width: "clamp(8px, 5vw, 64px)",
                     height: "clamp(8px, 5vw, 64px)",
@@ -305,21 +310,15 @@ export default function EyeExercise({
             {selectedExercise === "oddech" &&
               (time === 0 ? (
                 <div className="flex flex-col items-center gap-5">
-                  <h2 className="text-4xl font-bold text-green-500 animate-pulse">
+                  <h2 className="animate-pulse text-4xl font-bold text-green-500">
                     Oddychanie
                   </h2>
-                  <Button
-                    onClick={() => {
-                      handleStartExercise("oddech");
-                      reset();
-                      setTimeout(() => start(), 50);
-                    }}
-                  >
+                  <Button onClick={() => handleStartExercise("oddech")}>
                     Powtórz oddychanie
                   </Button>
                 </div>
               ) : (
-                <>
+                <div className="relative flex h-full w-full flex-col items-center justify-center">
                   <h3
                     ref={breathTextRef}
                     className="pointer-events-none absolute inset-x-0 top-4 z-10 px-4 text-center text-3xl font-black text-blue-200 md:top-6 md:text-4xl"
@@ -346,9 +345,10 @@ export default function EyeExercise({
                       ></div>
                     </div>
                   </div>
-                </>
+                </div>
               ))}
           </div>
+
           <div
             className={
               isEmbedded
@@ -371,6 +371,7 @@ export default function EyeExercise({
                       performance.now() - startTimeRef.current;
                     startTimeRef.current = null;
                   }
+
                   stop();
                   setIsPaused(true);
                 }
@@ -383,10 +384,12 @@ export default function EyeExercise({
               variant="destructive"
               onClick={() => {
                 stop();
+
                 if (onExit) {
                   onExit();
                   return;
                 }
+
                 navigate("/");
               }}
             >

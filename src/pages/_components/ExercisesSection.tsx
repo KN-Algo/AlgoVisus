@@ -4,9 +4,15 @@ import { GradientButton } from "@/components/ui/gradient-button";
 
 const exerciseIcons: { [key: string]: string } = {
   ósemka: "👁️",
+  oddech: "🌬️",
   fargaze: "🌠",
   accommodation: "📏",
   rest: "⏱️",
+};
+
+const exerciseDescriptions: { [key: string]: string } = {
+  oddech:
+    "Uspokój rytm pracy krótkim ćwiczeniem oddechowym prowadzonym krok po kroku.",
 };
 
 export function ExercisesSection() {
@@ -89,7 +95,8 @@ export function ExercisesSection() {
 
                   {/* Description */}
                   <p className="text-slate-600 text-sm md:text-base mb-6 flex-grow">
-                    Odkryj tego ćwiczenia i udoskonalaj swoją technikę
+                    {exerciseDescriptions[exercise.name.toLowerCase()] ||
+                      "Odkryj tego ćwiczenia i udoskonalaj swoją technikę"}
                   </p>
 
                   {/* CTA Button */}

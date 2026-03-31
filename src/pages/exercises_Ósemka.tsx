@@ -205,5 +205,3 @@ export default function OsemkaPage() {
     </div>
   );
 }
-
-export default Ósemka;

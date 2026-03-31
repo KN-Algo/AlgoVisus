@@ -18,8 +18,7 @@ export default defineConfig(() => {
         injectRegister: "auto",
 
         pwaAssets: {
-          disabled: false,
-          config: true,
+          disabled: true,
         },
 
         manifest: {
@@ -28,6 +27,14 @@ export default defineConfig(() => {
           description:
             " Application to care about your precious eyes made in collaboration with KN Visus!",
           theme_color: "#000424",
+          icons: [
+            {
+              src: "/icons/rysunek_visus2ss.svg",
+              sizes: "any",
+              type: "image/svg+xml",
+              purpose: "any",
+            },
+          ],
         },
 
         workbox: {

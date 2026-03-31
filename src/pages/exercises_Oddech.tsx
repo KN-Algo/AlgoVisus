@@ -40,8 +40,8 @@ function OddechPage() {
         return;
       }
 
-      const navbarOffset = 88;
-      const extraGap = 16;
+      const navbarOffset = 50;
+      const extraGap = 18;
       const rect = element.getBoundingClientRect();
       const absoluteTop = rect.top + window.scrollY;
 
@@ -97,7 +97,7 @@ function OddechPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent animate-shimmer" />
         </div>
 
-        <div className="relative flex min-h-screen items-center justify-center px-4 py-16 lg:py-24">
+        <div className="relative flex min-h-[calc(100vh-4rem)] items-start justify-center px-4 pb-16 pt-10 lg:pb-20 lg:pt-14">
           <div className="w-full max-w-5xl">
             <div
               className="mb-10 flex justify-center animate-fade-in-up"

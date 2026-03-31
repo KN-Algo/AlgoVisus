@@ -110,31 +110,31 @@ export default function EyeExercise({
         const cycleTime = elapsed % 16000;
         let currentPhase = 0;
         let scale = 1;
-        let maxScale = 2;
+        let maxScale = 1.7;
         let text = "";
         if (containerRef.current && breathBallRef.current) {
           const cHeight = containerRef.current.clientHeight;
           const cWidth = containerRef.current.clientWidth;
           const minDimension = Math.min(cHeight, cWidth);
           const baseSize = breathBallRef.current.offsetWidth;
-          maxScale = (minDimension - 20) / baseSize;
-          maxScale = Math.max(1.1, Math.min(maxScale, 2.5));
+          maxScale = (minDimension - 112) / baseSize;
+          maxScale = Math.max(1.05, Math.min(maxScale, 1.75));
         }
         if (cycleTime < 4000) {
           currentPhase = 0;
-          text = "WDECH...";
+          text = "WDECH";
           scale = 1 + (cycleTime / 4000) * (maxScale - 1);
         } else if (cycleTime < 8000) {
           currentPhase = 1;
-          text = "ZATRZYMAJ...";
+          text = "ZATRZYMAJ";
           scale = maxScale;
         } else if (cycleTime < 12000) {
           currentPhase = 2;
-          text = "WYDECH...";
+          text = "WYDECH";
           scale = maxScale - ((cycleTime - 8000) / 4000) * (maxScale - 1);
         } else {
           currentPhase = 3;
-          text = "ZATRZYMAJ...";
+          text = "ZATRZYMAJ";
           scale = 1;
         }
         if (currentPhase !== lastPhaseRef.current) {
@@ -230,7 +230,7 @@ export default function EyeExercise({
           <div
             className={
               isEmbedded
-                ? "absolute right-5 top-5 z-10 text-2xl font-mono font-bold tracking-[0.2em] text-gray-300 md:text-3xl"
+                ? "absolute right-5 top-5 z-10 hidden text-3xl font-mono font-bold tracking-[0.2em] text-gray-300 md:block"
                 : "absolute top-2 right-12 text-4xl font-mono font-bold tracking-widest text-gray-300"
             }
           >
@@ -250,13 +250,20 @@ export default function EyeExercise({
                 Podążaj za rytmem: wdech, zatrzymanie, wydech, zatrzymanie.
               </p>
             )}
+            {isEmbedded && (
+              <div className="mt-4 flex justify-center md:hidden">
+                <div className="rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-sm font-mono font-bold tracking-[0.18em] text-gray-300">
+                  {Math.floor(time / 1000)}s
+                </div>
+              </div>
+            )}
           </div>
           <div
             ref={containerRef}
             className={
               isEmbedded
-                ? "mx-4 my-4 flex min-h-[420px] flex-1 items-center justify-center overflow-hidden rounded-[1.5rem] border border-white/12 bg-white/[0.03] md:mx-6"
-                : "w-full h-9/10 border-2 border-dashed border-gray-500 m-3 flex justify-center items-center"
+                ? "relative mx-4 my-4 flex min-h-[420px] flex-1 items-center justify-center overflow-hidden rounded-[1.5rem] border border-white/12 bg-white/[0.03] md:mx-6"
+                : "relative w-full h-9/10 border-2 border-dashed border-gray-500 m-3 flex justify-center items-center"
             }
           >
             {selectedExercise === "osemka" &&
@@ -307,32 +314,34 @@ export default function EyeExercise({
                   </Button>
                 </div>
               ) : (
-                <div className="flex flex-col items-center justify-center relative w-full h-full">
+                <>
                   <h3
                     ref={breathTextRef}
-                    className="text-4xl font-black tracking-[0.2em] text-blue-200 absolute top-[15%] z-10"
+                    className="pointer-events-none absolute inset-x-0 top-4 z-10 px-4 text-center text-3xl font-black text-blue-200 md:top-6 md:text-4xl"
                   >
-                    WDECH...
+                    WDECH
                   </h3>
-                  <div
-                    ref={breathBallRef}
-                    className="relative"
-                    style={{
-                      willChange: "transform",
-                      width: "clamp(30px, 20vmin, 160px)",
-                      height: "clamp(30px, 20vmin, 160px)",
-                      transformOrigin: "center center",
-                      backfaceVisibility: "hidden",
-                    }}
-                  >
+                  <div className="flex h-full w-full items-center justify-center pt-20 md:pt-24">
                     <div
-                      className="h-full w-full rounded-full bg-blue-500/70"
+                      ref={breathBallRef}
+                      className="relative"
                       style={{
-                        filter: "drop-shadow(0 0 50px rgba(59,130,246,0.6))",
+                        willChange: "transform",
+                        width: "clamp(28px, 16vmin, 128px)",
+                        height: "clamp(28px, 16vmin, 128px)",
+                        transformOrigin: "center center",
+                        backfaceVisibility: "hidden",
                       }}
-                    ></div>
+                    >
+                      <div
+                        className="h-full w-full rounded-full bg-blue-500/70"
+                        style={{
+                          filter: "drop-shadow(0 0 50px rgba(59,130,246,0.6))",
+                        }}
+                      ></div>
+                    </div>
                   </div>
-                </div>
+                </>
               ))}
           </div>
           <div

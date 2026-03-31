@@ -6,7 +6,7 @@ import {
 } from "../hooks/useNotifications";
 import { TWEN_MIN_ENABLE } from "../pages/exercises_Zasada20-20-20";
 
-const DEFAULT_TIME = { hour: 0, minut: 0, second: 30 };
+const DEFAULT_TIME = { hour: 0, minut: 0, second: 10 };
 
 const NOTIFICATION_WORK: AppNotification = {
   title: "Zasada 20-20-20",
@@ -40,13 +40,6 @@ export function TwentyMinutesRule() {
     setEnabled(saved !== null ? JSON.parse(saved) : true);
   }, []);
 
-  useEffect(() => {
-    if (!enabled) {
-      workTimer.stop();
-      breakTimer.stop();
-    }
-  }, [enabled]);
-
   const startCounting = () => {
     if (mode === "work") {
       workTimer.reset();
@@ -58,9 +51,14 @@ export function TwentyMinutesRule() {
   };
 
   useEffect(() => {
-    if (!enabled) return;
     if (permission !== "granted") {
       requestPermission();
+      return;
+    }
+    if (!enabled) {
+      workTimer.stop();
+      breakTimer.stop();
+      return;
     } else {
       startCounting();
     }

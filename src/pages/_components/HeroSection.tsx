@@ -48,9 +48,9 @@ export function HeroSection() {
               }`}
             >
               <img
-                src="/src/assets/images/AlgoVisus_logo.png"
+                src="/rysunek_visus2ss.svg"
                 alt="AlgoVisus Logo"
-                className={`w-full h-full object-cover transition-all duration-300 ${
+                className={`w-full h-full object-contain transition-all duration-300 ${
                   shouldElevateLogo
                     ? "brightness-110 contrast-105 saturate-110"
                     : "brightness-100"

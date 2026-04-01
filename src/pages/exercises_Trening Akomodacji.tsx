@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { SquareArrowLeft, Eye, EyeOff } from "lucide-react";
+import { SquareArrowLeft } from "lucide-react";
 
 
 
@@ -147,7 +147,7 @@ export default function EyeAccommodation() {
                         </Link>
                     </div>
 
-                </div> // div główny instrukcji
+                </div> 
             )}
 
 
@@ -295,6 +295,6 @@ export default function EyeAccommodation() {
                 </div>
             )}
 
-        </div> // KONIEC div główny
+        </div> 
     )
 }

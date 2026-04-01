@@ -2,6 +2,7 @@ import { Bell, SquareArrowLeft } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
+import { NOTIFICATIONS } from "../lib/notificationConfig";
 
 
 interface UstawieniaPowiadomien {
@@ -19,12 +20,11 @@ function Powiadomienia() {
     const [settings, setSettings] = useState<UstawieniaPowiadomien[]>(() => {
         const savedCookies = Cookies.get(COOKIE_KEY);
 
-        const defaultSettings = [
-            { id: "1", title: "Cykliczne powiadomienie ⏰", active: true, icon: <Bell size={17} /> }, // powiadomienie 20-20-20 i inne cwiczenia
-            { id: "2", title: "Czas na przerwę! ☕", active: true, icon: <Bell size={17} /> }, // obecnie testPushAPI
-            { id: "3", title: "Czas na ćwiczenie! 🔵", active: true, icon: <Bell size={17} /> },
-            { id: "4", title: "Zadbaj o nawodnienie! 💧", active: true, icon: <Bell size={17} /> },
-        ];
+        const defaultSettings = NOTIFICATIONS.map((n) => ({
+            ...n,
+            active: true,
+            icon: <Bell size={17} />,
+        }));
 
 
         if (savedCookies) {

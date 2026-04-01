@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Cookies from "js-cookie";
+import { NOTIFICATION_TITLE_TO_ID } from "../lib/notificationConfig";
 
 // Interfejs dla powiadomienia
 export interface AppNotification {
@@ -8,14 +9,6 @@ export interface AppNotification {
 }
 
 const COOKIE_KEY = "user_notifications_preferences";
-
-// Mapowanie tytułów powiadomień na id zapisywane w COOKIES
-const NOTIFICATION_TO_ID: Record<string, string> = {
-  "Cykliczne powiadomienie ⏰": "1",
-  "Czas na przerwę! ☕": "2",
-  "Czas na ćwiczenie! 🔵": "3",
-  "Zadbaj o nawodnienie! 💧": "4",
-};
 
 export const useNotifications = () => {
   const [permission, setPermission] =
@@ -35,7 +28,7 @@ export const useNotifications = () => {
     }
 
     // Sprawdenie czy ten typ powiadomienia jest włączony w COOKIES
-    const id = NOTIFICATION_TO_ID[notification.title];
+    const id = NOTIFICATION_TITLE_TO_ID[notification.title];
     if (id) {
       const saved = Cookies.get(COOKIE_KEY);
       if (saved) {

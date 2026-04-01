@@ -3,6 +3,31 @@ import { Link } from "react-router-dom";
 import { SquareArrowLeft } from "lucide-react";
 
 
+// DZWIĘK 
+function sound(freq: number, duration: number) {
+    try {
+        const ctx = new AudioContext();
+        const play = () => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.frequency.value = freq;
+            osc.type = "sine";
+            gain.gain.setValueAtTime(0.3, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+            osc.start(ctx.currentTime);
+            osc.stop(ctx.currentTime + duration);
+        };
+        if (ctx.state === "suspended") {
+            ctx.resume().then(play);
+        } else {
+            play();
+        }
+    } catch (error) {
+        console.error("Błąd dźwięku:", error);
+    }
+}
 
 export default function EyeAccommodation() {
 
@@ -33,14 +58,17 @@ export default function EyeAccommodation() {
     const switchStep = () => {
         if (status === "near") {
             // faza blisko --> faza daleko
+            sound(660,0.4);
             setStatus("far");
             setTimeLeft(10);
         } else if (status === "far") {
             if (cycle >= maxCycles) {
                 // koniec treningu
+                sound(440,0.8);
                 setStatus("finished");
             } else {
                 // zwiekszamy cykl i wracamy do fazy blisko
+                sound(880,0.3);
                 setCycle(prev => prev + 1);
                 setStatus("near");
                 setTimeLeft(10);
@@ -52,6 +80,7 @@ export default function EyeAccommodation() {
     const startTraining = () => {
         setCycle(1);
         setTimeLeft(10);
+        sound(880,0.3);
         setStatus("near");
     };
 

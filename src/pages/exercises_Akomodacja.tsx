@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { SquareArrowLeft } from "lucide-react";
+import { useTimer } from "../hooks/useTimer";
 
 
 // DZWIĘK 
@@ -33,60 +34,66 @@ export default function EyeAccommodation() {
 
     // STANY APLIKACJI
     const [status, setStatus] = useState("start");
-    const [timeLeft, setTimeLeft] = useState(10); // 10s - 1 cykl
     const [cycle, setCycle] = useState(1);
     const maxCycles = 6;
 
+    // HOOK Timer
+    const { time, start, stop, reset } = useTimer(
+        {
+            hour: 0,
+            minut: 0,
+            second: 10
+        },
+        "accommodation-timer"
+    );
+
+    const timeLeftInSeconds = Math.ceil(time / 1000);
 
     // TIMER 
     useEffect(() => {
-        let timer;
-        // Sprawdzamy, czy trening jest aktywny i czy czas jest > 0
-        if (status === "near" || status === "far") {
-            if (timeLeft > 0) {
-                timer = setTimeout(() => setTimeLeft(prev => prev - 1), 1000);
-            } else {
-                // przelaczamy etap
-                switchStep();
-            }
-        }
-        return () => clearTimeout(timer); // CZYSZCZENIE TIMERU PO ZAKONCZENIU TRENINGU
-    }, [timeLeft, status]);
+        if (status !== "near" && status !== "far") return;
+        if (time > 0) return;
 
-
-    // FUNKCJA PRZEŁĄCZAJĄCA ETAPY
-    const switchStep = () => {
         if (status === "near") {
-            // faza blisko --> faza daleko
-            sound(660,0.4);
+            sound(660, 0.4);
             setStatus("far");
-            setTimeLeft(10);
+            reset();
+            start();
         } else if (status === "far") {
             if (cycle >= maxCycles) {
-                // koniec treningu
-                sound(440,0.8);
+                sound(440, 0.8);
                 setStatus("finished");
+                stop();
             } else {
-                // zwiekszamy cykl i wracamy do fazy blisko
-                sound(880,0.3);
+                sound(880, 0.3);
                 setCycle(prev => prev + 1);
                 setStatus("near");
-                setTimeLeft(10);
+                reset();
+                start();
             }
         }
-    };
+    }, [time]);
+
 
     // FUNKCJA ZACZYNAJĄCA TRENING
     const startTraining = () => {
         setCycle(1);
-        setTimeLeft(10);
-        sound(880,0.3);
+        reset();
+        sound(880, 0.3);
         setStatus("near");
+        start();
+    };
+
+    // FUNKCJA KOŃCZĄCA TRENING
+    const stopTraining = () => {
+        stop();
+        reset();
+        setStatus("start");
     };
 
 
     // PROGRES 
-    const progress = ((10 - timeLeft) / 10) * 100; // progres w procentach
+    const progress = ((10 - timeLeftInSeconds) / 10) * 100; // progres w procentach
     const totalPhases = maxCycles * 2; // liczba wszystkich faz
     const currentPhase = (cycle - 1) * 2 + (status === "near" ? 1 : 2); // numer aktualnej fazy
 
@@ -176,7 +183,7 @@ export default function EyeAccommodation() {
                         </Link>
                     </div>
 
-                </div> 
+                </div>
             )}
 
 
@@ -187,9 +194,9 @@ export default function EyeAccommodation() {
 
                     {/* POSTĘP */}
                     <div className="flex flex-col items-center gap-1">
-                            {/* POSTĘP - AKTUALNY ETAP */}
+                        {/* POSTĘP - AKTUALNY ETAP */}
                         <span className="text-gray-400 text-xs tracking-widest">
-                            {currentPhase} / {totalPhases} 
+                            {currentPhase} / {totalPhases}
                         </span>
                         <div className="w-48 h-1 bg-gray-200 rounded-full overflow-hidden">
                             <div
@@ -214,7 +221,7 @@ export default function EyeAccommodation() {
 
                     {/* TIMER */}
                     <div className="flex flex-col items-center gap-2">
-                        <span className="text-6xl font-bold text-gray-800 tabular-nums">{timeLeft}</span>
+                        <span className="text-6xl font-bold text-gray-800 tabular-nums">{timeLeftInSeconds}</span>
                         <div className="w-48 h-1.5 bg-gray-200 rounded-full overflow-hidden">
                             <div
                                 className="h-full bg-blue-400 rounded-full transition-all duration-1000"
@@ -225,7 +232,7 @@ export default function EyeAccommodation() {
 
                     {/* PRZERWANIE TRENINGU - POWRÓT DO STARTU */}
                     <button
-                        onClick={() => setStatus("start")}
+                        onClick={stopTraining}
                         className="text-gray-400 text-sm hover:text-gray-900 transition-colors"
                     >
                         Przerwij trening
@@ -266,9 +273,9 @@ export default function EyeAccommodation() {
                         <p className="text-gray-400 text-sm mt-1">Jak najdalej — minimum 6 metrów</p>
                     </div>
 
-                     {/* TIMER */}
+                    {/* TIMER */}
                     <div className="flex flex-col items-center gap-2">
-                        <span className="text-6xl font-bold text-gray-800 tabular-nums">{timeLeft}</span>
+                        <span className="text-6xl font-bold text-gray-800 tabular-nums">{timeLeftInSeconds}</span>
                         <div className="w-48 h-1.5 bg-gray-200 rounded-full overflow-hidden">
                             <div
                                 className="h-full bg-emerald-400 rounded-full transition-all duration-1000"
@@ -280,7 +287,7 @@ export default function EyeAccommodation() {
 
                     {/* PRZERWANIE TRENINGU - POWRÓT DO STARTU */}
                     <button
-                        onClick={() => setStatus("start")}
+                        onClick={stopTraining}
                         className="text-gray-400 text-sm hover:text-gray-600 transition-colors"
                     >
                         Przerwij trening
@@ -301,7 +308,7 @@ export default function EyeAccommodation() {
                         <h2 className="text-3xl font-bold text-gray-900 mb-2">Gotowe! 👁️</h2>
                         <p className="text-gray-800 text-sm leading-relaxed">
                             Ukończyłeś trening akomodacji. Twoje oczy wykonały{" "}
-                           {maxCycles * 2} zmian ostrości w ciągu 2 minut.
+                            {maxCycles * 2} zmian ostrości w ciągu 2 minut.
                         </p>
                     </div>
 
@@ -324,6 +331,6 @@ export default function EyeAccommodation() {
                 </div>
             )}
 
-        </div> 
+        </div>
     )
 }

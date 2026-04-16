@@ -1,24 +1,15 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTwentyRule } from "@/context/useTwentyRule";
 
 export const TWEN_MIN_ENABLE = "twenty_minutes_rule_enabled";
 
 export default function Zasada20min() {
   const navigate = useNavigate();
-
-  const [enabled, setEnabled] = useState<boolean>(() => {
-    const saved = localStorage.getItem(TWEN_MIN_ENABLE);
-    return saved ? JSON.parse(saved) : true; // domyślnie włączone
-  });
-
-  // Zapis do localStorage przy zmianie
-  useEffect(() => {
-    localStorage.setItem(TWEN_MIN_ENABLE, JSON.stringify(enabled));
-  }, [enabled]);
+  const { enabled, setEnabled } = useTwentyRule();
 
   const handleToggle = () => {
     setEnabled((prev) => !prev);
-    navigate("/"); // przekierowanie do main po kliknięciu
+    navigate("/");
   };
 
   return (

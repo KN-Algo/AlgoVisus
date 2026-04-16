@@ -4,7 +4,7 @@ import {
   useNotifications,
   type AppNotification,
 } from "../hooks/useNotifications";
-import { TWEN_MIN_ENABLE } from "../pages/exercises_Zasada20-20-20";
+import { useTwentyRule } from "../context/useTwentyRule";
 
 const DEFAULT_TIME = { hour: 0, minut: 0, second: 10 };
 
@@ -26,6 +26,7 @@ export function TwentyMinutesRule() {
     NOTIFICATION_BREAK,
     DEFAULT_TIME,
   );
+
   const breakTimer = useTimeNotification(
     sendNotification,
     NOTIFICATION_WORK,
@@ -33,14 +34,20 @@ export function TwentyMinutesRule() {
   );
 
   const [mode, setMode] = useState<"work" | "break">("work");
-  const [enabled, setEnabled] = useState<boolean>(true);
+  const { enabled } = useTwentyRule();
+  console.log("ENABLED:", enabled);
 
   useEffect(() => {
-    const saved = localStorage.getItem(TWEN_MIN_ENABLE);
-    setEnabled(saved !== null ? JSON.parse(saved) : true);
+    requestPermission();
   }, []);
 
-  const startCounting = () => {
+  useEffect(() => {
+    if (!enabled) return;
+    if (permission !== "granted") {
+      requestPermission();
+      return;
+    }
+
     if (mode === "work") {
       workTimer.reset();
       workTimer.start();
@@ -48,44 +55,37 @@ export function TwentyMinutesRule() {
       breakTimer.reset();
       breakTimer.start();
     }
-  };
+  }, [permission, mode]);
 
   useEffect(() => {
-    if (permission !== "granted") {
-      requestPermission();
-      return;
-    }
     if (!enabled) {
-      workTimer.stop();
-      breakTimer.stop();
-      return;
+      workTimer.reset();
+      breakTimer.reset();
     } else {
-      startCounting();
+      workTimer.start();
     }
-  }, [permission, enabled]);
+  }, [enabled]);
 
   useEffect(() => {
-    if (workTimer.time === 0) {
+    if (workTimer.time === 0 && mode === "work") {
       workTimer.reset();
       breakTimer.start();
       setMode("break");
     }
-    console.log("work timer", workTimer.time);
-  }, [workTimer.time]);
+  }, [workTimer.time, mode]);
 
   useEffect(() => {
-    if (breakTimer.time === 0) {
+    if (breakTimer.time === 0 && mode === "break") {
       breakTimer.reset();
       workTimer.start();
       setMode("work");
     }
-    console.log("break timer", breakTimer.time);
-  }, [breakTimer.time]);
+  }, [breakTimer.time, mode]);
 
   return (
     <>
-      {enabled && mode === "break" && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 text-white text-5xl font-bold">
+      {mode === "break" && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 text-white text-5xl font-bold">
           Przerwa! ⏳
         </div>
       )}

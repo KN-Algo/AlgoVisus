@@ -8,7 +8,7 @@ function Ustawienia() {
 
       {/* Powiadomienia */}
       <Link
-        to="/Powiadomienia"
+        to="/powiadomienia"
         className="px-6 py-3 bg-white text-black rounded-full shadow-lg active:scale-95 transition-all font-semibold"
       >
         Powiadomienia

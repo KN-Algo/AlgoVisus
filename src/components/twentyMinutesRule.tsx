@@ -6,7 +6,7 @@ import {
 } from "../hooks/useNotifications";
 import { useTwentyRule } from "../context/useTwentyRule";
 
-const DEFAULT_TIME = { hour: 0, minut: 0, second: 10 };
+const DEFAULT_TIME = { hour: 0, minut: 20, second: 0 };
 
 const NOTIFICATION_WORK: AppNotification = {
   title: "Zasada 20-20-20",

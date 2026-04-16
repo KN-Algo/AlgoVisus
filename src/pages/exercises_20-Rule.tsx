@@ -1,15 +1,12 @@
-import { useNavigate } from "react-router-dom";
 import { useTwentyRule } from "@/context/useTwentyRule";
 
 export const TWEN_MIN_ENABLE = "twenty_minutes_rule_enabled";
 
 export default function Zasada20min() {
-  const navigate = useNavigate();
   const { enabled, setEnabled } = useTwentyRule();
 
   const handleToggle = () => {
     setEnabled((prev) => !prev);
-    navigate("/");
   };
 
   return (

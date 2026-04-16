@@ -16,15 +16,25 @@ export const useNotifications = () => {
     setPermission(status);
   };
 
-  // Wysyłanie powiadomienia – **bez service workera**
-  const sendNotification = (notification: AppNotification) => {
+  // Wysyłanie powiadomienia (z obsługą Service Workera)
+  const sendNotification = async (notification: AppNotification) => {
     if (Notification.permission !== "granted") {
       alert("Brak zgody na powiadomienia!");
       return;
     }
 
     try {
-      new Notification(notification.title, notification.options);
+      if ("serviceWorker" in navigator) {
+        const registration = await navigator.serviceWorker.ready;
+        console.log("service Worker");
+
+        await registration.showNotification(notification.title, {
+          ...notification.options,
+        });
+      } else {
+        // fallback (np. starsze przeglądarki / desktop)
+        new Notification(notification.title, notification.options);
+      }
     } catch (error) {
       console.error("Błąd podczas wyświetlania powiadomienia:", error);
     }

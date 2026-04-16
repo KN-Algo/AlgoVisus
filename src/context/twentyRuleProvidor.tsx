@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { TWEN_MIN_ENABLE } from "../pages/exercises_Zasada20-20-20";
+import { TWEN_MIN_ENABLE } from "../pages/exercises_20-Rule";
 import { TwentyRuleContext } from "./twentyRuleContext";
 
 export const TwentyRuleProvider = ({

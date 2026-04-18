@@ -1,15 +1,20 @@
 import { useEffect } from "react";
 import { useTimer } from "./useTimer";
 import { type AppNotification } from "./useNotifications";
-import type { Time } from "./useTimer";
+import type { Time, UseTimerOptions } from "./useTimer";
 
 export const useTimeNotification = (
   sendNotification: (notif: AppNotification) => void,
   notification: AppNotification,
   timeInput: Time,
+  timerOptions?: UseTimerOptions,
 ) => {
   const storageKey = `notif-${notification.title}`;
-  const { time, start, stop, reset } = useTimer(timeInput, storageKey);
+  const { time, start, stop, reset } = useTimer(
+    timeInput,
+    storageKey,
+    timerOptions,
+  );
 
   useEffect(() => {
     if (time === 0) {

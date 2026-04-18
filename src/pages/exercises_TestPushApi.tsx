@@ -52,7 +52,7 @@ export default function TestPushApi() {
           {NOTIFICATIONS.map((n) => (
             <button
               key={n.id}
-              onClick={() => sendNotification({ title: n.title })}
+              onClick={() => sendNotification({ title: n.title, options: { body: n.body } })}
               className="bg-green-500 text-white px-6 py-2 rounded text-left"
             >
                {n.title}

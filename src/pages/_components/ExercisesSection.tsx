@@ -5,6 +5,7 @@ import { GradientButton } from "@/components/ui/gradient-button";
 const exerciseIcons: { [key: string]: string } = {
   ósemka: "👁️",
   drzewko: "🌳",
+  oddech: "🌬️",
   fargaze: "🌠",
   accommodation: "📏",
   rest: "⏱️",
@@ -15,6 +16,8 @@ const exerciseDescriptions: { [key: string]: string } = {
     "Śledź wzrokiem punkt poruszający się po torze ósemki, aby rozluźnić oczy i poprawić płynność ruchu.",
   drzewko:
     "Oderwij wzrok od ekranu i obrysowuj wybrany obiekt za oknem, aby rozluźnić oczy.",
+  oddech:
+    "Uspokój rytm pracy krótkim ćwiczeniem oddechowym prowadzonym krok po kroku.",
 };
 
 export function ExercisesSection() {

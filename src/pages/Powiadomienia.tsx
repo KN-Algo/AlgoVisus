@@ -1,7 +1,6 @@
 import { Bell, SquareArrowLeft } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Cookies from "js-cookie";
 import { NOTIFICATIONS } from "../lib/notificationConfig";
 
 
@@ -12,13 +11,37 @@ interface UstawieniaPowiadomien {
     icon: React.ReactNode;
 }
 
+// COOKIES 
 const COOKIE_KEY = "user_notifications_preferences";
+
+function getCookie(key: string): string | undefined {
+    return document.cookie.split("; ")
+        .find(row => row.startsWith(key + "="))
+        ?.split("=")[1];
+}
+
+function setCookie(key: string, value: string, days: number): void {
+    const expires = new Date();
+    expires.setDate(expires.getDate() + days);
+    document.cookie = `${key}=${value}; expires=${expires.toUTCString()}; path=/`;
+}
+
 
 function Powiadomienia() {
 
+    // Sprawdzamy czy przeglądarka obsługuje powiadomienia
+    const [pushSupported, setPushSupported] = useState<boolean | null>(null);
+
+    useEffect(() => {
+        const supported = "Notification" in window
+            && "serviceWorker" in navigator
+            && "PushManager" in window;
+        setPushSupported(supported);
+    }, []);
+
     // Stan przechowujący wybory użytkownika
     const [settings, setSettings] = useState<UstawieniaPowiadomien[]>(() => {
-        const savedCookies = Cookies.get(COOKIE_KEY);
+        const savedCookies = getCookie(COOKIE_KEY);
 
         const defaultSettings = NOTIFICATIONS.map((n) => ({
             ...n,
@@ -59,7 +82,7 @@ function Powiadomienia() {
         }), {});
 
         // Po 365 dniach COOKIES zostaje usuniete
-        Cookies.set(COOKIE_KEY, JSON.stringify(configToSave), { expires: 365 });
+        setCookie(COOKIE_KEY, JSON.stringify(configToSave), 365);
     };
 
     return (
@@ -104,8 +127,21 @@ function Powiadomienia() {
                 ))}
             </div>
 
-            <div className="mt-auto mb-6 text-gray-400 text-sm text-center px-4">
-                Powiadomienia zostały włączone
+            <div className="mt-auto mb-6 text-center px-4">
+
+                {pushSupported === false ? (  // przeglądarka nie obsługuje push
+                    <p className="text-red-400 text-sm">
+                        Twoja przeglądarka nie obsługuje powiadomień push.
+                    </p>
+                )
+                    : pushSupported === true && Notification.permission !== "granted" ? ( // przeglądarka obsługuje push
+                        <button
+                            onClick={() => Notification.requestPermission()}
+                            className="px-4 py-2 bg-blue-500 text-white rounded-xl text-sm"
+                        >
+                            Włącz powiadomienia
+                        </button>
+                    ) : null}
             </div>
         </div>
     );

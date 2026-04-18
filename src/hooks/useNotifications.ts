@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Cookies from "js-cookie";
 import { NOTIFICATION_TITLE_TO_ID } from "../lib/notificationConfig";
 
 // Interfejs dla powiadomienia
@@ -9,6 +8,13 @@ export interface AppNotification {
 }
 
 const COOKIE_KEY = "user_notifications_preferences";
+
+// COOKIES
+function getCookie(key: string): string | undefined {
+  return document.cookie.split("; ")
+    .find(row => row.startsWith(key + "="))
+    ?.split("=")[1];
+}
 
 export const useNotifications = () => {
   const [permission, setPermission] =
@@ -30,7 +36,7 @@ export const useNotifications = () => {
     // Sprawdenie czy ten typ powiadomienia jest włączony w COOKIES
     const id = NOTIFICATION_TITLE_TO_ID[notification.title];
     if (id) {
-      const saved = Cookies.get(COOKIE_KEY);
+      const saved = getCookie(COOKIE_KEY);
       if (saved) {
         try {
           const prefs = JSON.parse(saved);

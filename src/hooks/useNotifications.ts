@@ -18,7 +18,7 @@ function getCookie(key: string): string | undefined {
 
 export const useNotifications = () => {
   const [permission, setPermission] =
-    useState<NotificationPermission>("default");
+    useState<NotificationPermission>(() => Notification.permission); // zmiana z "default" na () => Notification.permission
 
   // Prośba o zgodę
   const requestPermission = async () => {

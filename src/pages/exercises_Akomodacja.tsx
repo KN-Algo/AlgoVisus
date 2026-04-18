@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Eye } from "lucide-react";
 import { useTimer } from "../hooks/useTimer";
 import { GradientButton } from "@/components/ui/gradient-button";
@@ -36,6 +35,8 @@ export default function EyeAccommodation() {
   const [status, setStatus] = useState("start");
   const [cycle, setCycle] = useState(1);
   const maxCycles = 6;
+  const startSectionRef = useRef<HTMLElement | null>(null);
+  const exerciseSectionRef = useRef<HTMLElement | null>(null);
 
   // HOOK Timer
   const { time, start, stop, reset } = useTimer(
@@ -48,6 +49,56 @@ export default function EyeAccommodation() {
   );
 
   const timeLeftInSeconds = Math.ceil(time / 1000);
+
+  const scrollToSectionTop = (
+    section: HTMLElement | null,
+    behavior: ScrollBehavior,
+  ) => {
+    if (!section) {
+      return;
+    }
+
+    const navbarOffset = 50;
+    const extraGap = 18;
+    const rect = section.getBoundingClientRect();
+    const absoluteTop = rect.top + window.scrollY;
+    const nextTop = Math.max(0, absoluteTop - navbarOffset - extraGap);
+
+    window.scrollTo({
+      top: nextTop,
+      behavior,
+    });
+
+    if (behavior === "auto") {
+      document.documentElement.scrollTop = nextTop;
+      document.body.scrollTop = nextTop;
+    }
+  };
+
+  const scrollToActiveSection = (behavior: ScrollBehavior) => {
+    const section =
+      status === "start" ? startSectionRef.current : exerciseSectionRef.current;
+
+    scrollToSectionTop(section, behavior);
+  };
+
+  useEffect(() => {
+    scrollToActiveSection("auto");
+  }, []);
+
+  useLayoutEffect(() => {
+    scrollToActiveSection("auto");
+  }, [status]);
+
+  useEffect(() => {
+    const frameId = window.requestAnimationFrame(() => {
+      scrollToActiveSection("auto");
+    });
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+    };
+  }, [status]);
 
   // TIMER
   useEffect(() => {
@@ -99,7 +150,10 @@ export default function EyeAccommodation() {
     <div className="w-full">
       {status === "start" && (
         // div główny - widok początkowy
-        <section className="relative w-full min-h-screen overflow-hidden animate-fade-in">
+        <section
+          ref={startSectionRef}
+          className="relative w-full min-h-screen overflow-hidden animate-fade-in"
+        >
           <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-cyan-50 to-teal-50" />
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent animate-shimmer" />
@@ -219,7 +273,7 @@ export default function EyeAccommodation() {
               </div>
 
               <div
-                className="flex justify-center gap-4 animate-fade-in-up"
+                className="flex justify-center animate-fade-in-up"
                 style={{
                   animationDelay: "460ms",
                   animationFillMode: "backwards",
@@ -228,12 +282,6 @@ export default function EyeAccommodation() {
                 <GradientButton onClick={startTraining}>
                   Rozpocznij ćwiczenie
                 </GradientButton>
-                <Link
-                  to="/App"
-                  className="px-8 py-4 font-semibold rounded-lg text-slate-900 bg-white/80 border border-white/75 transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-95 backdrop-blur-sm"
-                >
-                  Powrót
-                </Link>
               </div>
             </div>
           </div>
@@ -242,7 +290,10 @@ export default function EyeAccommodation() {
 
       {/* FAZA BLISKO - NEAR */}
       {status === "near" && (
-        <section className="relative w-full min-h-screen bg-gradient-to-br from-blue-50 via-cyan-50 to-teal-50 overflow-hidden">
+        <section
+          ref={exerciseSectionRef}
+          className="relative w-full min-h-screen bg-gradient-to-br from-blue-50 via-cyan-50 to-teal-50 overflow-hidden"
+        >
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent animate-shimmer" />
           </div>
@@ -342,7 +393,10 @@ export default function EyeAccommodation() {
 
       {/* FAZA DALEKO - FAR */}
       {status === "far" && (
-        <section className="relative w-full min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 overflow-hidden">
+        <section
+          ref={exerciseSectionRef}
+          className="relative w-full min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 overflow-hidden"
+        >
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent animate-shimmer" />
           </div>
@@ -443,7 +497,10 @@ export default function EyeAccommodation() {
 
       {/* FINISHED */}
       {status === "finished" && (
-        <section className="relative w-full min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 overflow-hidden">
+        <section
+          ref={exerciseSectionRef}
+          className="relative w-full min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 overflow-hidden"
+        >
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent animate-shimmer" />
           </div>

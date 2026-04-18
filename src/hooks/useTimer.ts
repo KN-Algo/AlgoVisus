@@ -9,7 +9,7 @@ export type Time = {
   second: number;
 };
 
-function TimeToMilSec({ hour, minut, second }: Time): number {
+export function TimeToMilSec({ hour, minut, second }: Time): number {
   minut += hour * 60;
   second += minut * 60;
   const m_second: number = second * SEC_IN_MSEC;
@@ -56,14 +56,14 @@ export function useTimer({ hour, minut, second }: Time, storageKey: string) {
     }
 
     if (time !== countTime) localStorage.setItem(storageKey, time.toString());
-  }, [time]);
+  }, [time, countTime, storageKey]);
 
   useEffect(() => {
     const savedTime = localStorage.getItem(storageKey);
     if (savedTime) {
       setTime(Number(savedTime));
     }
-  }, []);
+  }, [storageKey]);
 
   return { time, start, stop, reset };
 }

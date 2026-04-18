@@ -78,12 +78,29 @@ npm run dev
 ## 🤝 Twórcy
 
 Projekt realizowany przez członków **KN Algo** przy Politechnice Wrocławskiej:
-
-  * **[Adrian Goral](https://github.com/xEdziu)**
-  * **[Imię Nazwisko](https://github.com/)**
+* **[Adrian Goral](https://github.com/xEdziu)**
+* **[Krystian Bury](https://github.com/KBruy)**
+* **[Filip Mikłusiak](https://github.com/senzaglutine)**
+* **[Jakub Rolak](https://github.com/serplay)**
+* **[Hanna Gąsior](https://github.com/)**
+* **[Jakub Kowalewski](https://github.com/golab6)**
+* **[Piotr Kosior](https://github.com/Kosiorny)**
+* **[Aleksandra Zimna](https://github.com/OlciXs)**
+* **[Artiom Borokhov](https://github.com/crazymonkey112)**
+* **[Kristina Pavlovska](https://github.com/pavlovskakristina)**
+* **[Mikołaj Bogusz](https://github.com/mikolajXbogusz)**
+* **[Szymon Banasiak](https://github.com/FaziSPB)**
+* **[Tobiasz Rolla](https://github.com/tobiaszrolla)**
 
 Ze wsparciem merytorycznym członków **KN Visus** przy Politechnice Wrocławskiej:
-  * **[Imię Nazwisko](https://github.com/)**
+
+* **Jagoda 'Ewa' Zabilska**
+* **Joanna Biel**
+* **Weronika Pytlos**
+* **Maria Bąkowska**
+* **Agata Wołowicka**
+* **Justyna Owczarz**
+
 
 -----
 

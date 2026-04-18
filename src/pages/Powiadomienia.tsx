@@ -2,6 +2,7 @@ import { Bell, SquareArrowLeft } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { NOTIFICATIONS } from "../lib/notificationConfig";
+import { useNotifications } from "../hooks/useNotifications";
 
 
 interface UstawieniaPowiadomien {
@@ -31,6 +32,7 @@ function Powiadomienia() {
 
     // Sprawdzamy czy przeglądarka obsługuje powiadomienia
     const [pushSupported, setPushSupported] = useState<boolean | null>(null);
+    const { permission, requestPermission } = useNotifications();
 
     useEffect(() => {
         const supported = "Notification" in window
@@ -134,9 +136,9 @@ function Powiadomienia() {
                         Twoja przeglądarka nie obsługuje powiadomień push.
                     </p>
                 )
-                    : pushSupported === true && Notification.permission !== "granted" ? ( // przeglądarka obsługuje push
+                    : pushSupported === true && permission !== "granted" ? ( // przeglądarka obsługuje push
                         <button
-                            onClick={() => Notification.requestPermission()}
+                            onClick={requestPermission}
                             className="px-4 py-2 bg-blue-500 text-white rounded-xl text-sm"
                         >
                             Włącz powiadomienia

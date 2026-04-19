@@ -188,40 +188,42 @@ export function AppSidebar() {
         </SidebarContent>
 
         {/* Stopka bocznego panelu */}
-        {/* <SidebarFooter className="border-t border-slate-200/80 p-2">
+        {/* <SidebarFooter className="border-t border-slate-200/80 p-2"> */}
+        <SidebarFooter>
           <SidebarMenu>
-            {footer.map((route) => {
-              const Icon = getRouteIcon(route.name, route.prefix);
+            {footer.map((_) => {
+              // const Icon = getRouteIcon(route.name, route.prefix);
 
               return (
-                <SidebarMenuItem key={route.path}>
-                  <SidebarMenuButton
-                    asChild
-                    size="lg"
-                    className="mx-1 rounded-xl p-0"
-                  >
-                    <NavLink
-                      to={route.path}
-                      onClick={handleMenuItemClick}
-                      className={({ isActive }) =>
-                        `flex h-full w-full items-center gap-3 rounded-xl px-3.5 text-sm transition-all duration-200 ${
-                          isActive
-                            ? "bg-gradient-to-r from-cyan-100 to-blue-100 text-cyan-900 shadow-sm"
-                            : "text-black hover:bg-slate-100/90 hover:text-black"
-                        }`
-                      }
-                    >
-                      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-slate-200/70 border border-slate-400">
-                        <Icon className="h-4.5 w-4.5 text-black" />
-                      </span>
-                      <span className="truncate font-medium">{route.name}</span>
-                    </NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                <></>
+                // <SidebarMenuItem key={route.path}>
+                //   <SidebarMenuButton
+                //     asChild
+                //     size="lg"
+                //     className="mx-1 rounded-xl p-0"
+                //   >
+                //     <NavLink
+                //       to={route.path}
+                //       onClick={handleMenuItemClick}
+                //       className={({ isActive }) =>
+                //         `flex h-full w-full items-center gap-3 rounded-xl px-3.5 text-sm transition-all duration-200 ${
+                //           isActive
+                //             ? "bg-gradient-to-r from-cyan-100 to-blue-100 text-cyan-900 shadow-sm"
+                //             : "text-black hover:bg-slate-100/90 hover:text-black"
+                //         }`
+                //       }
+                //     >
+                //       <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-slate-200/70 border border-slate-400">
+                //         <Icon className="h-4.5 w-4.5 text-black" />
+                //       </span>
+                //       <span className="truncate font-medium">{route.name}</span>
+                //     </NavLink>
+                //   </SidebarMenuButton>
+                // </SidebarMenuItem>
               );
             })}
           </SidebarMenu>
-        </SidebarFooter> */}
+        </SidebarFooter>
       </Sidebar>
     </>
   );

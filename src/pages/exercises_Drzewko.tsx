@@ -10,6 +10,7 @@ import notifySound from "../assets/sounds/notify.mp3";
 import { GradientButton } from "@/components/ui/gradient-button";
 import { Button } from "@/components/ui/button";
 import { FooterSection } from "./_components/FooterSection.tsx";
+import { primeMediaElementPlayback } from "@/lib/audio";
 
 const EXERCISE_TRANSITION_MS = 420;
 
@@ -194,7 +195,8 @@ function DrzewkoExercisePanel({
               <Button
                 size="lg"
                 className="min-w-40"
-                onClick={() => {
+                onClick={async () => {
+                  await primeMediaElementPlayback(audioRef.current);
                   timer.start();
                   setExerciseStarted(true);
                   setExercisePaused(false);
@@ -242,7 +244,7 @@ function DrzewkoExercisePanel({
           </div>
         </div>
 
-        <audio ref={audioRef} src={notifySound} />
+        <audio ref={audioRef} src={notifySound} preload="auto" />
 
         {mediaWarning ? (
           <p className="mx-auto mt-5 max-w-xl text-center text-sm text-amber-300">

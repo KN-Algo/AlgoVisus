@@ -3,31 +3,13 @@ import { Eye } from "lucide-react";
 import { useTimer } from "../hooks/useTimer";
 import { GradientButton } from "@/components/ui/gradient-button";
 import { FooterSection } from "./_components/FooterSection";
+import { playTone } from "@/lib/audio";
 
 // DZWIĘK
 function sound(freq: number, duration: number) {
-  try {
-    const ctx = new AudioContext();
-    const play = () => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.frequency.value = freq;
-      osc.type = "sine";
-      gain.gain.setValueAtTime(0.3, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + duration);
-    };
-    if (ctx.state === "suspended") {
-      ctx.resume().then(play);
-    } else {
-      play();
-    }
-  } catch (error) {
+  void playTone(freq, duration).catch((error) => {
     console.error("Błąd dźwięku:", error);
-  }
+  });
 }
 
 export default function EyeAccommodation() {

@@ -3,6 +3,7 @@ import { routes } from "@/lib/routes-config";
 import { GradientButton } from "@/components/ui/gradient-button";
 
 const exerciseIcons: { [key: string]: string } = {
+  "20-rule": "⏱️",
   ósemka: "👁️",
   drzewko: "🌳",
   oddech: "🌬️",
@@ -12,6 +13,8 @@ const exerciseIcons: { [key: string]: string } = {
 };
 
 const exerciseDescriptions: { [key: string]: string } = {
+  "20-rule":
+    "Klasyczna reguła 20-20-20 przypomina o spojrzeniu w dal po 20 minutach pracy przy ekranie.",
   ósemka:
     "Śledź wzrokiem punkt poruszający się po torze ósemki, aby rozluźnić oczy i poprawić płynność ruchu.",
   drzewko:
@@ -65,11 +68,11 @@ export function ExercisesSection() {
           style={{ animationDelay: "100ms", animationFillMode: "backwards" }}
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-4">
-            Odkryj ćwiczenie dla zdrowszych oczu
+            Odkryj ćwiczenia dla zdrowszych oczu
           </h2>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Każde ćwiczenie jest specjalnie dobrane aby ulżyć zmęczeniu i
-            wzmocnić Twój wzrok
+            Każde ćwiczenie zostało specjalnie dobrane, aby zmniejszyć zmęczenie
+            oczu i wzmocnić Twój wzrok
           </p>
         </div>
 
@@ -105,7 +108,7 @@ export function ExercisesSection() {
                   </p>
 
                   {/* CTA Button */}
-                  <GradientButton>Zacznij ćwiczenie</GradientButton>
+                  <GradientButton>Rozpocznij ćwiczenie</GradientButton>
                 </div>
               </div>
             </Link>

@@ -64,7 +64,7 @@ export function AuthorsSection() {
                 />
               </a>
               <a
-                href="http://visus.pwr.wroc.pl"
+                href="https://www.instagram.com/visus.kn/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-lg overflow-hidden shadow-lg hover:scale-110 transition-transform duration-300 flex items-center justify-center bg-white/10"

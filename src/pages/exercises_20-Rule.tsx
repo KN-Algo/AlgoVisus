@@ -367,7 +367,7 @@ function ToggleSwitch({
       role="switch"
       aria-checked={enabled}
       onClick={onToggle}
-      className={`relative inline-flex h-8 w-16 items-center rounded-full border transition-all duration-300 ${
+      className={`relative inline-flex h-8 w-16 shrink-0 items-center overflow-hidden rounded-full border p-1 transition-all duration-300 ${
         enabled
           ? "border-teal-500/40 bg-gradient-to-r from-teal-500 to-cyan-500"
           : "border-slate-300 bg-slate-200"
@@ -375,7 +375,7 @@ function ToggleSwitch({
     >
       <span className="sr-only">Automatyczny kolejny cykl</span>
       <span
-        className={`mx-1 h-6 w-6 rounded-full bg-white shadow-md transition-transform duration-300 ${
+        className={`h-6 w-6 rounded-full bg-white shadow-md transition-transform duration-300 ${
           enabled ? "translate-x-8" : "translate-x-0"
         }`}
       />

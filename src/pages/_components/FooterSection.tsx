@@ -166,8 +166,8 @@ export function FooterSection() {
           </p>
           <div className="flex items-center gap-2 text-xs md:text-sm text-gray-500">
             <span>Stworzony z</span>
-            <Heart className="w-4 h-4 text-red-500 fill-red-500" />
-            <span>przez KN-Algo i KN Visus</span>
+            <Heart className="w-4 h-4 text-red-500 fill-red-500 ml-1" />
+            <span>przez KN Algo i KN Visus</span>
           </div>
         </div>
       </div>

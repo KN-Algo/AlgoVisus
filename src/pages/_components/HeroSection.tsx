@@ -1,5 +1,6 @@
 import { GradientButton } from "@/components/ui/gradient-button";
 import { useSidebar } from "@/components/ui/sidebar.utils";
+import visusLogo from "@/assets/icons/rysunek_visus2ss.svg";
 
 export function HeroSection() {
   const { open, isMobile } = useSidebar();
@@ -48,7 +49,7 @@ export function HeroSection() {
               }`}
             >
               <img
-                src="/rysunek_visus2ss.svg"
+                src={visusLogo}
                 alt="Blinky Logo"
                 className={`w-full h-full object-contain transition-all duration-300 ${
                   shouldElevateLogo

@@ -409,13 +409,13 @@ function DrzewkoPage() {
             </p>
 
             <div
-              className="mx-auto mb-12 grid max-w-5xl gap-6 animate-fade-in-up lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]"
+              className="mx-auto mb-12 grid max-w-5xl items-start gap-6 animate-fade-in-up lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]"
               style={{
                 animationDelay: "380ms",
                 animationFillMode: "backwards",
               }}
             >
-              <div className="rounded-[2rem] border border-white/75 bg-white/82 p-6 text-left shadow-[0_14px_30px_rgba(16,185,129,0.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_18px_36px_rgba(16,185,129,0.12)] md:p-7">
+              <div className="h-fit rounded-[2rem] border border-white/75 bg-white/82 p-6 text-left shadow-[0_14px_30px_rgba(16,185,129,0.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_18px_36px_rgba(16,185,129,0.12)] md:p-7">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
                     <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700/70">

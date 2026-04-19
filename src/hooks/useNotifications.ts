@@ -26,7 +26,7 @@ export const useNotifications = () => {
   };
 
   // Wysyłanie powiadomienia – **bez service workera**
-  const sendNotification = (notification: AppNotification) => {
+  const sendNotification = async (notification: AppNotification) => {
     if (
       typeof Notification === "undefined" ||
       Notification.permission !== "granted"

@@ -60,11 +60,11 @@ export function ExercisesSection() {
           style={{ animationDelay: "100ms", animationFillMode: "backwards" }}
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-4">
-            Odkryj ćwiczenie dla zdrowszych oczu
+            Odkryj ćwiczenia dla zdrowszych oczu
           </h2>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Każde ćwiczenie jest specjalnie dobrane aby ulżyć zmęczeniu i
-            wzmocnić Twój wzrok
+            Każde ćwiczenie zostało specjalnie dobrane, aby zmniejszyć zmęczenie
+            oczu i wzmocnić Twój wzrok
           </p>
         </div>
 
@@ -100,7 +100,7 @@ export function ExercisesSection() {
                   </p>
 
                   {/* CTA Button */}
-                  <GradientButton>Zacznij ćwiczenie</GradientButton>
+                  <GradientButton>Rozpocznij ćwiczenie</GradientButton>
                 </div>
               </div>
             </Link>

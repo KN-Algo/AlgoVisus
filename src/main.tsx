@@ -9,10 +9,12 @@ import { Suspense } from "react";
 import { routes } from "./lib/routes-config";
 import { TwentyRuleProvider } from "./context/twentyRuleProvidor.tsx";
 import { TwentyMinutesRule } from "./components/twentyMinutesRule.tsx";
+import { RouteScrollManager } from "./components/route-scroll-manager.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
+      <RouteScrollManager />
       <SidebarProvider defaultOpen={false}>
         <TwentyRuleProvider>
           {/* Komponent globalny - reguła 20-20-20 */}

@@ -18,14 +18,28 @@ export const authors: Author[] = [
     firstName: "Joanna",
     lastName: "Biel",
     organization: "KN Visus",
-    socialLinks: [],
+    socialLinks: [
+      {
+        platform: "instagram",
+        url: "https://www.instagram.com/prvvatkavbiel?igsh=aGhhaThyd2kxZjJz&utm_source=qr",
+      },
+      {
+        platform: "linkedin",
+        url: "https://www.linkedin.com/in/joanna-biel-821212306/",
+      },
+    ],
   },
   {
     id: "2",
     firstName: "Weronika",
     lastName: "Pytlos",
     organization: "KN Visus",
-    socialLinks: [],
+    socialLinks: [
+      {
+        platform: "linkedin",
+        url: "https://www.linkedin.com/in/weronika-pytlos-56485b328",
+      },
+    ],
   },
   {
     id: "3",
@@ -101,6 +115,10 @@ export const authors: Author[] = [
     organization: "KN Algo",
     socialLinks: [
       { platform: "github", url: "https://github.com/pavlovskakristina" },
+      {
+        platform: "linkedin",
+        url: "https://www.linkedin.com/in/pavlovskakristina",
+      },
     ],
   },
   {
@@ -124,7 +142,12 @@ export const authors: Author[] = [
     firstName: "Hanna",
     lastName: "Gąsior",
     organization: "KN Algo",
-    socialLinks: [],
+    socialLinks: [
+      {
+        platform: "instagram",
+        url: "https://www.instagram.com/irisless.art/",
+      },
+    ],
   },
   {
     id: "15",
@@ -161,6 +184,16 @@ export const authors: Author[] = [
     firstName: "Jakub",
     lastName: "Rolak",
     organization: "KN Algo",
-    socialLinks: [{ platform: "github", url: "https://github.com/serplay" }],
+    socialLinks: [
+      { platform: "github", url: "https://github.com/serplay" },
+      {
+        platform: "instagram",
+        url: "https://www.instagram.com/causewhynotbruh",
+      },
+      {
+        platform: "linkedin",
+        url: "https://www.linkedin.com/in/jakub-rolak/",
+      },
+    ],
   },
 ];

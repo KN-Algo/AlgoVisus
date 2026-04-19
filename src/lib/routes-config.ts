@@ -7,6 +7,8 @@ export interface RouteConfig {
   component: React.LazyExoticComponent<React.ComponentType>;
 }
 
+const HIDDEN_UI_ROUTE_NAMES = new Set(["TestPushApi"]);
+
 const pages = import.meta.glob<{ default: React.ComponentType }>(
   "../pages/*.tsx",
 );
@@ -29,3 +31,7 @@ export const routes = Object.keys(pages)
       component: React.lazy(() => pages[path]()),
     };
   });
+
+export function isRouteVisibleInUi(route: RouteConfig) {
+  return !HIDDEN_UI_ROUTE_NAMES.has(route.name);
+}

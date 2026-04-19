@@ -9,14 +9,16 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useSidebar } from "@/components/ui/sidebar.utils";
-import { routes } from "@/lib/routes-config";
+import { isRouteVisibleInUi, routes } from "@/lib/routes-config";
 import { ExerciseSymbol } from "@/components/exercise-symbol";
 import { Info, Settings2, Sparkles, UserRound, X } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import appLogo from "@/assets/images/Blinky_logo.png";
 
-const exercises = routes.filter((r) => r.prefix === "exercises");
+const exercises = routes.filter(
+  (route) => route.prefix === "exercises" && isRouteVisibleInUi(route),
+);
 const other = routes.filter((r) => r.prefix === "other");
 const footer = routes.filter((r) => r.prefix === "footer");
 

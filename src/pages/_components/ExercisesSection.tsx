@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { routes } from "@/lib/routes-config";
+import { isRouteVisibleInUi, routes } from "@/lib/routes-config";
 import { GradientButton } from "@/components/ui/gradient-button";
 import { ExerciseSymbol } from "@/components/exercise-symbol";
 
@@ -18,7 +18,7 @@ const exerciseDescriptions: { [key: string]: string } = {
 
 export function ExercisesSection() {
   const exercises = routes.filter(
-    (route) => route.prefix === "exercises" && route.name !== "TestPushApi",
+    (route) => route.prefix === "exercises" && isRouteVisibleInUi(route),
   );
 
   return (

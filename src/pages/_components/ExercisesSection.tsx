@@ -3,6 +3,7 @@ import { routes } from "@/lib/routes-config";
 import { GradientButton } from "@/components/ui/gradient-button";
 
 const exerciseIcons: { [key: string]: string } = {
+  "20-rule": "⏱️",
   ósemka: "👁️",
   oddech: "🌬️",
   fargaze: "🌠",
@@ -11,6 +12,8 @@ const exerciseIcons: { [key: string]: string } = {
 };
 
 const exerciseDescriptions: { [key: string]: string } = {
+  "20-rule":
+    "Klasyczna reguła 20-20-20 przypomina o spojrzeniu w dal po 20 minutach pracy przy ekranie.",
   oddech:
     "Uspokój rytm pracy krótkim ćwiczeniem oddechowym prowadzonym krok po kroku.",
 };

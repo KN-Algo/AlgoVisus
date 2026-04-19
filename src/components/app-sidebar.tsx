@@ -188,7 +188,7 @@ export function AppSidebar() {
         </SidebarContent>
 
         {/* Stopka bocznego panelu */}
-        <SidebarFooter className="border-t border-slate-200/80 p-2">
+        {/* <SidebarFooter className="border-t border-slate-200/80 p-2">
           <SidebarMenu>
             {footer.map((route) => {
               const Icon = getRouteIcon(route.name, route.prefix);
@@ -221,7 +221,7 @@ export function AppSidebar() {
               );
             })}
           </SidebarMenu>
-        </SidebarFooter>
+        </SidebarFooter> */}
       </Sidebar>
     </>
   );

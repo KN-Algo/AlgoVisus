@@ -395,7 +395,8 @@ function DrzewkoPage() {
               }}
             >
               Ćwiczenie "Drzewko" to 2 minutowe zadanie, które polega na
-              obrysowaniu wzrokiem dowolnego obiektu, który znajdziesz za oknem.
+              obrysowaniu wzrokiem dowolnego obiektu który znajdziesz za oknem
+              lub w dużej odległości (powyżej 5 metrów).
             </p>
             <p
               className="mx-auto mb-12 max-w-3xl text-center text-lg leading-relaxed text-slate-600 animate-fade-in-up md:text-xl"

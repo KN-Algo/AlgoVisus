@@ -409,13 +409,13 @@ function DrzewkoPage() {
             </p>
 
             <div
-              className="mx-auto mb-12 grid max-w-5xl items-start gap-6 animate-fade-in-up lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]"
+              className="mx-auto mb-12 grid max-w-5xl gap-6 animate-fade-in-up lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)]"
               style={{
                 animationDelay: "380ms",
                 animationFillMode: "backwards",
               }}
             >
-              <div className="h-fit rounded-[2rem] border border-white/75 bg-white/82 p-6 text-left shadow-[0_14px_30px_rgba(16,185,129,0.08)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_18px_36px_rgba(16,185,129,0.12)] md:p-7">
+              <div className="flex h-full flex-col rounded-[2rem] border border-slate-200/85 bg-white/88 p-6 text-left shadow-[0_16px_34px_rgba(148,163,184,0.16)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01] hover:shadow-[0_20px_40px_rgba(148,163,184,0.2)] md:p-7">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
                     <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700/70">
@@ -427,32 +427,32 @@ function DrzewkoPage() {
                   </div>
                 </div>
 
-                <div className="mt-6 grid gap-3 md:grid-cols-3">
-                  <div className="rounded-[1.5rem] border border-emerald-100 bg-emerald-50/80 p-4">
-                    <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-700/70">
+                <div className="mt-6 grid flex-1 auto-rows-fr gap-3">
+                  <div className="grid gap-3 rounded-[1.5rem] border border-emerald-100 bg-emerald-50/75 p-4 sm:grid-cols-[minmax(150px,0.9fr)_1fr] sm:items-start sm:gap-4">
+                    <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-700/70 sm:max-w-[11rem]">
                       1. Znajdź punkt
                     </p>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                    <p className="text-sm leading-relaxed text-slate-700">
                       Spójrz za okno i wybierz gałąź, dach, linię budynku albo
                       inny spokojny kontur.
                     </p>
                   </div>
 
-                  <div className="rounded-[1.5rem] border border-emerald-100 bg-emerald-50/80 p-4">
-                    <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-700/70">
+                  <div className="grid gap-3 rounded-[1.5rem] border border-emerald-100 bg-emerald-50/75 p-4 sm:grid-cols-[minmax(150px,0.9fr)_1fr] sm:items-start sm:gap-4">
+                    <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-700/70 sm:max-w-[11rem]">
                       2. Prowadź wzrok
                     </p>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                    <p className="text-sm leading-relaxed text-slate-700">
                       Delikatnie obrysowuj kształt oczami, spokojnie i bez
                       pośpiechu.
                     </p>
                   </div>
 
-                  <div className="rounded-[1.5rem] border border-emerald-100 bg-emerald-50/80 p-4">
-                    <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-700/70">
+                  <div className="grid gap-3 rounded-[1.5rem] border border-emerald-100 bg-emerald-50/75 p-4 sm:grid-cols-[minmax(150px,0.9fr)_1fr] sm:items-start sm:gap-4">
+                    <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-700/70 sm:max-w-[11rem]">
                       3. Wróć po sygnale
                     </p>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
+                    <p className="text-sm leading-relaxed text-slate-700">
                       Po uruchomieniu ćwiczenia, wyświetlony zostanie czas
                       odliczający koniec ćwiczenia.
                     </p>
@@ -460,10 +460,10 @@ function DrzewkoPage() {
                 </div>
               </div>
 
-              <div className="overflow-hidden rounded-[2rem] border border-white/75 bg-slate-950 shadow-[0_18px_36px_rgba(15,23,42,0.16)] transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01]">
+              <div className="overflow-hidden rounded-[2rem] border border-slate-200/85 bg-slate-950 shadow-[0_18px_36px_rgba(15,23,42,0.14)] transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01]">
                 <div className="relative aspect-[4/5] w-full">
                   <video
-                    className="h-full w-full object-cover"
+                    className="h-full w-full scale-[1.035] object-cover"
                     autoPlay
                     loop
                     muted
@@ -474,6 +474,7 @@ function DrzewkoPage() {
                     Twoja przeglądarka nie wspiera wideo.
                   </video>
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/88 via-slate-950/15 to-transparent" />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_62%,rgba(15,23,42,0.08)_100%)]" />
                   <div className="absolute inset-x-0 bottom-0 p-5 text-left text-white">
                     <p className="text-xs font-semibold uppercase tracking-[0.24em] text-emerald-200/80">
                       Podgląd ruchu

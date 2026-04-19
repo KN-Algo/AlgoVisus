@@ -46,7 +46,16 @@ export const authors: Author[] = [
     firstName: "Maria",
     lastName: "Bąkowska",
     organization: "KN Visus",
-    socialLinks: [],
+    socialLinks: [
+      {
+        platform: "linkedin",
+        url: "https://pl.linkedin.com/in/maria-b%C4%85kowska-2026b9303",
+      },
+      {
+        platform: "instagram",
+        url: "https://www.instagram.com/m__bakowska",
+      },
+    ],
   },
   {
     id: "4",
@@ -70,17 +79,9 @@ export const authors: Author[] = [
     socialLinks: [],
   },
   // KN Algo
+
   {
     id: "7",
-    firstName: "Filip",
-    lastName: "Mikłusiak",
-    organization: "KN Algo",
-    socialLinks: [
-      { platform: "github", url: "https://github.com/senzaglutine" },
-    ],
-  },
-  {
-    id: "8",
     firstName: "Krystian",
     lastName: "Bury",
     organization: "KN Algo",
@@ -93,23 +94,20 @@ export const authors: Author[] = [
     ],
   },
   {
-    id: "9",
-    firstName: "Mikołaj",
-    lastName: "Bogusz",
+    id: "8",
+    firstName: "Adrian",
+    lastName: "Goral",
     organization: "KN Algo",
     socialLinks: [
-      { platform: "github", url: "https://github.com/mikolajXbogusz" },
+      { platform: "github", url: "https://github.com/xEdziu" },
+      {
+        platform: "linkedin",
+        url: "https://www.linkedin.com/in/adrian-goral/"
+      },
     ],
   },
   {
-    id: "10",
-    firstName: "Piotr",
-    lastName: "Kosior",
-    organization: "KN Algo",
-    socialLinks: [{ platform: "github", url: "https://github.com/Kosiorny" }],
-  },
-  {
-    id: "11",
+    id: "9",
     firstName: "Kristina",
     lastName: "Pavlovska",
     organization: "KN Algo",
@@ -122,12 +120,30 @@ export const authors: Author[] = [
     ],
   },
   {
-    id: "12",
-    firstName: "Adrian",
-    lastName: "Goral",
+    id: "10",
+    firstName: "Aleksandra",
+    lastName: "Zimna",
     organization: "KN Algo",
-    socialLinks: [{ platform: "github", url: "https://github.com/xEdziu" }],
+    socialLinks: [{ platform: "github", url: "https://github.com/OlciXs" }],
   },
+  {
+    id: "11",
+    firstName: "Tobiasz",
+    lastName: "Rolla",
+    organization: "KN Algo",
+    socialLinks: [
+      { platform: "github", url: "https://github.com/tobiaszrolla" },
+    ],
+  },
+  {
+    id: "12",
+    firstName: "Piotr",
+    lastName: "Kosior",
+    organization: "KN Algo",
+    socialLinks: [{ platform: "github", url: "https://github.com/Kosiorny" }],
+  },
+
+
   {
     id: "13",
     firstName: "Artiom",
@@ -151,36 +167,13 @@ export const authors: Author[] = [
   },
   {
     id: "15",
-    firstName: "Jakub",
-    lastName: "Kowalewski",
-    organization: "KN Algo",
-    socialLinks: [{ platform: "github", url: "https://github.com/golab6" }],
-  },
-  {
-    id: "16",
     firstName: "Szymon",
     lastName: "Banasiak",
     organization: "KN Algo",
     socialLinks: [{ platform: "github", url: "https://github.com/FaziSPB" }],
   },
   {
-    id: "17",
-    firstName: "Aleksandra",
-    lastName: "Zimna",
-    organization: "KN Algo",
-    socialLinks: [{ platform: "github", url: "https://github.com/OlciXs" }],
-  },
-  {
-    id: "18",
-    firstName: "Tobiasz",
-    lastName: "Rolla",
-    organization: "KN Algo",
-    socialLinks: [
-      { platform: "github", url: "https://github.com/tobiaszrolla" },
-    ],
-  },
-  {
-    id: "19",
+    id: "16",
     firstName: "Jakub",
     lastName: "Rolak",
     organization: "KN Algo",

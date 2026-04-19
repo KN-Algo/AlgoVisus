@@ -132,8 +132,8 @@ export default function OsemkaPage() {
               }}
             >
               To krótkie ćwiczenie pomaga rozluźnić oczy i poprawić płynność
-              śledzenia wzrokiem. Po rozpoczęciu pojawi się animowany punkt,
-              który będziesz śledzić wzrokiem po torze w kształcie ósemki.
+              śledzenia wzrokiem. Po rozpoczęciu pojawi się animowany punkt.
+              Prowadź wzrokiem po torze w kształcie ósemki.
             </p>
 
             <div

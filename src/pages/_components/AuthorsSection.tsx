@@ -28,7 +28,7 @@ export function AuthorsSection() {
             >
               Poznaj nasz zespół
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-blue-600">
-                Twórcy AlgoVisus
+                Twórcy Blinky
               </span>
             </h1>
 

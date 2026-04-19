@@ -1,20 +1,13 @@
 import { Link } from "react-router-dom";
-import { routes } from "@/lib/routes-config";
+import { isRouteVisibleInUi, routes } from "@/lib/routes-config";
 import { GradientButton } from "@/components/ui/gradient-button";
-
-const exerciseIcons: { [key: string]: string } = {
-  "20-rule": "⏱️",
-  ósemka: "👁️",
-  drzewko: "🌳",
-  oddech: "🌬️",
-  fargaze: "🌠",
-  accommodation: "📏",
-  rest: "⏱️",
-};
+import { ExerciseSymbol } from "@/components/exercise-symbol";
 
 const exerciseDescriptions: { [key: string]: string } = {
   "20-rule":
     "Klasyczna reguła 20-20-20 przypomina o spojrzeniu w dal po 20 minutach pracy przy ekranie.",
+  akomodacja:
+    "Ćwiczenie rozluźnia napięte mięśnie oka i poprawia zdolność do szybkiego łapania ostrości.",
   ósemka:
     "Śledź wzrokiem punkt poruszający się po torze ósemki, aby rozluźnić oczy i poprawić płynność ruchu.",
   drzewko:
@@ -24,7 +17,9 @@ const exerciseDescriptions: { [key: string]: string } = {
 };
 
 export function ExercisesSection() {
-  const exercises = routes.filter((r) => r.prefix === "exercises");
+  const exercises = routes.filter(
+    (route) => route.prefix === "exercises" && isRouteVisibleInUi(route),
+  );
 
   return (
     <section
@@ -92,8 +87,8 @@ export function ExercisesSection() {
                 {/* Card Content */}
                 <div className="p-8 flex flex-col items-center text-center h-full">
                   {/* Icon */}
-                  <div className="text-5xl mb-4">
-                    {exerciseIcons[exercise.name.toLowerCase()] || "💪"}
+                  <div className="mb-5">
+                    <ExerciseSymbol name={exercise.name} />
                   </div>
 
                   {/* Title */}

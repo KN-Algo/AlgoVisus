@@ -9,43 +9,21 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useSidebar } from "@/components/ui/sidebar.utils";
-import { routes } from "@/lib/routes-config";
-import {
-  Eye,
-  Infinity as InfinityIcon,
-  Info,
-  Settings2,
-  Sparkles,
-  TimerReset,
-  UserRound,
-  X,
-} from "lucide-react";
+import { isRouteVisibleInUi, routes } from "@/lib/routes-config";
+import { ExerciseSymbol } from "@/components/exercise-symbol";
+import { Info, Settings2, Sparkles, UserRound, X } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import appLogo from "@/assets/images/AlgoVisus_logo.png";
+import appLogo from "@/assets/images/Blinky_logo.png";
 
-const exercises = routes.filter((r) => r.prefix === "exercises");
+const exercises = routes.filter(
+  (route) => route.prefix === "exercises" && isRouteVisibleInUi(route),
+);
 const other = routes.filter((r) => r.prefix === "other");
 const footer = routes.filter((r) => r.prefix === "footer");
 
 const getRouteIcon = (name: string, prefix: string | null) => {
   const normalized = name.toLowerCase();
-
-  if (prefix === "exercises") {
-    if (normalized.includes("osem") || normalized.includes("ósem")) {
-      return InfinityIcon;
-    }
-    if (normalized.includes("far") || normalized.includes("gaze")) {
-      return Eye;
-    }
-    if (normalized.includes("accommodation")) {
-      return Sparkles;
-    }
-    if (normalized.includes("rest") || normalized.includes("przerw")) {
-      return TimerReset;
-    }
-    return Eye;
-  }
 
   if (prefix === "other") {
     if (normalized.includes("autor")) {
@@ -117,12 +95,12 @@ export function AppSidebar() {
           >
             <img
               src={appLogo}
-              alt="AlgoVisus logo"
+              alt="Blinky logo"
               className="h-12 w-12 rounded-xl border border-white/70 object-cover shadow-sm"
             />
             <div className="min-w-0">
               <p className="truncate text-base font-semibold tracking-wide text-slate-900">
-                AlgoVisus
+                Blinky
               </p>
             </div>
           </Link>
@@ -136,8 +114,6 @@ export function AppSidebar() {
             </span>
             <SidebarMenu>
               {exercises.map((route) => {
-                const Icon = getRouteIcon(route.name, route.prefix);
-
                 return (
                   <SidebarMenuItem key={route.path}>
                     <SidebarMenuButton
@@ -157,7 +133,7 @@ export function AppSidebar() {
                         }
                       >
                         <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-slate-200/70 border border-slate-400">
-                          <Icon className="h-4.5 w-4.5 text-black" />
+                          <ExerciseSymbol name={route.name} variant="menu" />
                         </span>
                         <span className="truncate font-medium">
                           {route.name}
@@ -212,36 +188,38 @@ export function AppSidebar() {
         </SidebarContent>
 
         {/* Stopka bocznego panelu */}
-        <SidebarFooter className="border-t border-slate-200/80 p-2">
+        {/* <SidebarFooter className="border-t border-slate-200/80 p-2"> */}
+        <SidebarFooter>
           <SidebarMenu>
-            {footer.map((route) => {
-              const Icon = getRouteIcon(route.name, route.prefix);
+            {footer.map((_) => {
+              // const Icon = getRouteIcon(route.name, route.prefix);
 
               return (
-                <SidebarMenuItem key={route.path}>
-                  <SidebarMenuButton
-                    asChild
-                    size="lg"
-                    className="mx-1 rounded-xl p-0"
-                  >
-                    <NavLink
-                      to={route.path}
-                      onClick={handleMenuItemClick}
-                      className={({ isActive }) =>
-                        `flex h-full w-full items-center gap-3 rounded-xl px-3.5 text-sm transition-all duration-200 ${
-                          isActive
-                            ? "bg-gradient-to-r from-cyan-100 to-blue-100 text-cyan-900 shadow-sm"
-                            : "text-black hover:bg-slate-100/90 hover:text-black"
-                        }`
-                      }
-                    >
-                      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-slate-200/70 border border-slate-400">
-                        <Icon className="h-4.5 w-4.5 text-black" />
-                      </span>
-                      <span className="truncate font-medium">{route.name}</span>
-                    </NavLink>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                <></>
+                // <SidebarMenuItem key={route.path}>
+                //   <SidebarMenuButton
+                //     asChild
+                //     size="lg"
+                //     className="mx-1 rounded-xl p-0"
+                //   >
+                //     <NavLink
+                //       to={route.path}
+                //       onClick={handleMenuItemClick}
+                //       className={({ isActive }) =>
+                //         `flex h-full w-full items-center gap-3 rounded-xl px-3.5 text-sm transition-all duration-200 ${
+                //           isActive
+                //             ? "bg-gradient-to-r from-cyan-100 to-blue-100 text-cyan-900 shadow-sm"
+                //             : "text-black hover:bg-slate-100/90 hover:text-black"
+                //         }`
+                //       }
+                //     >
+                //       <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-slate-200/70 border border-slate-400">
+                //         <Icon className="h-4.5 w-4.5 text-black" />
+                //       </span>
+                //       <span className="truncate font-medium">{route.name}</span>
+                //     </NavLink>
+                //   </SidebarMenuButton>
+                // </SidebarMenuItem>
               );
             })}
           </SidebarMenu>

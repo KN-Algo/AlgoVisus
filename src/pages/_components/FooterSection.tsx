@@ -64,7 +64,7 @@ export function FooterSection() {
             style={{ animationDelay: "100ms", animationFillMode: "backwards" }}
           >
             <h3 className="text-lg md:text-xl font-bold mb-4 text-white">
-              AlgoVisus
+              Blinky
             </h3>
             <p className="text-sm md:text-base text-gray-400 leading-relaxed">
               Aplikacja wspierająca zdrowie oczu poprzez interaktywne ćwiczenia
@@ -162,12 +162,12 @@ export function FooterSection() {
           style={{ animationDelay: "250ms", animationFillMode: "backwards" }}
         >
           <p className="text-xs md:text-sm text-gray-500 text-center md:text-left">
-            © {currentYear} AlgoVisus. Wszystkie prawa zastrzeżone.
+            © {currentYear} Blinky. Wszystkie prawa zastrzeżone.
           </p>
           <div className="flex items-center gap-2 text-xs md:text-sm text-gray-500">
             <span>Stworzony z</span>
-            <Heart className="w-4 h-4 text-red-500 fill-red-500" />
-            <span>przez KN-Algo i KN Visus</span>
+            <Heart className="w-4 h-4 text-red-500 fill-red-500 ml-1" />
+            <span>przez KN Algo i KN Visus</span>
           </div>
         </div>
       </div>

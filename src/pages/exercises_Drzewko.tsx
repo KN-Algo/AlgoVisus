@@ -10,6 +10,7 @@ import notifySound from "../assets/sounds/notify.mp3";
 import { GradientButton } from "@/components/ui/gradient-button";
 import { Button } from "@/components/ui/button";
 import { FooterSection } from "./_components/FooterSection.tsx";
+import { primeMediaElementPlayback } from "@/lib/audio";
 
 const EXERCISE_TRANSITION_MS = 420;
 
@@ -194,7 +195,8 @@ function DrzewkoExercisePanel({
               <Button
                 size="lg"
                 className="min-w-40"
-                onClick={() => {
+                onClick={async () => {
+                  await primeMediaElementPlayback(audioRef.current);
                   timer.start();
                   setExerciseStarted(true);
                   setExercisePaused(false);
@@ -242,7 +244,7 @@ function DrzewkoExercisePanel({
           </div>
         </div>
 
-        <audio ref={audioRef} src={notifySound} />
+        <audio ref={audioRef} src={notifySound} preload="auto" />
 
         {mediaWarning ? (
           <p className="mx-auto mt-5 max-w-xl text-center text-sm text-amber-300">
@@ -395,7 +397,8 @@ function DrzewkoPage() {
               }}
             >
               Ćwiczenie "Drzewko" to 2 minutowe zadanie, które polega na
-              obrysowaniu wzrokiem dowolnego obiektu, który znajdziesz za oknem.
+              obrysowaniu wzrokiem dowolnego obiektu który znajdziesz za oknem
+              lub w dużej odległości (powyżej 5 metrów).
             </p>
             <p
               className="mx-auto mb-12 max-w-3xl text-center text-lg leading-relaxed text-slate-600 animate-fade-in-up md:text-xl"
@@ -460,21 +463,28 @@ function DrzewkoPage() {
                 </div>
               </div>
 
-              <div className="overflow-hidden rounded-[2rem] border border-slate-200/85 bg-slate-950 shadow-[0_18px_36px_rgba(15,23,42,0.14)] transition-all duration-300 hover:-translate-y-1 hover:scale-[1.01]">
-                <div className="relative aspect-[4/5] w-full">
+              <div className="group relative overflow-hidden rounded-[2rem] border border-slate-200/85 bg-slate-950 shadow-[0_18px_36px_rgba(15,23,42,0.14)]">
+                <div className="pointer-events-none absolute inset-0 rounded-[inherit] shadow-[0_24px_46px_rgba(15,23,42,0.18)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                <div className="relative isolate aspect-[4/5] w-full overflow-hidden bg-slate-950 transition-transform duration-300 ease-out transform-gpu will-change-transform group-hover:-translate-y-1 group-hover:scale-[1.01]">
                   <video
-                    className="h-full w-full scale-[1.035] object-cover"
+                    className="absolute -inset-0.5 block h-[calc(100%+4px)] w-[calc(100%+4px)] max-w-none object-cover"
                     autoPlay
                     loop
                     muted
                     playsInline
                     preload="metadata"
                     src={drzewoVideo}
+                    style={{
+                      transform: "translateZ(0) scale(1.035)",
+                      backfaceVisibility: "hidden",
+                      willChange: "transform",
+                    }}
                   >
                     Twoja przeglądarka nie wspiera wideo.
                   </video>
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/88 via-slate-950/15 to-transparent" />
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_62%,rgba(15,23,42,0.08)_100%)]" />
+                  <div className="pointer-events-none absolute inset-0 bg-white/[0.015] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/88 via-slate-950/15 to-transparent" />
+                  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_62%,rgba(15,23,42,0.08)_100%)]" />
                   <div className="absolute inset-x-0 bottom-0 p-5 text-left text-white">
                     <p className="text-xs font-semibold uppercase tracking-[0.24em] text-emerald-200/80">
                       Podgląd ruchu

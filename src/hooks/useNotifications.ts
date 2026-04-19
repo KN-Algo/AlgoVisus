@@ -7,19 +7,30 @@ export interface AppNotification {
 }
 
 export const useNotifications = () => {
-  const [permission, setPermission] =
-    useState<NotificationPermission>("default");
+  const [permission, setPermission] = useState<NotificationPermission>(() => {
+    if (typeof Notification === "undefined") {
+      return "default";
+    }
+
+    return Notification.permission;
+  });
 
   // Prośba o zgodę
   const requestPermission = async () => {
+    if (typeof Notification === "undefined") {
+      return;
+    }
+
     const status = await Notification.requestPermission();
     setPermission(status);
   };
 
-  // Wysyłanie powiadomienia (z obsługą Service Workera)
+  // Wysyłanie powiadomienia – **bez service workera**
   const sendNotification = async (notification: AppNotification) => {
-    if (Notification.permission !== "granted") {
-      alert("Brak zgody na powiadomienia!");
+    if (
+      typeof Notification === "undefined" ||
+      Notification.permission !== "granted"
+    ) {
       return;
     }
 

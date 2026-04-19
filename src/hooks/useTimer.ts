@@ -9,14 +9,22 @@ export type Time = {
   second: number;
 };
 
-export function TimeToMilSec({ hour, minut, second }: Time): number {
+export type UseTimerOptions = {
+  persist?: boolean;
+};
+
+function TimeToMilSec({ hour, minut, second }: Time): number {
   minut += hour * 60;
   second += minut * 60;
   const m_second: number = second * SEC_IN_MSEC;
   return m_second;
 }
 
-export function useTimer({ hour, minut, second }: Time, storageKey: string) {
+export function useTimer(
+  { hour, minut, second }: Time,
+  storageKey: string,
+  { persist = true }: UseTimerOptions = {},
+) {
   const countTime = TimeToMilSec({ hour, minut, second });
 
   const [time, setTime] = useState(countTime);
@@ -50,20 +58,29 @@ export function useTimer({ hour, minut, second }: Time, storageKey: string) {
   }, [isRunning]);
 
   useEffect(() => {
+    if (!persist) {
+      localStorage.removeItem(storageKey);
+      return;
+    }
+
     if (time <= 0) {
       localStorage.removeItem(storageKey);
       return;
     }
 
     if (time !== countTime) localStorage.setItem(storageKey, time.toString());
-  }, [time, countTime, storageKey]);
+  }, [time, countTime, persist, storageKey]);
 
   useEffect(() => {
+    if (!persist) {
+      return;
+    }
+
     const savedTime = localStorage.getItem(storageKey);
     if (savedTime) {
       setTime(Number(savedTime));
     }
-  }, [storageKey]);
+  }, [persist, storageKey]);
 
   return { time, start, stop, reset };
 }

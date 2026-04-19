@@ -1,4 +1,4 @@
-# AlgoVisus
+# Blinky
 
 [![KN Algo](https://img.shields.io/badge/Made%20by-KN%20Algo-000424?style=flat-square&logo=typescript)](https://algo.pwr.edu.pl/)
 [![PWr](https://img.shields.io/badge/Affiliation-PWr-b01f09?style=flat-square)](https://pwr.edu.pl/)

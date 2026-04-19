@@ -22,8 +22,8 @@ export default defineConfig(() => {
         },
 
         manifest: {
-          name: "AlgoVisus",
-          short_name: "AlgoVisus",
+          name: "Blinky",
+          short_name: "Blinky",
           description:
             " Application to care about your precious eyes made in collaboration with KN Visus!",
           background_color: "#010424",

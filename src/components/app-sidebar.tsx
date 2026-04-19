@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import appLogo from "@/assets/images/AlgoVisus_logo.png";
+import appLogo from "@/assets/images/Blinky_logo.png";
 
 const exercises = routes.filter((r) => r.prefix === "exercises");
 const other = routes.filter((r) => r.prefix === "other");
@@ -117,12 +117,12 @@ export function AppSidebar() {
           >
             <img
               src={appLogo}
-              alt="AlgoVisus logo"
+              alt="Blinky logo"
               className="h-12 w-12 rounded-xl border border-white/70 object-cover shadow-sm"
             />
             <div className="min-w-0">
               <p className="truncate text-base font-semibold tracking-wide text-slate-900">
-                AlgoVisus
+                Blinky
               </p>
             </div>
           </Link>

@@ -20,7 +20,7 @@ function App() {
             <img
               src={appLogo}
               className="h-24 p-6 transition-all duration-300 will-change-auto hover:drop-shadow-[0_0_2em_#646cffaa]"
-              alt="AlgoVisus logo"
+              alt="Blinky logo"
             />
           </a>
           <a
@@ -36,7 +36,7 @@ function App() {
             />
           </a>
         </div>
-        <h1 className="text-5xl leading-tight">AlgoVisus</h1>
+        <h1 className="text-5xl leading-tight">Blinky</h1>
         <div className="text-lg">
           <ExampleTimerComponent />
         </div>

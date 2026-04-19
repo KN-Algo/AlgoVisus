@@ -17,7 +17,7 @@ export function AppNavigationMenu() {
             <span
               className={`relative z-10 text-2xl font-bold tracking-tight ${activeBrandClass}`}
             >
-              {"AlgoVisus"}
+              {"Blinky"}
             </span>
           </span>
         </div>
@@ -38,7 +38,7 @@ export function AppNavigationMenu() {
                   shouldElevateText ? "opacity-0" : "text-slate-900"
                 }`}
               >
-                {"AlgoVisus"}
+                {"Blinky"}
               </span>
             </Link>
           </div>

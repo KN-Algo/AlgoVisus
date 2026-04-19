@@ -49,7 +49,7 @@ export function HeroSection() {
             >
               <img
                 src="/rysunek_visus2ss.svg"
-                alt="AlgoVisus Logo"
+                alt="Blinky Logo"
                 className={`w-full h-full object-contain transition-all duration-300 ${
                   shouldElevateLogo
                     ? "brightness-110 contrast-105 saturate-110"
@@ -75,7 +75,7 @@ export function HeroSection() {
             className="text-lg md:text-xl text-slate-600 text-center mb-12 leading-relaxed max-w-2xl mx-auto animate-fade-in-up"
             style={{ animationDelay: "300ms", animationFillMode: "backwards" }}
           >
-            AlgoVisus to aplikacja stworzona specjalnie dla programistów i
+            Blinky to aplikacja stworzona specjalnie dla programistów i
             pracowników biurowych, którzy dbają o zdrowie swoich oczu.
             Regularnie przypomina o przerwach i dostarcza cennych informacji o
             higienie wzroku, bazując na wiedzy optometrycznej.

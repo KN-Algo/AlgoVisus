@@ -10,16 +10,8 @@ import {
 } from "@/components/ui/sidebar";
 import { useSidebar } from "@/components/ui/sidebar.utils";
 import { routes } from "@/lib/routes-config";
-import {
-  Eye,
-  Infinity as InfinityIcon,
-  Info,
-  Settings2,
-  Sparkles,
-  TimerReset,
-  UserRound,
-  X,
-} from "lucide-react";
+import { ExerciseSymbol } from "@/components/exercise-symbol";
+import { Info, Settings2, Sparkles, UserRound, X } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import appLogo from "@/assets/images/Blinky_logo.png";
@@ -30,22 +22,6 @@ const footer = routes.filter((r) => r.prefix === "footer");
 
 const getRouteIcon = (name: string, prefix: string | null) => {
   const normalized = name.toLowerCase();
-
-  if (prefix === "exercises") {
-    if (normalized.includes("osem") || normalized.includes("ósem")) {
-      return InfinityIcon;
-    }
-    if (normalized.includes("far") || normalized.includes("gaze")) {
-      return Eye;
-    }
-    if (normalized.includes("accommodation")) {
-      return Sparkles;
-    }
-    if (normalized.includes("rest") || normalized.includes("przerw")) {
-      return TimerReset;
-    }
-    return Eye;
-  }
 
   if (prefix === "other") {
     if (normalized.includes("autor")) {
@@ -136,8 +112,6 @@ export function AppSidebar() {
             </span>
             <SidebarMenu>
               {exercises.map((route) => {
-                const Icon = getRouteIcon(route.name, route.prefix);
-
                 return (
                   <SidebarMenuItem key={route.path}>
                     <SidebarMenuButton
@@ -157,7 +131,7 @@ export function AppSidebar() {
                         }
                       >
                         <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-slate-200/70 border border-slate-400">
-                          <Icon className="h-4.5 w-4.5 text-black" />
+                          <ExerciseSymbol name={route.name} variant="menu" />
                         </span>
                         <span className="truncate font-medium">
                           {route.name}

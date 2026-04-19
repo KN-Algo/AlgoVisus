@@ -46,7 +46,16 @@ export const authors: Author[] = [
     firstName: "Maria",
     lastName: "Bąkowska",
     organization: "KN Visus",
-    socialLinks: [],
+    socialLinks: [
+      {
+        platform: "linkedin",
+        url: "https://pl.linkedin.com/in/maria-b%C4%85kowska-2026b9303",
+      },
+      {
+        platform: "instagram",
+        url: "https://www.instagram.com/m__bakowska",
+      },
+    ],
   },
   {
     id: "4",

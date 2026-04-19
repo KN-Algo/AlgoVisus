@@ -7,10 +7,12 @@ import { AppSidebar } from "./components/app-sidebar.tsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Suspense } from "react";
 import { routes } from "./lib/routes-config";
+import { RouteScrollManager } from "./components/route-scroll-manager.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
+      <RouteScrollManager />
       <SidebarProvider defaultOpen={false}>
         <div className="w-full">
           <AppNavigationMenu />

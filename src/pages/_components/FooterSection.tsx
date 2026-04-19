@@ -1,8 +1,27 @@
 import { Github, Mail, Heart } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export function FooterSection() {
   const currentYear = new Date().getFullYear();
+  const location = useLocation();
+
+  const scrollToFooterTarget = (targetId: "top" | "exercises") => {
+    if (targetId === "top") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    const targetElement = document.getElementById(targetId);
+    if (!targetElement) return;
+
+    const targetTop =
+      targetElement.getBoundingClientRect().top + window.scrollY;
+
+    window.scrollTo({
+      top: Math.max(0, targetTop - 80),
+      behavior: "smooth",
+    });
+  };
 
   return (
     <footer className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-100 animate-fade-in">
@@ -48,8 +67,8 @@ export function FooterSection() {
               AlgoVisus
             </h3>
             <p className="text-sm md:text-base text-gray-400 leading-relaxed">
-              Aplikacja do ćwiczenia zdrowia oczu poprzez interaktywne ćwiczenia
-              i algorytmy wspomagające wzrok.
+              Aplikacja wspierająca zdrowie oczu poprzez interaktywne ćwiczenia
+              oraz algorytmy wspomagające funkcje wzrokowe.
             </p>
           </div>
 
@@ -63,23 +82,38 @@ export function FooterSection() {
             </h3>
             <nav className="space-y-2 flex flex-col">
               <Link
-                to="/"
+                to="/#top"
+                onClick={(event) => {
+                  if (location.pathname === "/" && location.hash === "#top") {
+                    event.preventDefault();
+                    scrollToFooterTarget("top");
+                  }
+                }}
                 className="text-sm md:text-base text-gray-400 hover:text-white transition-colors duration-200"
               >
                 Strona główna
               </Link>
-              <a
-                href="#exercises"
+              <Link
+                to="/#exercises"
+                onClick={(event) => {
+                  if (
+                    location.pathname === "/" &&
+                    location.hash === "#exercises"
+                  ) {
+                    event.preventDefault();
+                    scrollToFooterTarget("exercises");
+                  }
+                }}
                 className="text-sm md:text-base text-gray-400 hover:text-white transition-colors duration-200"
               >
                 Ćwiczenia
-              </a>
-              <a
-                href="/o-autorach"
+              </Link>
+              <Link
+                to="/autorzy"
                 className="text-sm md:text-base text-gray-400 hover:text-white transition-colors duration-200"
               >
                 O autorach
-              </a>
+              </Link>
             </nav>
           </div>
 
@@ -93,11 +127,18 @@ export function FooterSection() {
             </h3>
             <div className="flex flex-col space-y-3">
               <a
-                href="mailto:info@algovisus.pl"
+                href="mailto:kontakt.visus@gmail.com"
                 className="flex items-center gap-2 text-sm md:text-base text-gray-400 hover:text-white transition-colors duration-200"
               >
                 <Mail className="w-4 h-4 md:w-5 md:h-5" />
-                <span>info@algovisus.pl</span>
+                <span>kontakt.visus@gmail.com</span>
+              </a>
+              <a
+                href="mailto:algo.pwr@gmail.com"
+                className="flex items-center gap-2 text-sm md:text-base text-gray-400 hover:text-white transition-colors duration-200"
+              >
+                <Mail className="w-4 h-4 md:w-5 md:h-5" />
+                <span>algo.pwr@gmail.com</span>
               </a>
               <a
                 href="https://github.com/KN-Algo/AlgoVisus"
@@ -126,11 +167,8 @@ export function FooterSection() {
           <div className="flex items-center gap-2 text-xs md:text-sm text-gray-500">
             <span>Stworzony z</span>
             <Heart className="w-4 h-4 text-red-500 fill-red-500" />
-            <span>przez KN-Algo</span>
+            <span>przez KN-Algo i KN Visus</span>
           </div>
-          <span className="text-xs md:text-sm text-gray-500">
-            Polityka prywatności
-          </span>
         </div>
       </div>
     </footer>

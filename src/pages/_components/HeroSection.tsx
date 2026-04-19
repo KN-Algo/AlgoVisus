@@ -77,8 +77,8 @@ export function HeroSection() {
           >
             AlgoVisus to aplikacja stworzona specjalnie dla programistów i
             pracowników biurowych, którzy dbają o zdrowie swoich oczu.
-            Regularnie przypominamy o przerwach i dostarczamy cennych informacji
-            o higienie wzroku, bazując na wiedzy optometrycznej.
+            Regularnie przypomina o przerwach i dostarcza cennych informacji o
+            higienie wzroku, bazując na wiedzy optometrycznej.
           </p>
 
           {/* CTA Button */}
@@ -87,7 +87,7 @@ export function HeroSection() {
             style={{ animationDelay: "400ms", animationFillMode: "backwards" }}
           >
             <GradientButton onClick={handleStartNowClick}>
-              Zacznij teraz
+              Rozpocznij teraz
             </GradientButton>
           </div>
         </div>
